@@ -1,1 +1,15 @@
-# dynamic-systems-and-chaos
+# Dynamic Systems and Chaos
+
+**Python Script**
+
+    legraph.py
+
+**Some usage examples**
+
+    ./legraph.py --x0 0.4 -r 3.2 -n 50
+
+![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot01_le-periodic-orbit.png)
+
+    ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
+ 
+![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot02_le-sdic.png)
