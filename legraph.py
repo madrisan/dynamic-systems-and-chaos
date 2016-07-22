@@ -28,17 +28,20 @@ def logistic(r, n, x0):
 
     return x, y
 
-def plotline(x, y, color):
-    plt.plot(x, y, color + 'o', x, y, color)
+def plotline(x, y, color, dotsonly):
+    if dotsonly:
+        plt.plot(x, y, color + 'o')
+    else:
+        plt.plot(x, y, color + 'o', x, y, color)
 
-def plotsingle(x, y, color):
+def plotsingle(x, y, color, dotsonly):
     plt.title('Logistic Equation')
     plt.xlabel('time t')
     plt.ylim([0, 1.0])
     plt.grid(True)
-    plotline(x, y, color)
+    plotline(x, y, color, dotsonly)
 
-def plotwithdiff(x, y1, y2, color):
+def plotwithdiff(x, y1, y2, color, dotsonly):
     plt.figure(1)
 
     plt.subplot(211)
@@ -46,8 +49,8 @@ def plotwithdiff(x, y1, y2, color):
     plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
     plt.ylim([0, 1.0])
     plt.grid(True)
-    plotline(x, y1, color[0])
-    plotline(x, y2, color[1])
+    plotline(x, y1, color[0], dotsonly)
+    plotline(x, y2, color[1], dotsonly)
 
     ydiff = y2 - y1
 
@@ -56,7 +59,7 @@ def plotwithdiff(x, y1, y2, color):
     plt.xlabel('time t')
     plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
     plt.grid(True)
-    plotline(x, ydiff, 'b')
+    plotline(x, ydiff, 'b', False)
 
 def die(exitcode, message):
     "Print error and exit with the requested errorcode"
@@ -70,14 +73,15 @@ def writeln(line):
 def usage():
     progname = sys.argv[0]
     writeln('Usage:\n' +
-        progname + ' -x0 <1st-init-cond> [-x1 <2nd-init-cond>] -r <growth-rate> -n <steps>\n' +
+        progname + ' -0 <1st-init-cond> [-1 <2nd-init-cond>] [-d] -r <growth-rate> -n <steps>\n' +
         progname + ' -h\n')
     writeln('Example:\n' +
         '# of a time series with a stable fixed point\n' +
-        progname + ' --x0 0.4 -r 3.2 -n 50\n' +
-        progname + ' --x0 0.4 --x1 0.45 -r 3.2 -n 50\n' +
+        progname + ' -0 0.4 -r 3.2 -n 50\n' +
+        progname + ' -0 0.4 -1 0.45 -r 3.2 -n 50\n' +
         '# of a chaotic result (randon output)\n' +
-        progname + ' --x0 0.2 --x1 0.2000001 -r 4.0 -n 50\n')
+        progname + ' --x0 0.2 --x1 0.2000001 -r 4.0 -n 50\n' +
+        progname + ' -0 0.2 -r 3.6 -n 5000 --dots-only\n')
 
 def proghelp():
     writeln('Plot of Logistic Equation Time Series\n' +
@@ -86,13 +90,14 @@ def proghelp():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:1:n:r:h',
-                   ["x0=", "x1=", "steps=", "rate=", "help"])
+        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:h',
+                   ["x0=", "x1=", "dots-only", "steps=", "rate=", "help"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
     x0 = x1 = n = r = None
+    dotsonly = False
 
     for o, a in opts:
         if o in ('-h', '--help'):
@@ -102,6 +107,8 @@ def main():
             x0 = float(a)
         elif o in ('-1', '--x1'):
             x1 = float(a)
+        elif o in ('-d', '--dots-only'):
+            dotsonly = True
         elif o in ('-n', '--steps'):
             n = int(a)
         elif o in ('-r', '--rate'):
@@ -117,9 +124,9 @@ def main():
 
     if x1:
         t, y2 = logistic(r, n, x1)
-        plotwithdiff(t, y1, y2, ['g', 'r'])
+        plotwithdiff(t, y1, y2, ['g', 'r'], dotsonly)
     else:
-        plotsingle(t, y1, 'g')
+        plotsingle(t, y1, 'g', dotsonly)
 
     plt.show()
 
