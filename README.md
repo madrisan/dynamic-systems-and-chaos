@@ -13,3 +13,7 @@
     ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
  
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot02_le-sdic.png)
+
+    ./legraph.py --x0 0.2 -r 3.6 -n 5000 --dots-only
+
+![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot03_le-sdic-dotsonly.png)
