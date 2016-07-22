@@ -15,12 +15,16 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-# r : Parameter
-# n : Number of Iterations
-# x0: Initial condition
 def logistic(r, n, x0):
+    """Return the numpy vectors 'x' and 'y' containing
+       the iterations (1..n) and the corresponding values
+       of the Logistic Equation rx(1-x)
+         r  : Grow rate parameter
+         n  : Number of iterations
+         x0 : The initial condition """
+
     x = np.arange(n)
-    y = np.arange(0, n, 1.0)
+    y = np.arange(0, n, 1.)
 
     y[0] = x0
     for t in x[1:]:
@@ -28,26 +32,35 @@ def logistic(r, n, x0):
 
     return x, y
 
+
 def plotline(x, y, color, dotsonly):
-    if dotsonly:
-        plt.plot(x, y, color + 'o')
-    else:
-        plt.plot(x, y, color + 'o', x, y, color)
+    """Plot the dots (x, y) connected by straight lines
+       if the parameter 'dotsonly' if false """
+
+    plt.plot(x, y, color + 'o')
+    if not dotsonly: plt.plot(x, y, color)
+
 
 def plotsingle(x, y, color, dotsonly):
+    """Plot a Logistic Equation map """
+
     plt.title('Logistic Equation')
     plt.xlabel('time t')
-    plt.ylim([0, 1.0])
+    plt.ylim([0, 1.])
     plt.grid(True)
     plotline(x, y, color, dotsonly)
 
+
 def plotwithdiff(x, y1, y2, color, dotsonly):
+    """Plot a Logistic Equation map with two different seeds (two plots)
+       followed by their difference """
+
     plt.figure(1)
 
     plt.subplot(211)
     plt.title('Time series for a logistic equation with two different initial conditions')
     plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
-    plt.ylim([0, 1.0])
+    plt.ylim([0, 1.])
     plt.grid(True)
     plotline(x, y1, color[0], dotsonly)
     plotline(x, y2, color[1], dotsonly)
@@ -61,16 +74,24 @@ def plotwithdiff(x, y1, y2, color, dotsonly):
     plt.grid(True)
     plotline(x, ydiff, 'b', False)
 
+
 def die(exitcode, message):
-    "Print error and exit with the requested errorcode"
+    """Print and error message and exit with 'exitcode' """
+
     progname = sys.argv[0]
     sys.stderr.write('%s: error: %s\n' % (progname, message))
     sys.exit(exitcode)
 
+
 def writeln(line):
+    """Print the given line to stdout followed by a newline """
+
     sys.stdout.write(line + '\n')
 
+
 def usage():
+    """Program usage """
+
     progname = '  ' + sys.argv[0]
 
     writeln('Usage:\n' +
@@ -92,11 +113,15 @@ def usage():
         progname + ' --x0 0.2 --x1 0.2000001 -r 4.0 -n 50\n' +
         progname + ' -0 0.2 -r 3.6 -n 5000 --dots-only\n')
 
+
 def proghelp():
+    """Print the Copyright and an help message """
+
     writeln('Plot of Logistic Equation Time Series v.' +
-            __version__ + ' (' + __status__ +  ')')
+        __version__ + ' (' + __status__ +  ')')
     writeln(__copyright__ + ' <' + __email__ + '>\n')
     usage()
+
 
 def main():
     try:
@@ -141,9 +166,9 @@ def main():
     plt.show()
 
 if __name__ == '__main__':
-    exitcode = 0
     try:
         main()
     except KeyboardInterrupt:
         die(3, 'Exiting on user request')
-    sys.exit(exitcode)
+
+    sys.exit(0)
