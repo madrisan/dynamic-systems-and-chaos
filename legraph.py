@@ -4,7 +4,7 @@
 # Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
 
 __author__ = "Davide Madrisan"
-__copyright__ = "Copyright 2016 Davide Madrisan"
+__copyright__ = "Copyright (C) 2016 Davide Madrisan"
 __license__ = "GPL"
 __version__ = "1"
 __email__ = "davide.madrisan.gmail.com"
@@ -71,21 +71,31 @@ def writeln(line):
     sys.stdout.write(line + '\n')
 
 def usage():
-    progname = sys.argv[0]
+    progname = '  ' + sys.argv[0]
+
     writeln('Usage:\n' +
-        progname + ' -0 <1st-init-cond> [-1 <2nd-init-cond>] [-d] -r <growth-rate> -n <steps>\n' +
+        progname + ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int>\n' +
         progname + ' -h\n')
+
+    writeln("""Where:
+  -0 | --x0: 1st initial condition
+  -1 | --x1: 2nd initial condition (optional)
+  -d | --dots-only: do not connect the dots with lines
+  -r | --rate: growth rate parameter
+  -n | --steps: number of iterations\n""")
+
     writeln('Example:\n' +
-        '# of a time series with a stable fixed point\n' +
+        '  # time series with a stable fixed point\n' +
         progname + ' -0 0.4 -r 3.2 -n 50\n' +
-        progname + ' -0 0.4 -1 0.45 -r 3.2 -n 50\n' +
-        '# of a chaotic result (randon output)\n' +
+        progname + ' -0 0.4 -1 0.45 -r 3.2 -n 50\n\n' +
+        '  # chaotic results (randon output)\n' +
         progname + ' --x0 0.2 --x1 0.2000001 -r 4.0 -n 50\n' +
         progname + ' -0 0.2 -r 3.6 -n 5000 --dots-only\n')
 
 def proghelp():
-    writeln('Plot of Logistic Equation Time Series\n' +
-            'Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>\n')
+    writeln('Plot of Logistic Equation Time Series v.' +
+            __version__ + ' (' + __status__ +  ')')
+    writeln(__copyright__ + ' <' + __email__ + '>\n')
     usage()
 
 def main():
