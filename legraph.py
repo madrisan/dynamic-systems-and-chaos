@@ -15,64 +15,96 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-def logistic(r, n, x0):
-    """Return the numpy vectors 'x' and 'y' containing
-       the iterations (1..n) and the corresponding values
-       of the Logistic Equation rx(1-x)
-         r  : Grow rate parameter
-         n  : Number of iterations
-         x0 : The initial condition """
+class logistic(object):
+    def __init__(self, r, n, x0, x1 = None, dotsonly = False):
+        self.r = r    # Grow rate parameter
+        self.n = n    # Number of iterations
+        self.x0 = x0  # The 1st initial condition
+        self.x1 = x1  # The 2st (optional) initial condition
 
-    x = np.arange(n)
-    y = np.arange(0, n, 1.)
+        self.x = self.y1 = self.y2 = []
+        self.dotsonly = dotsonly
 
-    y[0] = x0
-    for t in x[1:]:
-        y[t] = r * y[t-1] * (1 - y[t-1])
+    def getxy(self):
+        """Set the numpy vectors 'x' and 'y' containing
+           the iterations (1..n) and the corresponding values
+           of the Logistic Equation rx(1-x) """
 
-    return x, y
+        if len(self.x) > 0: return
+        self.x = np.arange(self.n)
 
+        self.y1 = np.arange(0, self.n, 1.)
+        self.y1[0] = self.x0
 
-def plotline(x, y, color, dotsonly):
-    """Plot the dots (x, y) connected by straight lines
-       if the parameter 'dotsonly' if false """
+        if self.x1:
+            self.y2 = np.arange(0, self.n, 1.)
+            self.y2[0] = self.x1
+        else:
+            self.y2 = None
 
-    plt.plot(x, y, color + 'o')
-    if not dotsonly: plt.plot(x, y, color)
+        for t in self.x[1:]:
+            self.y1[t] = self.r * self.y1[t-1] * (1 - self.y1[t-1])
+            if self.x1: self.y2[t] = self.r * self.y2[t-1] * (1 - self.y2[t-1])
 
+        return self.x, self.y1, self.y2
 
-def plotsingle(x, y, color, dotsonly):
-    """Plot a Logistic Equation map """
+    def _plotline(self, x, y, color):
+        """Plot the dots (x, y) connected by straight lines
+           if the parameter 'dotsonly' if false """
 
-    plt.title('Logistic Equation')
-    plt.xlabel('time t')
-    plt.ylim([0, 1.])
-    plt.grid(True)
-    plotline(x, y, color, dotsonly)
+        assert x.any() and y.any(), '_plotline(): internal error'
 
+        plt.plot(x, y, color + 'o')
+        if not self.dotsonly: plt.plot(x, y, color)
 
-def plotwithdiff(x, y1, y2, color, dotsonly):
-    """Plot a Logistic Equation map with two different seeds (two plots)
-       followed by their difference """
+    def _plotsingle(self):
+        """Plot a Logistic Equation map """
 
-    plt.figure(1)
+        color = 'g'
 
-    plt.subplot(211)
-    plt.title('Time series for a logistic equation with two different initial conditions')
-    plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
-    plt.ylim([0, 1.])
-    plt.grid(True)
-    plotline(x, y1, color[0], dotsonly)
-    plotline(x, y2, color[1], dotsonly)
+        plt.title('Logistic Equation')
+        plt.xlabel('time t')
+        plt.ylim([0, 1.])
+        plt.grid(True)
+        self._plotline(self.x, self.y1, color)
 
-    ydiff = y2 - y1
+    def _plotwithdiff(self):
+        """Plot a Logistic Equation map with two different seeds (two plots)
+           followed by their difference """
 
-    plt.subplot(212)
-    plt.title('Difference between the two time series')
-    plt.xlabel('time t')
-    plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
-    plt.grid(True)
-    plotline(x, ydiff, 'b', False)
+        color = ['g', 'r']
+
+        plt.figure(1)
+
+        plt.subplot(211)
+        plt.title('Time series for a logistic equation with two different initial conditions')
+        plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
+        plt.ylim([0, 1.])
+        plt.grid(True)
+        self._plotline(self.x, self.y1, color[0])
+        self._plotline(self.x, self.y2, color[1])
+
+        ydiff = self.y2 - self.y1
+
+        plt.subplot(212)
+        plt.title('Difference between the two time series')
+        plt.xlabel('time t')
+        plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
+        plt.grid(True)
+        self._plotline(self.x, ydiff, 'b')
+
+    def plot(self):
+        """Helper function that will just call the appropriate plotting
+           function and parameters """
+
+        self.getxy()
+
+        if self.x1:
+            self._plotwithdiff()
+        else:
+            self._plotsingle()
+
+        plt.show()
 
 
 def die(exitcode, message):
@@ -149,21 +181,15 @@ def main():
         elif o in ('-r', '--rate'):
             r = float(a)
         else:
-            assert False, 'unhandled command-line option'
+            assert False, "Unhandled command-line option"
 
     if not x0 or not n or not r:
         usage()
-        die(2, 'one of more arguments have not been set.')
+        die(2, 'One of more arguments have not been set.')
 
-    t, y1 = logistic(r, n, x0)
-
-    if x1:
-        t, y2 = logistic(r, n, x1)
-        plotwithdiff(t, y1, y2, ['g', 'r'], dotsonly)
-    else:
-        plotsingle(t, y1, 'g', dotsonly)
-
-    plt.show()
+    le = logistic(r, n, x0, x1, dotsonly)
+    #t, y1, y2 = le.getxy()
+    le.plot()
 
 if __name__ == '__main__':
     try:
