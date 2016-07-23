@@ -16,6 +16,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 class Logistic(object):
+    """Class for plotting a Logistic Map rx(1-x) """
+
     def __init__(self, r, n, x0, dotsonly = False):
         self.r = r    # Grow rate parameter
         self.n = n    # Number of iterations
@@ -34,7 +36,7 @@ class Logistic(object):
         if not self.dotsonly: plt.plot(x, y, color)
 
     def getxy(self):
-        """Set the numpy vectors 'x' and 'y' containing
+        """Set the numpy vectors 'x' and 'y1' containing
            the iterations (1..n) and the corresponding values
            of the Logistic Equation rx(1-x) """
 
@@ -66,13 +68,21 @@ class Logistic(object):
 
 
 class LogisticDiff(Logistic):
+    """Derived class for plotting a Logistic Map rx(1-x)
+       with two different initial conditions, followed by a plot of
+       their differences (for a visualization of the Butterfly Effect) """
+
     def __init__(self, r, n, x0, x1, dotsonly = False):
         Logistic.__init__(self, r, n, x0, dotsonly)
 
-        self.x1 = x1  # The 2st (optional) initial condition
+        self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
     def getxy(self):
+        """Set the numpy vectors 'x', 'y1', and 'y2' containing
+           the iterations (1..n) and the corresponding values
+           of the Logistic Equation rx(1-x) """
+
         super(LogisticDiff, self).getxy()
 
         self.y2 = np.arange(0, self.n, 1.)
