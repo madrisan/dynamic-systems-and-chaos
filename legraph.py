@@ -40,7 +40,9 @@ class Logistic(object):
            the iterations (1..n) and the corresponding values
            of the Logistic Equation rx(1-x) """
 
+        # do not initialize twice the x and y1 vectors
         if len(self.x) > 0: return
+
         self.x = np.arange(self.n)
 
         self.y1 = np.arange(0, self.n, 1.)
@@ -84,6 +86,9 @@ class LogisticDiff(Logistic):
            of the Logistic Equation rx(1-x) """
 
         super(LogisticDiff, self).getxy()
+
+        # do not initialize twice the vector y2
+        if len(self.y2) > 0: return
 
         self.y2 = np.arange(0, self.n, 1.)
         self.y2[0] = self.x1
