@@ -15,14 +15,13 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 
-class logistic(object):
-    def __init__(self, r, n, x0, x1 = None, dotsonly = False):
+class Logistic(object):
+    def __init__(self, r, n, x0, dotsonly = False):
         self.r = r    # Grow rate parameter
         self.n = n    # Number of iterations
         self.x0 = x0  # The 1st initial condition
-        self.x1 = x1  # The 2st (optional) initial condition
 
-        self.x = self.y1 = self.y2 = []
+        self.x = self.y1 = []
         self.dotsonly = dotsonly
 
     def getxy(self):
@@ -36,17 +35,10 @@ class logistic(object):
         self.y1 = np.arange(0, self.n, 1.)
         self.y1[0] = self.x0
 
-        if self.x1:
-            self.y2 = np.arange(0, self.n, 1.)
-            self.y2[0] = self.x1
-        else:
-            self.y2 = None
-
         for t in self.x[1:]:
             self.y1[t] = self.r * self.y1[t-1] * (1 - self.y1[t-1])
-            if self.x1: self.y2[t] = self.r * self.y2[t-1] * (1 - self.y2[t-1])
 
-        return self.x, self.y1, self.y2
+        return self.x, self.y1
 
     def _plotline(self, x, y, color):
         """Plot the dots (x, y) connected by straight lines
@@ -57,10 +49,12 @@ class logistic(object):
         plt.plot(x, y, color + 'o')
         if not self.dotsonly: plt.plot(x, y, color)
 
-    def _plotsingle(self):
+    def plot(self):
         """Plot a Logistic Equation map """
 
         color = 'g'
+
+        self.getxy()
 
         plt.title('Logistic Equation')
         plt.xlabel('time t')
@@ -68,11 +62,34 @@ class logistic(object):
         plt.grid(True)
         self._plotline(self.x, self.y1, color)
 
-    def _plotwithdiff(self):
+        plt.show()
+
+
+class LogisticDiff(Logistic):
+    def __init__(self, r, n, x0, x1, dotsonly = False):
+        Logistic.__init__(self, r, n, x0, dotsonly)
+
+        self.x1 = x1  # The 2st (optional) initial condition
+        self.y2 = []
+
+    def getxy(self):
+        super(LogisticDiff, self).getxy()
+
+        self.y2 = np.arange(0, self.n, 1.)
+        self.y2[0] = self.x1
+
+        for t in self.x[1:]:
+            self.y2[t] = self.r * self.y2[t-1] * (1 - self.y2[t-1])
+
+        return self.x, self.y1, self.y2
+
+    def plot(self):
         """Plot a Logistic Equation map with two different seeds (two plots)
            followed by their difference """
 
         color = ['g', 'r']
+
+        self.getxy()
 
         plt.figure(1)
 
@@ -92,17 +109,6 @@ class logistic(object):
         plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
         plt.grid(True)
         self._plotline(self.x, ydiff, 'b')
-
-    def plot(self):
-        """Helper function that will just call the appropriate plotting
-           function and parameters """
-
-        self.getxy()
-
-        if self.x1:
-            self._plotwithdiff()
-        else:
-            self._plotsingle()
 
         plt.show()
 
@@ -187,8 +193,13 @@ def main():
         usage()
         die(2, 'One of more arguments have not been set.')
 
-    le = logistic(r, n, x0, x1, dotsonly)
-    #t, y1, y2 = le.getxy()
+    if x1:
+        le = LogisticDiff(r, n, x0, x1, dotsonly)
+        #t, y1, y2 = le.getxy()
+    else:
+        le = Logistic(r, n, x0, dotsonly)
+        #t, y1 = le.getxy()
+
     le.plot()
 
 if __name__ == '__main__':
