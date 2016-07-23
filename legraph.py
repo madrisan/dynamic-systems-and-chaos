@@ -152,7 +152,7 @@ def usage():
         progname + ' -0 0.2 -r 3.6 -n 5000 --dots-only\n')
 
 
-def proghelp():
+def help():
     """Print the Copyright and an help message """
 
     writeln('Plot of Logistic Equation Time Series v.' +
@@ -174,7 +174,7 @@ def main():
 
     for o, a in opts:
         if o in ('-h', '--help'):
-            proghelp()
+            help()
             sys.exit()
         elif o in ('-0', '--x0'):
             x0 = float(a)
@@ -193,13 +193,8 @@ def main():
         usage()
         die(2, 'One of more arguments have not been set.')
 
-    if x1:
-        le = LogisticDiff(r, n, x0, x1, dotsonly)
-        #t, y1, y2 = le.getxy()
-    else:
-        le = Logistic(r, n, x0, dotsonly)
-        #t, y1 = le.getxy()
-
+    le = LogisticDiff(r, n, x0, x1, dotsonly) if x1 \
+             else Logistic(r, n, x0, dotsonly)
     le.plot()
 
 if __name__ == '__main__':
