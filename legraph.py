@@ -218,4 +218,4 @@ if __name__ == '__main__':
     except KeyboardInterrupt:
         die(3, 'Exiting on user request')
 
-    sys.exit(0)
+    sys.exit()
