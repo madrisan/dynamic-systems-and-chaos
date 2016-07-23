@@ -6,7 +6,7 @@
 __author__ = "Davide Madrisan"
 __copyright__ = "Copyright (C) 2016 Davide Madrisan"
 __license__ = "GPL"
-__version__ = "1"
+__version__ = "2"
 __email__ = "davide.madrisan.gmail.com"
 __status__ = "stable"
 
