@@ -24,6 +24,15 @@ class Logistic(object):
         self.x = self.y1 = []
         self.dotsonly = dotsonly
 
+    def _plotline(self, x, y, color):
+        """Plot the dots (x, y) connected by straight lines
+           if the parameter 'dotsonly' if false """
+
+        assert x.any() and y.any(), '_plotline(): internal error'
+
+        plt.plot(x, y, color + 'o')
+        if not self.dotsonly: plt.plot(x, y, color)
+
     def getxy(self):
         """Set the numpy vectors 'x' and 'y' containing
            the iterations (1..n) and the corresponding values
@@ -39,15 +48,6 @@ class Logistic(object):
             self.y1[t] = self.r * self.y1[t-1] * (1 - self.y1[t-1])
 
         return self.x, self.y1
-
-    def _plotline(self, x, y, color):
-        """Plot the dots (x, y) connected by straight lines
-           if the parameter 'dotsonly' if false """
-
-        assert x.any() and y.any(), '_plotline(): internal error'
-
-        plt.plot(x, y, color + 'o')
-        if not self.dotsonly: plt.plot(x, y, color)
 
     def plot(self):
         """Plot a Logistic Equation map """
