@@ -28,7 +28,7 @@ class Logistic(object):
 
     def _plotline(self, x, y, color):
         """Plot the dots (x, y) connected by straight lines
-           if the parameter 'dotsonly' if false """
+           if the parameter 'dotsonly' if set to False """
 
         assert x.any() and y.any(), '_plotline(): internal error'
 
