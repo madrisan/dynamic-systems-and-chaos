@@ -43,9 +43,9 @@ class Logistic(object):
         # do not initialize twice the x and y1 vectors
         if len(self.x) > 0: return
 
-        self.x = np.arange(self.n)
+        self.x = np.arange(self.n + 1)
 
-        self.y1 = np.arange(0, self.n, 1.)
+        self.y1 = np.arange(0, self.n + 1, 1.)
         self.y1[0] = self.x0
 
         for t in self.x[1:]:
@@ -92,7 +92,7 @@ class LogisticDiff(Logistic):
         # do not initialize twice the vector y2
         if len(self.y2) > 0: return
 
-        self.y2 = np.arange(0, self.n, 1.)
+        self.y2 = np.arange(0, self.n + 1, 1.)
         self.y2[0] = self.x1
 
         for t in self.x[1:]:
@@ -232,31 +232,32 @@ def test():
     le1 = Logistic(r, n, x0, False)
     x, y1 = le1.getxy()
 
-    assert len(x) == n, "x should be a vector of size " + n
+    assert len(x) == n+1, "x should be a vector of size " + str(n+1)
     assert x[0] == 0, "x[0] should be 0"
-    assert x[n-1] == n-1, "the last element of x should be equal to " + (n-1)
-    assert x.sum() == n * (n-1) / 2, "the sum of the elements of x is not correct"
+    assert x[n] == n, "the last element of x should be equal to " + str(n)
+    assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
 
-    assert len(y1) == n, "y1 should be a vector of size " + n
+    assert len(y1) == n+1, "y1 should be a vector of size " + str(n+1)
     assert y1[0] == x0, "the first element of y1 should be equal to x0"
+    assert y1[n] == y1[n-2], "y1 is expected to be periodic with period 2"
     assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
-    assert y1[n-2] == y1[n-4], "y1 is expected to be periodic with period 2"
 
     writeln("Running the tests for the class 'LogisticDiff'...")
     r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
     le2 = LogisticDiff(r, n, x0, x1, False)
     x, y1, y2 = le2.getxy()
 
-    assert len(x) == n, "x should be a vector of size " + n
+    assert len(x) == n+1, "x should be a vector of size " + str(n+1)
     assert x[0] == 0, "x[0] should be 0"
-    assert x[n-1] == n-1, "the last element of x should be equal to " + (n-1)
-    assert x.sum() == n * (n-1) / 2, "the sum of the elements of x is not correct"
+    assert x[n] == n, "the last element of x should be equal to " + str(n)
+    assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
 
-    assert len(y1) == n, "y1 should be a vector of size " + n
+    assert len(y1) == n+1, "y1 should be a vector of size " + str(n+1)
     assert y1[0] == x0, "the first element of y1 should be equal to x0"
 
     ydiff = le2.getdiffy()
-    assert len(ydiff) == n, "the vector y2-y1 should have a size equal to " + n
+    assert len(ydiff) == n+1, \
+        "the vector y2-y1 should have a size equal to " + str(n+1)
     np.any(ydiff > 1e3) or np.any(ydiff < -1e3), \
         "the diff vector should show the Butterfly Effect"
 
