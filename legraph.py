@@ -32,8 +32,8 @@ class Logistic(object):
 
         assert x.any() and y.any(), '_plotline(): internal error'
 
-        plt.plot(x, y, color + 'o')
-        if not self.dotsonly: plt.plot(x, y, color)
+        plt.plot(x, y, color[0] + 'o')
+        if not self.dotsonly: plt.plot(x, y, color[1])
 
     def getxy(self):
         """Set the numpy vectors 'x' and 'y1' containing
@@ -56,10 +56,12 @@ class Logistic(object):
     def plot(self):
         """Plot a Logistic Equation map """
 
-        color = 'g'
+        color = ['r', 'y']
 
         self.getxy()
 
+        plt.suptitle('Dynamic Systems and Chaos',
+                     fontsize=14, fontweight='bold')
         plt.title('Logistic Equation')
         plt.xlabel('time t')
         plt.ylim([0, 1.])
@@ -107,19 +109,22 @@ class LogisticDiff(Logistic):
         """Plot a Logistic Equation map with two different seeds (two plots)
            followed by their difference """
 
-        color = ['g', 'r']
+        colory1 = ['g', 'g']
+        colory2 = ['r', 'r']
 
         self.getxy()
 
         plt.figure(1)
+        plt.suptitle('Dynamic Systems and Chaos',
+                     fontsize=14, fontweight='bold')
 
         plt.subplot(211)
         plt.title('Time series for a logistic equation with two different initial conditions')
         plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
         plt.ylim([0, 1.])
         plt.grid(True)
-        self._plotline(self.x, self.y1, color[0])
-        self._plotline(self.x, self.y2, color[1])
+        self._plotline(self.x, self.y1, colory1)
+        self._plotline(self.x, self.y2, colory2)
 
         ydiff = self.y2 - self.y1
 
@@ -128,7 +133,7 @@ class LogisticDiff(Logistic):
         plt.xlabel('time t')
         plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
         plt.grid(True)
-        self._plotline(self.x, ydiff, 'b')
+        self._plotline(self.x, ydiff, [ 'b', 'c' ])
 
         plt.show()
 
