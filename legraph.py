@@ -252,7 +252,7 @@ def test():
 
     ydiff = le2.getdiffy()
     assert len(ydiff) == n, "the vector y2-y1 should have a size equal to " + n
-    ydiff.any() > 1e3 or ydiff.any() < -1e3, \
+    np.any(ydiff > 1e3) or np.any(ydiff < -1e3), \
         "the diff vector should show the Butterfly Effect"
 
     writeln("All tests successfully passed!")
