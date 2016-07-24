@@ -98,6 +98,11 @@ class LogisticDiff(Logistic):
 
         return self.x, self.y1, self.y2
 
+    def getdiffy(self):
+        """Return the difference between the two vectors y2 and y1 """
+
+        return self.y2 - self.y1
+
     def plot(self):
         """Plot a Logistic Equation map with two different seeds (two plots)
            followed by their difference """
@@ -149,7 +154,8 @@ def usage():
 
     writeln('Usage:\n' +
         progname + ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int>\n' +
-        progname + ' -h\n')
+        progname + ' -h\n' +
+        progname + ' --run-tests\n')
 
     writeln("""Where:
   -0 | --x0: 1st initial condition
@@ -178,8 +184,8 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:h',
-                   ["x0=", "x1=", "dots-only", "steps=", "rate=", "help"])
+        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:th',
+            ["x0=", "x1=", "dots-only", "steps=", "rate=", "run-tests", "help"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -201,6 +207,8 @@ def main():
             n = int(a)
         elif o in ('-r', '--rate'):
             r = float(a)
+        elif o in ('-t', '--run-tests'):
+            test()
         else:
             assert False, "Unhandled command-line option"
 
@@ -211,6 +219,45 @@ def main():
     le = LogisticDiff(r, n, x0, x1, dotsonly) if x1 \
              else Logistic(r, n, x0, dotsonly)
     le.plot()
+
+
+def test():
+    writeln("Running the tests for the class 'Logistic'...")
+    r, n, x0 = 3.2, 100, 0.4
+    le1 = Logistic(r, n, x0, False)
+    x, y1 = le1.getxy()
+
+    assert len(x) == n, "x should be a vector of size " + n
+    assert x[0] == 0, "x[0] should be 0"
+    assert x[n-1] == n-1, "the last element of x should be equal to " + (n-1)
+    assert x.sum() == n * (n-1) / 2, "the sum of the elements of x is not correct"
+
+    assert len(y1) == n, "y1 should be a vector of size " + n
+    assert y1[0] == x0, "the first element of y1 should be equal to x0"
+    assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
+    assert y1[n-2] == y1[n-4], "y1 is expected to be periodic with period 2"
+
+    writeln("Running the tests for the class 'LogisticDiff'...")
+    r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
+    le2 = LogisticDiff(r, n, x0, x1, False)
+    x, y1, y2 = le2.getxy()
+
+    assert len(x) == n, "x should be a vector of size " + n
+    assert x[0] == 0, "x[0] should be 0"
+    assert x[n-1] == n-1, "the last element of x should be equal to " + (n-1)
+    assert x.sum() == n * (n-1) / 2, "the sum of the elements of x is not correct"
+
+    assert len(y1) == n, "y1 should be a vector of size " + n
+    assert y1[0] == x0, "the first element of y1 should be equal to x0"
+
+    ydiff = le2.getdiffy()
+    assert len(ydiff) == n, "the vector y2-y1 should have a size equal to " + n
+    ydiff.any() > 1e3 or ydiff.any() < -1e3, \
+        "the diff vector should show the Butterfly Effect"
+
+    writeln("All tests successfully passed!")
+    sys.exit()
+
 
 if __name__ == '__main__':
     try:
