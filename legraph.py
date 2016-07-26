@@ -19,9 +19,17 @@ class Logistic(object):
     """Class for plotting a Logistic Map rx(1-x) """
 
     def __init__(self, r, n, x0, s=0, dotsonly = False):
+        assert r >= 0, 'The growth parameter r must be non negative.'
         self.r = r    # Grow rate parameter
+
+        assert n > 0, 'The number of iterations must be greater than zero.'
         self.n = n    # Number of iterations
+
+        assert s >= 0, 'You cannot skip a negative number of iterations.'
         self.s = s    # Number of iterations to skip in the plot
+
+        assert x0 >= 0 and x0 <= 1, \
+            'The initial condition x0 should be in [0, 1].'
         self.x0 = x0  # The 1st initial condition
 
         self.x = self.y1 = []
@@ -80,6 +88,8 @@ class LogisticDiff(Logistic):
     def __init__(self, r, n, x0, x1, s=0, dotsonly = False):
         Logistic.__init__(self, r, n, x0, s, dotsonly)
 
+        assert x1 >= 0 and x1 <= 1, \
+            'The initial condition x1 should be in [0, 1].'
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
@@ -224,12 +234,6 @@ def main():
     if x0 == None or n == None or r == None:
         usage()
         die(2, 'One of more arguments have not been set.')
-
-    if x0 < 0 or x0 > 1 or (x1 and (x1 < 0 or x1 > 1)):
-        die(2, 'The initial condition should belong to [0, 1].')
-    if n <= 0: die(2, 'The number of iterations must greater than zero.')
-    if r < 0: die(2, 'The growth parameter r must be non negative.')
-    if s < 0: die(2, 'You cannot skip a negative number of iterations.')
 
     le = LogisticDiff(r, n, x0, x1, s, dotsonly) if x1 \
              else Logistic(r, n, x0, s, dotsonly)
