@@ -211,11 +211,16 @@ def main():
         elif o in ('-t', '--run-tests'):
             test()
         else:
-            assert False, "Unhandled command-line option"
+            assert False, "Unhandled command-line option."
 
-    if not x0 or not n or not r:
+    if x0 == None or n == None or r == None:
         usage()
         die(2, 'One of more arguments have not been set.')
+
+    if x0 < 0 or x0 > 1 or (x1 and (x1 < 0 or x1 > 1)):
+        die(2, 'The initial condition should belong to [0, 1].')
+    if n <= 0: die(2, 'The number of iterations must greater than zero.')
+    if r < 0: die(2, 'The growth parameter r must be non negative.')
 
     le = LogisticDiff(r, n, x0, x1, dotsonly) if x1 \
              else Logistic(r, n, x0, dotsonly)
