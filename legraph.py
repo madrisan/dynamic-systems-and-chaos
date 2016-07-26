@@ -18,9 +18,10 @@ import matplotlib.pyplot as plt
 class Logistic(object):
     """Class for plotting a Logistic Map rx(1-x) """
 
-    def __init__(self, r, n, x0, dotsonly = False):
+    def __init__(self, r, n, x0, s=0, dotsonly = False):
         self.r = r    # Grow rate parameter
         self.n = n    # Number of iterations
+        self.s = s    # Number of iterations to skip in the plot
         self.x0 = x0  # The 1st initial condition
 
         self.x = self.y1 = []
@@ -44,9 +45,10 @@ class Logistic(object):
         # do not initialize twice the x and y1 vectors
         if len(self.x) > 0: return
 
-        self.x = np.arange(self.n + 1)
+        vectlen = self.n + self.s + 1
 
-        self.y1 = np.arange(0, self.n + 1, 1.)
+        self.x = np.arange(vectlen)
+        self.y1 = np.arange(0, vectlen, 1.)
         self.y1[0] = self.x0
 
         for t in self.x[1:]:
@@ -65,7 +67,7 @@ class Logistic(object):
         plt.xlabel('time t')
         plt.ylim([0, 1.])
         plt.grid(True)
-        self._plotline(self.x, self.y1, 'mediumseagreen')
+        self._plotline(self.x[self.s:], self.y1[self.s:], 'mediumseagreen')
 
         plt.show()
 
@@ -75,8 +77,8 @@ class LogisticDiff(Logistic):
        with two different initial conditions, followed by a plot of
        their differences (for a visualization of the Butterfly Effect) """
 
-    def __init__(self, r, n, x0, x1, dotsonly = False):
-        Logistic.__init__(self, r, n, x0, dotsonly)
+    def __init__(self, r, n, x0, x1, s=0, dotsonly = False):
+        Logistic.__init__(self, r, n, x0, s, dotsonly)
 
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
@@ -91,7 +93,7 @@ class LogisticDiff(Logistic):
         # do not initialize twice the vector y2
         if len(self.y2) > 0: return
 
-        self.y2 = np.arange(0, self.n + 1, 1.)
+        self.y2 = np.arange(0, self.n + self.s + 1, 1.)
         self.y2[0] = self.x1
 
         for t in self.x[1:]:
@@ -119,8 +121,8 @@ class LogisticDiff(Logistic):
         plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
         plt.ylim([0, 1.])
         plt.grid(True)
-        self._plotline(self.x, self.y1, 'indianred')
-        self._plotline(self.x, self.y2, 'mediumseagreen')
+        self._plotline(self.x[self.s:], self.y1[self.s:], 'indianred')
+        self._plotline(self.x[self.s:], self.y2[self.s:], 'mediumseagreen')
 
         ydiff = self.y2 - self.y1
 
@@ -129,7 +131,7 @@ class LogisticDiff(Logistic):
         plt.xlabel('time t')
         plt.ylabel(r'$y_2(t) - y_1(t)$', fontsize=14)
         plt.grid(True)
-        self._plotline(self.x, ydiff, 'royalblue')
+        self._plotline(self.x[self.s:], ydiff[self.s:], 'royalblue')
 
         plt.show()
 
@@ -154,7 +156,8 @@ def usage():
     progname = '  ' + sys.argv[0]
 
     writeln('Usage:\n' +
-        progname + ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int>\n' +
+        progname + \
+         ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>]\n' +
         progname + ' -h\n' +
         progname + ' --run-tests\n')
 
@@ -163,6 +166,7 @@ def usage():
   -1 | --x1: 2nd initial condition (optional)
   -d | --dots-only: do not connect the dots with lines
   -r | --rate: growth rate parameter
+  -s | --skip: skip plotting the first 's' iterations
   -n | --steps: number of iterations\n""")
 
     writeln('Example:\n' +
@@ -185,13 +189,15 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:th',
-            ["x0=", "x1=", "dots-only", "steps=", "rate=", "run-tests", "help"])
+        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:s:th',
+            ["x0=", "x1=", "dots-only", "steps=", \
+             "rate=", "skip=", "run-tests", "help"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
     x0 = x1 = n = r = None
+    s = 0
     dotsonly = False
 
     for o, a in opts:
@@ -208,6 +214,8 @@ def main():
             n = int(a)
         elif o in ('-r', '--rate'):
             r = float(a)
+        elif o in ('-s', '--skip'):
+            s = int(a)
         elif o in ('-t', '--run-tests'):
             test()
         else:
@@ -221,9 +229,10 @@ def main():
         die(2, 'The initial condition should belong to [0, 1].')
     if n <= 0: die(2, 'The number of iterations must greater than zero.')
     if r < 0: die(2, 'The growth parameter r must be non negative.')
+    if s < 0: die(2, 'You cannot skip a negative number of iterations.')
 
-    le = LogisticDiff(r, n, x0, x1, dotsonly) if x1 \
-             else Logistic(r, n, x0, dotsonly)
+    le = LogisticDiff(r, n, x0, x1, s, dotsonly) if x1 \
+             else Logistic(r, n, x0, s, dotsonly)
     le.plot()
 
 
