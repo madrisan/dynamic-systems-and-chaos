@@ -78,6 +78,25 @@ class Logistic(object):
 
         plt.show()
 
+    def finalstate(self):
+        """Plot a Final State Diagram """
+
+        self.getxy()
+
+        fsy = np.full(len(self.y1), .5, dtype=np.float)
+
+        plt.suptitle('Dynamic Systems and Chaos',
+                     fontsize=14, fontweight='bold')
+        plt.title('Final State Diagram')
+        plt.xlim([0, 1.])
+        plt.ylim([0, 1.])
+        plt.yticks([])
+
+        plt.plot([0, 1], [.5, .5], color='black', lw=1)
+        plt.plot(self.y1[self.s:], fsy[self.s:], color='black', linestyle='',
+                 markerfacecolor='black', marker='o', markersize=8)
+        plt.grid(True)
+        plt.show()
 
 class LogisticDiff(Logistic):
     """Derived class for plotting a Logistic Map rx(1-x)
