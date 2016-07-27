@@ -100,7 +100,6 @@ def main():
             s = int(a)
         elif o in ('-t', '--run-tests'):
             test()
-            writeln("All tests successfully passed!")
             sys.exit()
         else:
             assert False, "Unhandled command-line option."

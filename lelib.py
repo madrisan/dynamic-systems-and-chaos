@@ -145,11 +145,12 @@ class LogisticDiff(Logistic):
         plt.show()
 
 def test():
+    # Test the class 'Logistic'
+    sys.stdout.write("Running the tests for the class 'Logistic'...\n")
     r, n, x0 = 3.2, 100, 0.4
     le1 = Logistic(r, n, x0, False)
     x, y1 = le1.getxy()
 
-    # Running the tests for the class 'Logistic'...
     assert len(x) == n+1, "x should be a vector of size " + str(n+1)
     assert x[0] == 0, "x[0] should be 0"
     assert x[n] == n, "the last element of x should be equal to " + str(n)
@@ -160,7 +161,8 @@ def test():
     assert y1[n] == y1[n-2], "y1 is expected to be periodic with period 2"
     assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
 
-    # Running the tests for the class 'LogisticDiff'...
+    # Test the class 'LogisticDiff'
+    sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
     r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
     le2 = LogisticDiff(r, n, x0, x1, False)
     x, y1, y2 = le2.getxy()
@@ -178,3 +180,5 @@ def test():
         "the vector y2-y1 should have a size equal to " + str(n+1)
     np.any(ydiff > 1e3) or np.any(ydiff < -1e3), \
         "the diff vector should show the Butterfly Effect"
+
+    sys.stdout.write("All tests successfully passed!\n")
