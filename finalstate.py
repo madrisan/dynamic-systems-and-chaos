@@ -92,7 +92,7 @@ def main():
         usage()
         die(2, 'You must set at least the growth rate parameter.')
 
-    Logistic(r, n, x0, s).finalstate()
+    Logistic(r, n, x0, s).plot(finalstate = True)
 
 
 if __name__ == '__main__':

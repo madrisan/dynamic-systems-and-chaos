@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 class Logistic(object):
     """Class for plotting a Logistic Map rx(1-x) """
 
-    def __init__(self, r, n, x0, s=0, dotsonly = False):
+    def __init__(self, r, n, x0, s=0, dotsonly=False):
         assert r >= 0, 'The growth parameter r must be non negative.'
         self.r = r    # Grow rate parameter
 
@@ -63,39 +63,34 @@ class Logistic(object):
 
         return self.x, self.y1
 
-    def plot(self):
-        """Plot a Logistic Equation map """
+    def plot(self, finalstate = False):
+        """Plot a Logistic Equation map or the Final State Diagram """
 
         self.getxy()
 
-        plt.suptitle('Dynamic Systems and Chaos',
-                     fontsize=14, fontweight='bold')
-        plt.title('Logistic Equation')
-        plt.xlabel('time t')
+        if finalstate:
+            title = 'Final State Diagram'
+            plt.xlim([0, 1.])
+            plt.yticks([])
+
+            fsy = np.full(len(self.y1), .5, dtype=np.float)
+
+            plt.plot([0, 1], [.5, .5], color='black', lw=1)
+            plt.plot(self.y1[self.s:], fsy[self.s:], color='black', linestyle='',
+                     markerfacecolor='black', marker='o', markersize=8)
+
+            plt.text(.05, .4, 'r = ' + str(self.r), style='italic',
+                     bbox={'facecolor':'red', 'alpha':0.5, 'pad':10})
+        else:
+            title = 'Logistic Equation'
+            plt.xlabel('time t')
+            self._plotline(self.x[self.s:], self.y1[self.s:], 'mediumseagreen')
+
+        plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
+        plt.title(title)
         plt.ylim([0, 1.])
         plt.grid(True)
-        self._plotline(self.x[self.s:], self.y1[self.s:], 'mediumseagreen')
 
-        plt.show()
-
-    def finalstate(self):
-        """Plot a Final State Diagram """
-
-        self.getxy()
-
-        fsy = np.full(len(self.y1), .5, dtype=np.float)
-
-        plt.suptitle('Dynamic Systems and Chaos',
-                     fontsize=14, fontweight='bold')
-        plt.title('Final State Diagram')
-        plt.xlim([0, 1.])
-        plt.ylim([0, 1.])
-        plt.yticks([])
-
-        plt.plot([0, 1], [.5, .5], color='black', lw=1)
-        plt.plot(self.y1[self.s:], fsy[self.s:], color='black', linestyle='',
-                 markerfacecolor='black', marker='o', markersize=8)
-        plt.grid(True)
         plt.show()
 
 class LogisticDiff(Logistic):
