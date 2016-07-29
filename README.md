@@ -1,8 +1,12 @@
 # Dynamic Systems and Chaos
 
-**Python Script**
+**Python Scripts**
 
     legraph.py
+    finalstate.py
+
+The code is compatible with both Python 2 and 3 (tested on Fedora 24 Workstation).
+
 
 **Some usage examples**
 
