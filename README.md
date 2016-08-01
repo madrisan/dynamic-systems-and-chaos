@@ -123,6 +123,16 @@ behaviour.
 
 #### Final State Diagrams
 
+For a given _r_ value, the program `finalstate.py` will iterate 5000 times by default, then plot the next 2000 iterates on the unit interval. The resulting plot is called a _final-state diagram_.
+
+The number of skipped (`-s`) and plotted (`-n`) iterations can be manually tuned as in the following example.
+
     ./finalstate.py -r 3.614 -s 200 -n 300
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot05_le-final-state-diagram.png)
+
+## References and Acknowledgments
+
+This software has been developed as part of the (optional) homeworks of the
+[MOOC](https://www.complexityexplorer.org/courses/61-introduction-to-dynamical-systems-and-chaos-summer-2016)
+__Introduction to Dynamical Systems and Chaos__ (Summer, 2016), leaded by __David Feldman__, Professor of Physics and Mathematics at College of the Atlantic.
