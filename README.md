@@ -16,21 +16,31 @@ and _f_(_x_) gives the population next year given _x_, the population this year.
 
 By iterating this function we can create a _dynamical system_, that is, a system that evolves in time according to a well-defined, unchanging rule.
 The number we start with is called the _seed_ or _initial condition_.
-The resulting sequence of numbers is called the _itinerary_ or _orbit_.
-It is also sometimes called a _time series_ or a _trajectory_.
+The resulting sequence of numbers
+
+<p align="center">
+   <i>x</i><small><sub>0</sub></small></br>
+   <i>x</i><small><sub>1</sub></small> = <i>f</i>(<i>x</i><small><sub>0</sub></small>)</br>
+   ...</br>
+   <i>x</i><small><sub>n</sub></small> = <i>f</i>(<i>x</i><small><sub>n-1</sub></small>)</br>
+</p>
+
+is called the _itinerary_ or _orbit_ (or sometimes a _time series_ or a _trajectory_).
 
 ## Software
 
-This project is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 Workstation).
+The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 Workstation).
 
-* __legraph.py__: iterate the logistic equation for different _r_ and _x0_ values and make _time series plots_
-* __finalstate.py__: iterate the logistic equation for different _r_ and _x0_ values and make _final state diagrams_
-* __lelib.py__: a simple library that implements a few Python classes for computing the time series and make the plots
+* __legraph.py__: iterate the logistic equation for different _r_ and _x0_ values and make _time series plots_;
+* __finalstate.py__: iterate the logistic equation for different _r_ and _x0_ values and make _final state diagrams_;
+* __lelib.py__: a simple library that implements a few Python classes for computing the time series and make the plots.
 
 #### Programs Usage
 
+##### legraph.py
+
     $ ./legraph.py --help
-    Plot of Logistic Equation Time Series v.2 (stable)
+    Plot of Logistic Equation Time Series
     Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
     
     Usage:
@@ -46,6 +56,22 @@ This project is written in Python and compatible with both Python 2 and 3 (teste
       -s | --skip: skip plotting the first 's' iterations
       -n | --steps: number of iterations
 
+##### finalstate.py
+
+    $ ./finalstate.py --help
+    Plot of the Final State Diagram
+    Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
+    
+    Usage:
+      ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>]
+      ./finalstate.py -h
+    
+    Where:
+      -0 | --x0: initial condition (default: .5)
+      -r | --rate: growth rate parameter
+      -s | --skip: skip plotting the first 's' iterations (default: 2000)
+      -n | --steps: number of iterations (default: 3000)
+
 ## Examples
 
 #### Dynamical System with a Periodic Orbit
@@ -60,19 +86,42 @@ That is to say, _c_ is a fixed point of the function _f_(_x_) if and only if _f_
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot01_le-periodic-orbit.png)
 
-#### The Batterfly Effect
+#### Aperiodic Orbits and The Batterfly Effect
+
+For _r_ = 4 (and other values), the orbit is aperiodic It never repeats.
+Applying the same function over and over again does not result in periodic behavior.
+
+We can use `legraph.py` to compare time series for two different initial conditions.
 
     ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
- 
+
+The bottom plot is the difference between the two time series in the top plot.
+
+You can note that the two orbits start very close together and eventually end up far apart.
+This is known as _sensitive dependence on initial conditions_ (_SDIC_), or the _butterfly effect_.
+
+For any initial condition _x_ there is another initial condition very near to it that eventually ends up far away.
+To predict the behavior of a system with _SDIC_ requires knowing the initial condition with _impossible accuracy_.
+Systems with _SDIC_ are deterministic yet unpredictable in the long run.
+
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot02_le-sdic.png)
+
+#### Aperiodic Orbits with holes
+
+The aperiodic orbits are always bounded nut do not necessarily cover all the domain. They can present one or more holes.
 
     ./legraph.py --x0 0.2 -r 3.6 -n 500
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot03_le-sdic-dots-and-lines.png)
 
+We can increase the number of iterations and add the command line switch `--dots-only` in order to better visualize this
+behaviour.
+
     ./legraph.py --x0 0.2 -r 3.6 -n 5000 --dots-only
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot04_le-sdic-dotsonly.png)
+
+#### Final State Diagrams
 
     ./finalstate.py -r 3.614 -s 200 -n 300
 
