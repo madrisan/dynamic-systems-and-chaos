@@ -85,6 +85,23 @@ class FinalState(Logistic):
     def __init__(self, r, n=1000, x0=.5, s=2000):
         Logistic.__init__(self, r, n, x0, s)
 
+    def getxy(self, y=.5):
+        """Set the numpy vectors 'x' and 'y1' containing the values of the
+           Logistic Equation rx(1-x) for the n iterations """
+
+        # do not initialize twice the x and y1 vectors
+        if len(self.x) > 0: return
+
+        vectlen = self.n + self.s + 1
+
+        self.y1 = np.full(vectlen, y, dtype=np.float)
+        self.x = np.full(vectlen, self.x0, dtype=np.float64)
+
+        for t in range(1, vectlen):
+            self.x[t] = self.r * self.x[t-1] * (1 - self.x[t-1])
+
+        return self.x, self.y1
+
     def plot(self):
         """Plot a Final State Diagram """
 
@@ -92,20 +109,19 @@ class FinalState(Logistic):
 
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
         plt.title('Final State Diagram')
+
         plt.xlim([0, 1.])
+        plt.ylim([0, 1.])
         plt.yticks([])
 
-        fsy = np.full(len(self.y1), .5, dtype=np.float)
+        plt.grid(True)
 
         plt.plot([0, 1], [.5, .5], color='black', lw=1)
-        plt.plot(self.y1[self.s:], fsy[self.s:], color='black', linestyle='',
+        plt.plot(self.x[self.s:], self.y1[self.s:], color='black', linestyle='',
                  markerfacecolor='black', marker='o', markersize=8)
 
         plt.text(.05, .4, 'r = ' + str(self.r), style='italic',
                  bbox={'facecolor':'red', 'alpha':0.5, 'pad':10})
-
-        plt.ylim([0, 1.])
-        plt.grid(True)
 
         plt.show()
 
