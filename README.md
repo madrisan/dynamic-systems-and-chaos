@@ -123,9 +123,11 @@ behaviour.
 
 #### Final State Diagrams
 
-For a given _r_ value, the program `finalstate.py` will iterate 5000 times by default, then plot the next 2000 iterates on the unit interval. The resulting plot is called a _final-state diagram_.
+For a given _r_ value, the program `finalstate.py` will iterate 1000 times by default (`-s`),
+then plot the next 2000 iterates (`-n`) on the unit interval.
+The resulting plot is called a _final-state diagram_.
 
-The number of skipped (`-s`) and plotted (`-n`) iterations can be manually tuned as in the following example.
+The number of skipped (`-s`) and plotted (`-n`) iterations can be manually tuned as shown in the following example.
 
     ./finalstate.py -r 3.614 -s 200 -n 300
 
