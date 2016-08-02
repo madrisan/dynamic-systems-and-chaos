@@ -13,7 +13,7 @@ __status__ = "beta"
 import getopt
 import sys
 
-from lelib import Logistic
+from lelib import FinalState
 
 def die(exitcode, message):
     """Print and error message and exit with 'exitcode' """
@@ -92,7 +92,7 @@ def main():
         usage()
         die(2, 'You must set at least the growth rate parameter.')
 
-    Logistic(r, n, x0, s).plot(finalstate = True)
+    FinalState(r, n, x0, s).plot()
 
 
 if __name__ == '__main__':
