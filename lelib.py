@@ -221,7 +221,7 @@ class Bifurcation(object):
         for r in np.linspace(self.rmin, self.rmax, 1000):
             x, y = FinalState(r, self.n, .5, self.s).getxy(r)
             plt.plot(y[self.s:], x[self.s:], color='black', linestyle='',
-                     markerfacecolor='black', marker='.', markersize=1)
+                     markerfacecolor='black', marker=',', markersize=1)
 
         plt.show()
 
