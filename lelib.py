@@ -18,8 +18,9 @@ class Logistic(object):
     """Class for plotting a Logistic Map rx(1-x) """
 
     def __init__(self, r, n, x0, s=0, dotsonly=False):
-        assert r >= 0, 'The growth parameter r must be non negative.'
-        self.r = r    # Grow rate parameter
+        assert r >= 0 and r <= 4.0, \
+            'The growth parameter r must be between 0 and 4.0.'
+        self.r = r    # Growth rate parameter
 
         assert n > 0, 'The number of iterations must be greater than zero.'
         self.n = n    # Number of iterations
@@ -77,6 +78,7 @@ class Logistic(object):
 
         plt.show()
 
+
 class FinalState(Logistic):
     """Derived class for plotting a Final State Diagram """
 
@@ -124,6 +126,7 @@ class FinalState(Logistic):
                  bbox={'facecolor':'red', 'alpha':0.5, 'pad':10})
 
         plt.show()
+
 
 class LogisticDiff(Logistic):
     """Derived class for plotting a Logistic Map rx(1-x)
@@ -189,6 +192,39 @@ class LogisticDiff(Logistic):
         self._plotline(self.x[self.s:], ydiff[self.s:], 'royalblue')
 
         plt.show()
+
+
+class Bifurcation(object):
+    def __init__(self, r, n=100, s=200):
+        assert len(r) == 2, 'The growth rate vector should contains two elements'
+        assert r[0] >= 0 and r[1] > r[0] and r[1] <= 4.0, \
+            'The growth range must be between 0 and 4.0 and in ascenting order.'
+
+        self.rmin = r[0]    # Growth rate range
+        self.rmax = r[1]
+
+        assert n > 0, 'The number of iterations must be greater than zero.'
+        self.n = n    # Number of iterations
+
+        assert s >= 0, 'You cannot skip a negative number of iterations.'
+        self.s = s    # Number of iterations to skip in the plot
+
+    def plot(self):
+        plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
+        plt.title('Bifurcation Diagram for the Logistic Equation')
+
+        plt.xlim([self.rmin, self.rmax])
+        plt.xticks([round(i, 1) for i in np.linspace(self.rmin, self.rmax, 5)])
+
+        plt.ylim([0, 1.])
+
+        for r in np.linspace(self.rmin, self.rmax, 1000):
+            x, y = FinalState(r, self.n, .5, self.s).getxy(r)
+            plt.plot(y[self.s:], x[self.s:], color='black', linestyle='',
+                     markerfacecolor='black', marker='.', markersize=1)
+
+        plt.show()
+
 
 def test():
     # Test the class 'Logistic'
