@@ -41,7 +41,7 @@ def usage():
   -0 | --x0: initial condition (default: .5)
   -r | --rate: growth rate parameter
   -s | --skip: skip plotting the first 's' iterations (default: 2000)
-  -n | --steps: number of iterations (default: 3000)\n""")
+  -n | --steps: number of iterations (default: 1000)\n""")
 
     writeln('Example:\n' +
         '  # time series with a stable fixed point\n' +
@@ -69,7 +69,7 @@ def main():
     r = None
     # By default, set to .5 the initial state
     x0 = .5
-    # By default, make 3000 iterations and do no plot the first 2000 ones
+    # By default, make 3000 iterations but do no plot the first 2000 ones
     n = 1000
     s = 2000
 
