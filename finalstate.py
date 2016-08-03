@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 # Final State Diagram
 # Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>

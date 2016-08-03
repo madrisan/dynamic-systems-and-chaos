@@ -1,4 +1,4 @@
-#!/usr/bin/python2
+#!/usr/bin/python
 
 # Plot the Bifurcation Diagram of the Logistic Equation
 # Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
