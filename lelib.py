@@ -215,8 +215,10 @@ class Bifurcation(object):
 
         plt.xlim([self.rmin, self.rmax])
         plt.xticks([round(i, 1) for i in np.linspace(self.rmin, self.rmax, 5)])
+        plt.xlabel('r')
 
         plt.ylim([0, 1.])
+        plt.ylabel('final states')
 
         for r in np.linspace(self.rmin, self.rmax, 1000):
             x, y = FinalState(r, self.n, .5, self.s).getxy(r)
