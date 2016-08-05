@@ -64,7 +64,8 @@ def main():
         usage()
         sys.exit(2)
 
-    r = None
+    # Plot the entire diagram by default
+    r = [0, 4.0]
     # By default, make 3000 iterations and do no plot the first 2000 ones
     n = 100
     s = 200
@@ -81,10 +82,6 @@ def main():
             s = int(a)
         else:
             assert False, "Unhandled command-line option."
-
-    if r == None:
-        usage()
-        die(2, 'You must set at least the growth rate parameter.')
 
     Bifurcation(r, n, s).plot()
 
