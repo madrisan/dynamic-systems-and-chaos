@@ -42,7 +42,7 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 
     $ ./legraph.py --help
     Plot of Logistic Equation Time Series
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
+    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
       ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>]
@@ -61,7 +61,7 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 
     $ ./finalstate.py --help
     Plot of the Final State Diagram
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
+    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
       ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>]
@@ -77,7 +77,7 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 
     $ ./bifurcations.py --help
     Plot the Bifurcation Diagram of a Logistic Equation
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
+    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
     Usage:
       ./bifurcations.py [-r <float>:<float>] [-n <int>] [-s <int>]

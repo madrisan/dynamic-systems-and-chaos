@@ -1,13 +1,13 @@
 #!/usr/bin/python
 
 # Plot the Bifurcation Diagram of the Logistic Equation
-# Copyright (C) 2016 Davide Madrisan <davide.madrisan.gmail.com>
+# Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
 __author__ = "Davide Madrisan"
 __copyright__ = "Copyright (C) 2016 Davide Madrisan"
 __license__ = "Apache License 2.0"
 __version__ = "1"
-__email__ = "davide.madrisan.gmail.com"
+__email__ = "davide.madrisan@gmail.com"
 __status__ = "beta"
 
 import getopt
