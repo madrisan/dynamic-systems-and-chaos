@@ -44,7 +44,6 @@ def usage():
   -n | --steps: number of iterations (default: 1000)\n""")
 
     writeln('Example:\n' +
-        '  # time series with a stable fixed point\n' +
         progname + ' -r 3.492\n' +
         progname + ' -r 3.614 -s 200 -n 300\n' +
         progname + ' -0 0.4 -r 3.2 -s 10 -n 50\n')

@@ -45,7 +45,7 @@ def usage():
     writeln('Example:\n' +
         '  # time series with a stable fixed point\n' +
         progname + ' -r 0:4\n' +
-        progname + ' -r 3.0:3.5 -s 2000 -n 1000\n')
+        progname + ' -r 2.:4. -s 500 -n 600\n')
 
 def help():
     """Print the Copyright and an help message """
