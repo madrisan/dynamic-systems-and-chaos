@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Plot the Bifurcation Diagram of the Logistic Equation
+# Plot the Bifurcation Diagram of Logistic and Cubic Maps
 # Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
 __author__ = "Davide Madrisan"
@@ -14,6 +14,7 @@ import getopt
 import sys
 
 from lelib import Bifurcation
+from lelib import Map
 
 def die(exitcode, message):
     """Print and error message and exit with 'exitcode' """
@@ -34,23 +35,25 @@ def usage():
 
     writeln('Usage:\n' +
         progname + \
-         ' [-r <float>:<float>] [-n <int>] [-s <int>]\n' +
+         ' [-r <float>:<float>] [-n <int>] [-s <int>] [--cubic]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
   -r | --rate: range of the growth rate parameters (default: [0:4])
   -s | --skip: skip plotting the first 's' iterations (default: 200)
-  -n | --steps: number of iterations (default: 100)\n""")
+  -n | --steps: number of iterations (default: 100)
+  -c | --cubic: plot the bifurcation diagram of the cubic map
+  -l | --logistic: plot the diagram of the logistic map (default)\n""")
 
     writeln('Example:\n' +
-        '  # time series with a stable fixed point\n' +
-        progname + ' -r 0:4\n' +
+        progname + ' -r 1:4\n' +
+        progname + ' -r 4:6.5 --cubic\n' +
         progname + ' -r 2.:4. -s 500 -n 600\n')
 
 def help():
     """Print the Copyright and an help message """
 
-    writeln('Plot the Bifurcation Diagram of a Logistic Equation v.' +
+    writeln('Plot the Bifurcation Diagram of Logistic and Cubic Maps v.' +
         __version__ + ' (' + __status__ +  ')')
     writeln(__copyright__ + ' <' + __email__ + '>\n')
     usage()
@@ -58,17 +61,20 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:h',
-            ["steps=", "rate=", "skip=", "help"])
+        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hlc',
+            ["steps=", "rate=", "skip=", "help", "logistic", "cubic"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
-    # Plot the entire diagram by default
-    r = [0, 4.0]
+    r = None
+
     # By default, make 3000 iterations and do no plot the first 2000 ones
     n = 100
     s = 200
+
+    # By default select the Logistic Equation
+    map_name = 'logistic'
 
     for o, a in opts:
         if o in ('-h', '--help'):
@@ -80,10 +86,19 @@ def main():
             r = [ float(i) for i in a.split(':')]
         elif o in ('-s', '--skip'):
             s = int(a)
+        elif o in ('-c', '--cubic'):
+            map_name = 'cubic'
+        elif o in ('-l', '--logistic'):
+            map_name = 'logistic'
         else:
             assert False, "Unhandled command-line option."
 
-    Bifurcation(r, n, s).plot()
+    if not r:
+        map = Map(map_name)
+        # Plot the entire diagram by default
+        r = [map.map_rmin, map.map_rmax]
+
+    Bifurcation(r, n, s, map_name).plot()
 
 if __name__ == '__main__':
     try:

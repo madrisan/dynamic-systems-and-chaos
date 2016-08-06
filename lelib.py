@@ -16,14 +16,19 @@ import matplotlib.pyplot as plt
 
 class Map(object):
     def __init__(self, map='logistic'):
-        self.map = None
+        self.map_name = map
         if map == 'logistic':
             self.map = self._logistic
-            self.map_description = 'Logistic Equation'
+            self.map_longname = 'Logistic Equation'
             self.map_rmin = 0
             self.map_rmax = 4.0
-
-        assert self.map != None, 'Undefined or unknown map'
+        elif map == 'cubic':
+            self.map = self._cubic
+            self.map_longname = 'Cubic Equation'
+            self.map_rmin = 0
+            self.map_rmax = 6.5
+        else:
+            assert False, 'Undefined or unknown map ' + map
 
     def _logistic(self, r, x):
         """Logistic map: rx(1-x) """
@@ -32,11 +37,19 @@ class Map(object):
             ' and ' + str(self.map_rmax) + '.'
         return r * x * (1.0 - x)
 
+    def _cubic(self, r, x):
+        """Cubic map: rx^2(1-x) """
+        assert r >= self.map_rmin and r <= self.map_rmax, \
+            'The growth parameter r must be between ' + str(self.map_rmin) + \
+            ' and ' + str(self.map_rmax) + '.'
+        return r * x**2 * (1.0 - x)
+
+
 class Logistic(Map):
     """Class for plotting a Logistic/Cubic/Sine Map """
 
     def __init__(self, r, n, x0, s=0, dotsonly=False, map='logistic'):
-        Map.__init__(self, map=map)
+        Map.__init__(self, map)
 
         self.r = r    # Growth rate parameter
 
@@ -66,7 +79,7 @@ class Logistic(Map):
     def getxy(self):
         """Set the numpy vectors 'x' and 'y1' containing
            the iterations (1..n) and the corresponding values
-           of the Logistic Equation rx(1-x) """
+           of the choosen Map """
 
         # do not initialize twice the x and y1 vectors
         if len(self.x) > 0: return
@@ -83,12 +96,12 @@ class Logistic(Map):
         return self.x, self.y1
 
     def plot(self):
-        """Plot a Logistic Equation map or the Final State Diagram """
+        """Plot a Logistic, Cubic or Sine map """
 
         self.getxy()
 
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
-        plt.title('Logistic Equation')
+        plt.title(self.map.longname)
         plt.xlabel('time t')
         plt.ylim([0, 1.])
         plt.grid(True)
@@ -103,7 +116,7 @@ class FinalState(Logistic):
     # By default, set the initial state to .5
     # make 3000 iterations and do no plot the first 2000 ones
     def __init__(self, r, n=1000, x0=.5, s=2000, map='logistic'):
-        Logistic.__init__(self, r, n, x0, s, map)
+        Logistic.__init__(self, r, n, x0, s, True, map)
 
     def getxy(self, y=.5):
         """Set the numpy vectors 'x' and 'y1' containing the values of the
@@ -183,7 +196,7 @@ class LogisticDiff(Logistic):
         return self.y2 - self.y1
 
     def plot(self):
-        """Plot a Logistic Equation map with two different seeds (two plots)
+        """Plot a Logistic, Cubic or Sine map with two different seeds (two plots)
            followed by their difference """
 
         self.getxy()
@@ -193,7 +206,8 @@ class LogisticDiff(Logistic):
                      fontsize=14, fontweight='bold')
 
         plt.subplot(211)
-        plt.title('Time series for a logistic equation with two different initial conditions')
+        plt.title('Time series for a ' + map_longname + \
+                  ' with two different initial conditions')
         plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
         plt.ylim([0, 1.])
         plt.grid(True)
@@ -217,6 +231,10 @@ class Bifurcation(Map):
         Map.__init__(self, map=map)
 
         assert len(r) == 2, 'The growth rate vector should contains two elements'
+        assert r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax, \
+            'The parameters [r0, r1] must be between ' + str(self.map_rmin) + \
+            ' and ' + str(self.map_rmax) + ' and be in the ascending order.'
+
         self.rmin = r[0]    # Growth rate range
         self.rmax = r[1]
 
@@ -226,11 +244,9 @@ class Bifurcation(Map):
         assert s >= 0, 'You cannot skip a negative number of iterations.'
         self.s = s    # Number of iterations to skip in the plot
 
-        self.map = map  # The map (function) to be used
-
     def plot(self):
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
-        plt.title('Bifurcation Diagram for the ' + self.map_description)
+        plt.title('Bifurcation Diagram for the ' + self.map_longname)
 
         plt.xlim([self.rmin, self.rmax])
         plt.xticks([round(i, 1) for i in np.linspace(self.rmin, self.rmax, 5)])
@@ -240,7 +256,7 @@ class Bifurcation(Map):
         plt.ylabel('final states')
 
         for r in np.linspace(self.rmin, self.rmax, 1000):
-            x, y = FinalState(r, self.n, .5, self.s, self.map).getxy(r)
+            x, y = FinalState(r, self.n, .5, self.s, self.map_name).getxy(r)
             plt.plot(y[self.s:], x[self.s:], color='black', linestyle='',
                      markerfacecolor='black', marker=',', markersize=1)
 
