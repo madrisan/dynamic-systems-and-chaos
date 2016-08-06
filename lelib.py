@@ -251,7 +251,7 @@ def test():
     # Test the class 'Logistic'
     sys.stdout.write("Running the tests for the class 'Logistic'...\n")
     r, n, x0 = 3.2, 100, 0.4
-    le1 = Logistic(r, n, x0, False)
+    le1 = Logistic(r, n, x0, False, 'logistic')
     x, y1 = le1.getxy()
 
     assert len(x) == n+1, "x should be a vector of size " + str(n+1)
@@ -267,7 +267,7 @@ def test():
     # Test the class 'LogisticDiff'
     sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
     r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
-    le2 = LogisticDiff(r, n, x0, x1, False)
+    le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
     x, y1, y2 = le2.getxy()
 
     assert len(x) == n+1, "x should be a vector of size " + str(n+1)
