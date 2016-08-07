@@ -47,7 +47,6 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
     Usage:
       ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>]
       ./legraph.py -h
-      ./legraph.py --run-tests
     
     Where:
       -0 | --x0: 1st initial condition

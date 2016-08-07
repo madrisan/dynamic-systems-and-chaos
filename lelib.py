@@ -319,3 +319,6 @@ def test():
         "the diff vector should show the Butterfly Effect"
 
     sys.stdout.write("All tests successfully passed!\n")
+
+if __name__ == '__main__':
+    test()

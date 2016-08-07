@@ -15,7 +15,6 @@ import sys
 
 from lelib import Logistic
 from lelib import LogisticDiff
-from lelib import test
 
 def die(exitcode, message):
     """Print and error message and exit with 'exitcode' """
@@ -39,8 +38,7 @@ def usage():
     writeln('Usage:\n' +
         progname + \
          ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>]\n' +
-        progname + ' -h\n' +
-        progname + ' --run-tests\n')
+        progname + ' -h\n')
 
     writeln("""Where:
   -0 | --x0: 1st initial condition
@@ -70,9 +68,9 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:s:th',
+        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:s:h',
             ["x0=", "x1=", "dots-only", "steps=", \
-             "rate=", "skip=", "run-tests", "help"])
+             "rate=", "skip=", "help"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -97,9 +95,6 @@ def main():
             r = float(a)
         elif o in ('-s', '--skip'):
             s = int(a)
-        elif o in ('-t', '--run-tests'):
-            test()
-            sys.exit()
         else:
             assert False, "Unhandled command-line option."
 
