@@ -282,6 +282,33 @@ class Bifurcation(Map):
 
 
 def test():
+    # Test the class 'Map'
+    sys.stdout.write("Running the tests for the class 'Map'...\n")
+    m = Map()
+    assert m.map_name == 'logistic', "The default map should be 'logistic'"
+    assert m.map_longname == 'Logistic Equation', "Logistic Map: bad long name"
+    assert m.map_rmin == 0 and m.map_rmax == 4, "Logistic Map: bad range for r"
+    assert m.map_ymin == 0 and m.map_ymax == 1, "Logistic Map: bad range for y"
+    i = m.map(4,.25)
+    assert i == .75, "Logistic Map: bad value for r=4 and x=.25: should be %f" % i
+
+    m = Map('cubic')
+    assert m.map_name == 'cubic', "Cubic Map: bad map selection"
+    assert m.map_longname == 'Cubic Equation', "Cubic Map: bad long name"
+    assert m.map_rmin == 0 and m.map_rmax == 6.5, "Cubic Map: bad range for r"
+    assert m.map_ymin == 0 and m.map_ymax == 1, "Cubic Map: bad range for y"
+    i = m.map(2,.5)
+    assert i == .25, "Cubic Map: bad value for r=2 and x=.5, should be %f" % i
+
+    m = Map('sine')
+    assert m.map_name == 'sine', "Sine Map: bad map selection"
+    assert m.map_longname == 'Sine Equation', "Sine Map: bad long name"
+    assert m.map_rmin == 0 and m.map_rmax == 2, "Sine Map: bad range for r"
+    assert m.map_ymin == 0 and m.map_ymax == 2, "Sine Map: bad range for y"
+    i = m.map(0.5,1)
+    assert i == .5, "Sine Map: bad value for r=0.5 and x=1: should be %f" % i
+
+
     # Test the class 'Logistic'
     sys.stdout.write("Running the tests for the class 'Logistic'...\n")
     r, n, x0 = 3.2, 100, 0.4
@@ -297,6 +324,7 @@ def test():
     assert y1[0] == x0, "the first element of y1 should be equal to x0"
     assert y1[n] == y1[n-2], "y1 is expected to be periodic with period 2"
     assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
+
 
     # Test the class 'LogisticDiff'
     sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
