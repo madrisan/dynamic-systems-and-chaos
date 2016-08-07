@@ -119,7 +119,7 @@ class Logistic(Map):
         self.getxy()
 
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
-        plt.title(self.map.longname)
+        plt.title(self.map_longname)
         plt.xlabel('time t')
         plt.ylim([0, 1.])
         plt.grid(True)
@@ -224,7 +224,7 @@ class LogisticDiff(Logistic):
                      fontsize=14, fontweight='bold')
 
         plt.subplot(211)
-        plt.title('Time series for a ' + map_longname + \
+        plt.title('Time series for a ' + self.map_longname + \
                   ' with two different initial conditions')
         plt.ylabel(r'$y_1(t),\ y_2(t)$', fontsize=14)
         plt.ylim([0, 1.])
