@@ -1,6 +1,6 @@
 #!/usr/bin/python
 
-# Plot the Bifurcation Diagram of Logistic and Cubic Maps
+# Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps
 # Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
 __author__ = "Davide Madrisan"
@@ -35,7 +35,7 @@ def usage():
 
     writeln('Usage:\n' +
         progname + \
-         ' [-r <float>:<float>] [-n <int>] [-s <int>] [--cubic]\n' +
+         ' [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-s]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
@@ -43,33 +43,35 @@ def usage():
   -s | --skip: skip plotting the first 's' iterations (default: 200)
   -n | --steps: number of iterations (default: 100)
   -c | --cubic: plot the bifurcation diagram of the cubic map
-  -l | --logistic: plot the diagram of the logistic map (default)\n""")
+  -l | --logistic: plot the diagram of the logistic map (default)
+  -s | --sine: plot the diagram of the sine map\n""")
 
     writeln('Example:\n' +
         progname + ' -r 1:4\n' +
         progname + ' -r 4:6.5 --cubic\n' +
+        progname + ' --sine -s 200 -n 200\n' +
         progname + ' -r 2.:4. -s 500 -n 600\n')
 
 def help():
     """Print the Copyright and an help message """
 
-    writeln('Plot the Bifurcation Diagram of Logistic and Cubic Maps v.' +
-        __version__ + ' (' + __status__ +  ')')
+    writeln('Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps v.'\
+        +  __version__ + ' (' + __status__ +  ')')
     writeln(__copyright__ + ' <' + __email__ + '>\n')
     usage()
 
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hlc',
-            ["steps=", "rate=", "skip=", "help", "logistic", "cubic"])
+        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hcls',
+            ["steps=", "rate=", "skip=", "help", "cubic", "logistic", "sine"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
     r = None
 
-    # By default, make 3000 iterations and do no plot the first 2000 ones
+    # By default, make 300 iterations and do no plot the first 200 ones
     n = 100
     s = 200
 
@@ -90,6 +92,8 @@ def main():
             map_name = 'cubic'
         elif o in ('-l', '--logistic'):
             map_name = 'logistic'
+        elif o in ('-s', '--sine'):
+            map_name = 'sine'
         else:
             assert False, "Unhandled command-line option."
 

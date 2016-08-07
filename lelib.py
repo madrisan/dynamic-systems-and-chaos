@@ -13,6 +13,7 @@ __status__ = "stable"
 import sys
 import numpy as np
 import matplotlib.pyplot as plt
+from math import pi, sin
 
 class Map(object):
     def __init__(self, map='logistic'):
@@ -22,11 +23,22 @@ class Map(object):
             self.map_longname = 'Logistic Equation'
             self.map_rmin = 0
             self.map_rmax = 4.0
+            self.map_ymin = 0
+            self.map_ymax = 1
         elif map == 'cubic':
             self.map = self._cubic
             self.map_longname = 'Cubic Equation'
             self.map_rmin = 0
             self.map_rmax = 6.5
+            self.map_ymin = 0
+            self.map_ymax = 1
+        elif map == 'sine':
+            self.map = self._sine
+            self.map_longname = 'Sine Equation'
+            self.map_rmin = 0
+            self.map_rmax = 2.0
+            self.map_ymin = 0
+            self.map_ymax = 2
         else:
             assert False, 'Undefined or unknown map ' + map
 
@@ -44,6 +56,12 @@ class Map(object):
             ' and ' + str(self.map_rmax) + '.'
         return r * x**2 * (1.0 - x)
 
+    def _sine(self, r, x):
+        """Sine map: r sin(pi x / 2) """
+        assert r >= self.map_rmin and r <= self.map_rmax, \
+            'The growth parameter r must be between ' + str(self.map_rmin) + \
+            ' and ' + str(self.map_rmax) + '.'
+        return r * sin(pi * x / 2.0)
 
 class Logistic(Map):
     """Class for plotting a Logistic/Cubic/Sine Map """
@@ -252,7 +270,7 @@ class Bifurcation(Map):
         plt.xticks([round(i, 1) for i in np.linspace(self.rmin, self.rmax, 5)])
         plt.xlabel('r')
 
-        plt.ylim([0, 1.])
+        plt.ylim([self.map_ymin, self.map_ymax])
         plt.ylabel('final states')
 
         for r in np.linspace(self.rmin, self.rmax, 1000):
