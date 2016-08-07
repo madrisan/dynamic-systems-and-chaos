@@ -34,7 +34,7 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 * __legraph.py__: iterate the logistic equation for different _r_ and _x0_ values and make _time series plots_;
 * __finalstate.py__: iterate the logistic equation for different _r_ and _x0_ values and make _final state diagrams_;
 * __lelib.py__: a simple library that implements a few Python classes for computing the time series and make the plots;
-* __bifurcation.sh: plot the _bifurcation diagram_ of a logistic equation.
+* __bifurcation.sh__: plot the _bifurcation diagram_ of a logistic equation.
 
 #### How to use these scripts
 
