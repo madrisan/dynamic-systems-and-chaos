@@ -39,22 +39,22 @@ class Map(object):
     def _logistic(self, r, x):
         """Logistic map: rx(1-x) """
         assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between ' + str(self.map_rmin) + \
-            ' and ' + str(self.map_rmax) + '.'
+            'The growth parameter r must be between %g and %g' % \
+            (self.map_rmin, self.map_rmax)
         return r * x * (1.0 - x)
 
     def _cubic(self, r, x):
         """Cubic map: rx^2(1-x) """
         assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between ' + str(self.map_rmin) + \
-            ' and ' + str(self.map_rmax) + '.'
+            'The growth parameter r must be between %g and %g' % \
+            (self.map_rmin, self.map_rmax)
         return r * x**2 * (1.0 - x)
 
     def _sine(self, r, x):
         """Sine map: r sin(pi x / 2) """
         assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between ' + str(self.map_rmin) + \
-            ' and ' + str(self.map_rmax) + '.'
+            'The growth parameter r must be between %g and %g' % \
+            (self.map_rmin, self.map_rmax)
         return r * sin(pi * x / 2.0)
 
 class Logistic(Map):
@@ -165,7 +165,7 @@ class FinalState(Logistic):
         plt.plot(self.x[self.s:], self.y1[self.s:], color='black', linestyle='',
                  markerfacecolor='black', marker='o', markersize=8)
 
-        plt.text(.05, .4, 'r = ' + str(self.r), style='italic',
+        plt.text(.05, .4, 'r = %g' % self.r, style='italic',
                  bbox={'facecolor':'red', 'alpha':0.5, 'pad':10})
 
         plt.show()
@@ -244,8 +244,8 @@ class Bifurcation(Map):
 
         assert len(r) == 2, 'The growth rate vector should contains two elements'
         assert r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax, \
-            'The parameters [r0, r1] must be between ' + str(self.map_rmin) + \
-            ' and ' + str(self.map_rmax) + ' and be in the ascending order.'
+            ('The parameters [r0, r1] must be between %g and %g, '
+             'and in ascending order.') % (self.map_rmin, self.map_rmax)
 
         self.rmin = r[0]    # Growth rate range
         self.rmax = r[1]
@@ -309,12 +309,12 @@ def test():
     le1 = Logistic(r, n, x0, False, 'logistic')
     x, y1 = le1.getxy()
 
-    assert len(x) == n+1, "x should be a vector of size " + str(n+1)
+    assert len(x) == n+1, "x should be a vector of size %n" % (n+1)
     assert x[0] == 0, "x[0] should be 0"
-    assert x[n] == n, "the last element of x should be equal to " + str(n)
+    assert x[n] == n, "the last element of x should be equal to %d" % n
     assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
 
-    assert len(y1) == n+1, "y1 should be a vector of size " + str(n+1)
+    assert len(y1) == n+1, "y1 should be a vector of size %d" % (n+1)
     assert y1[0] == x0, "the first element of y1 should be equal to x0"
     assert y1[n] == y1[n-2], "y1 is expected to be periodic with period 2"
     assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
@@ -326,17 +326,17 @@ def test():
     le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
     x, y1, y2 = le2.getxy()
 
-    assert len(x) == n+1, "x should be a vector of size " + str(n+1)
+    assert len(x) == n+1, "x should be a vector of size %d" % (n+1)
     assert x[0] == 0, "x[0] should be 0"
-    assert x[n] == n, "the last element of x should be equal to " + str(n)
+    assert x[n] == n, "the last element of x should be equal to %d" % n
     assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
 
-    assert len(y1) == n+1, "y1 should be a vector of size " + str(n+1)
+    assert len(y1) == n+1, "y1 should be a vector of size %d" % (n+1)
     assert y1[0] == x0, "the first element of y1 should be equal to x0"
 
     ydiff = le2.getdiffy()
     assert len(ydiff) == n+1, \
-        "the vector y2-y1 should have a size equal to " + str(n+1)
+        "the vector y2-y1 should have a size equal to %d" % (n+1)
     np.any(ydiff > 1e3) or np.any(ydiff < -1e3), \
         "the diff vector should show the Butterfly Effect"
 
