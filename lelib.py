@@ -16,6 +16,8 @@ import matplotlib.pyplot as plt
 from math import pi, sin
 
 class Map(object):
+    """Class that provides the map functions along with r and y ranges """
+
     def __init__(self, map='logistic'):
         ranges = {
                       # rmin rmax ymin ymax
