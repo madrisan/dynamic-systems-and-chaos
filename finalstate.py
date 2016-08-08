@@ -8,7 +8,7 @@ __copyright__ = "Copyright (C) 2016 Davide Madrisan"
 __license__ = "Apache License 2.0"
 __version__ = "1"
 __email__ = "davide.madrisan@gmail.com"
-__status__ = "beta"
+__status__ = "stable"
 
 import getopt
 import sys
