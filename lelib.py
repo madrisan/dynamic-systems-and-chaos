@@ -17,30 +17,28 @@ from math import pi, sin
 
 class Map(object):
     def __init__(self, map='logistic'):
+        params = {
+            'cubic': [
+                # map(func) longname(descr) rmin rmax ymin ymax
+                self._cubic, 'Cubic Equation', 0, 6.5, 0, 1
+            ],
+            'logistic': [
+                self._logistic, 'Logistic Equation', 0, 4.0, 0, 1
+            ],
+            'sine': [
+                self._sine, 'Sine Equation', 0, 2.0, 0, 2
+            ],
+        }
+
+        try:
+            self.map, \
+            self.map_longname, \
+            self.map_rmin, self.map_rmax, \
+            self.map_ymin, self.map_ymax = params[map]
+        except Exception as e:
+            raise type(e)('Unknown map name ' + map)
+
         self.map_name = map
-        if map == 'logistic':
-            self.map = self._logistic
-            self.map_longname = 'Logistic Equation'
-            self.map_rmin = 0
-            self.map_rmax = 4.0
-            self.map_ymin = 0
-            self.map_ymax = 1
-        elif map == 'cubic':
-            self.map = self._cubic
-            self.map_longname = 'Cubic Equation'
-            self.map_rmin = 0
-            self.map_rmax = 6.5
-            self.map_ymin = 0
-            self.map_ymax = 1
-        elif map == 'sine':
-            self.map = self._sine
-            self.map_longname = 'Sine Equation'
-            self.map_rmin = 0
-            self.map_rmax = 2.0
-            self.map_ymin = 0
-            self.map_ymax = 2
-        else:
-            assert False, 'Undefined or unknown map ' + map
 
     def _logistic(self, r, x):
         """Logistic map: rx(1-x) """
