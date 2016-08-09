@@ -239,6 +239,7 @@ class LogisticDiff(Logistic):
 
 
 class Bifurcation(Map):
+    """Class for plotting a Logistic/Cubic/Sine Bifurcation Diagram """
     def __init__(self, r, n=100, s=200, map='logistic'):
         Map.__init__(self, map=map)
 
