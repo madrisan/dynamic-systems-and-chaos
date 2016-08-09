@@ -49,7 +49,7 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
     Usage:
       ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-k <int>] [-c|-l|-s]
       ./legraph.py -h
-
+    
     Where:
       -0 | --x0: 1st initial condition
       -1 | --x1: 2nd initial condition (optional)
@@ -60,17 +60,17 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
       -c | --cubic: plot the bifurcation diagram of the cubic map
       -l | --logistic: plot the diagram of the logistic map (default)
       -s | --sine: plot the diagram of the sine map
-
-Example:
-  # time series with a stable fixed point
-  ./legraph.py -0 0.4 -r 3.2 -n 50
-  ./legraph.py -0 0.4 -1 0.45 -r 3.2 -n 50
-
-  # chaotic results (randon output)
-  ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
-  ./legraph.py -0 0.2 -r 3.6 -n 5000 --dots-only
-  ./legraph.py -0 0.9 -r 4.5 -n 50 --cubic
-  ./legraph.py -0 0.4 -r 0.8 -n 50 --sine
+    
+    Example:
+      # time series with a stable fixed point
+      ./legraph.py -0 0.4 -r 3.2 -n 50
+      ./legraph.py -0 0.4 -1 0.45 -r 3.2 -n 50
+    
+      # chaotic results (randon output)
+      ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
+      ./legraph.py -0 0.2 -r 3.6 -n 5000 --dots-only
+      ./legraph.py -0 0.9 -r 4.5 -n 50 --cubic
+      ./legraph.py -0 0.4 -r 0.8 -n 50 --sine
 
 ##### finalstate.py
 
