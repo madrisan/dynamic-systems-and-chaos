@@ -36,6 +36,8 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 * __lelib.py__: a simple library that implements a few Python classes for computing the time series and make the plots;
 * __bifurcation.sh__: plot the _bifurcation diagram_ of a cubic, logistic (default), or sine map.
 
+It requires the (widely-available and ivery popular) Python libraries `NumPy` and `matplotlib`.
+
 #### How to use these scripts
 
 ##### legraph.py
