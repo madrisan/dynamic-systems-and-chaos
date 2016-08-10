@@ -113,7 +113,7 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
       -n | --steps: number of iterations (default: 100)
       -c | --cubic: plot the bifurcation diagram of the cubic map
       -l | --logistic: plot the diagram of the logistic map (default)
-      -s | --sine: plot the diagram of the sine map
+      -t | --sine: plot the diagram of the sine map
 
     Example:
       ./bifurcations.py -r 1:4
