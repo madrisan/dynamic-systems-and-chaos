@@ -71,8 +71,9 @@ class Logistic(Map):
         assert s >= 0, 'You cannot skip a negative number of iterations.'
         self.s = s    # Number of iterations to skip in the plot
 
-        assert x0 >= 0 and x0 <= 1, \
-            'The initial condition x0 should be in [0, 1].'
+        assert x0 >= self.map_ymin and x0 <= self.map_ymax, \
+            'The initial condition x0 should be in [%g, %g].' % \
+            (self.map_ymin, self.map_ymax)
         self.x0 = x0  # The 1st initial condition
 
         self.x = self.y1 = []
@@ -179,8 +180,9 @@ class LogisticDiff(Logistic):
     def __init__(self, r, n, x0, x1, s=0, dotsonly=False, map='logistic'):
         Logistic.__init__(self, r, n, x0, s, dotsonly, map)
 
-        assert x1 >= 0 and x1 <= 1, \
-            'The initial condition x1 should be in [0, 1].'
+        assert x1 >= self.map_ymin and x1 <= self.map_ymax, \
+            'The initial condition x1 should be in [%g, %g].' % \
+            (self.map_ymin, self.map_ymax)
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
