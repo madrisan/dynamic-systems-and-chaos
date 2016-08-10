@@ -155,17 +155,17 @@ class FinalState(Logistic):
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
         plt.title('Final State Diagram for the ' + self.map_longname)
 
-        plt.xlim([0, 1.])
+        plt.xlim([self.map_ymin, self.map_ymax])
         plt.ylim([0, 1.])
         plt.yticks([])
 
         plt.grid(True)
 
-        plt.plot([0, 1], [.5, .5], color='black', lw=1)
+        plt.plot([self.map_ymin, self.map_ymax], [.5, .5],
+                 color='black', lw=1)
         plt.plot(self.x[self.s:], self.y1[self.s:], color='black', linestyle='',
                  markerfacecolor='black', marker='o', markersize=8)
-
-        plt.text(.05, .4, 'r = %g' % self.r, style='italic',
+        plt.text(.1 * self.map_ymax, .4, 'r = %g' % self.r, style='italic',
                  bbox={'facecolor':'red', 'alpha':0.5, 'pad':10})
 
         plt.show()
