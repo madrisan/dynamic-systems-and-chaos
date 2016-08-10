@@ -35,7 +35,7 @@ def usage():
 
     writeln('Usage:\n' +
         progname + \
-         ' [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-s]\n' +
+         ' [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-t]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
@@ -44,7 +44,7 @@ def usage():
   -n | --steps: number of iterations (default: 100)
   -c | --cubic: plot the bifurcation diagram of the cubic map
   -l | --logistic: plot the diagram of the logistic map (default)
-  -s | --sine: plot the diagram of the sine map\n""")
+  -t | --sine: plot the diagram of the sine map\n""")
 
     writeln('Example:\n' +
         progname + ' -r 1:4\n' +
@@ -63,7 +63,7 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hcls',
+        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hclt',
             ["steps=", "rate=", "skip=", "help", "cubic", "logistic", "sine"])
     except getopt.GetoptError:
         usage()
@@ -92,7 +92,7 @@ def main():
             map_name = 'cubic'
         elif o in ('-l', '--logistic'):
             map_name = 'logistic'
-        elif o in ('-s', '--sine'):
+        elif o in ('-t', '--sine'):
             map_name = 'sine'
         else:
             assert False, "Unhandled command-line option."

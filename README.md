@@ -47,7 +47,7 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
     Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
-      ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-k <int>] [-c|-l|-s]
+      ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>] [-c|-l|-t]
       ./legraph.py -h
     
     Where:
@@ -55,11 +55,11 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
       -1 | --x1: 2nd initial condition (optional)
       -d | --dots-only: do not connect the dots with lines
       -r | --rate: growth rate parameter
-      -k | --skip: skip plotting the first 'k' iterations
+      -s | --skip: skip plotting the first 's' iterations
       -n | --steps: number of iterations
       -c | --cubic: plot the bifurcation diagram of the cubic map
       -l | --logistic: plot the diagram of the logistic map (default)
-      -s | --sine: plot the diagram of the sine map
+      -t | --sine: plot the diagram of the sine map
     
     Example:
       # time series with a stable fixed point
@@ -79,7 +79,7 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
     Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
-      ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>]
+      ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>] [-c|-l|-t]
       ./finalstate.py -h
     
     Where:
@@ -87,6 +87,15 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
       -r | --rate: growth rate parameter
       -s | --skip: skip plotting the first 's' iterations (default: 2000)
       -n | --steps: number of iterations (default: 3000)
+      -c | --cubic: plot the bifurcation diagram of the cubic map
+      -l | --logistic: plot the diagram of the logistic map (default)
+      -t | --sine: plot the diagram of the sine map
+    
+    Example:
+      ./finalstate.py -r 3.492
+      ./finalstate.py -r 3.614 -s 200 -n 300
+      ./finalstate.py -0 0.4 -r 3.2 -s 10 -n 50
+      ./finalstate.py -0 0.8 -r 6.2 -n 20 --cubic
 
 ##### bifurcations.py
 
@@ -95,7 +104,7 @@ It requires the (widely-available and ivery popular) Python libraries `NumPy` an
     Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
     Usage:
-      ./bifurcations.py [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-s]
+      ./bifurcations.py [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-t]
       ./bifurcations.py -h
 
     Where:

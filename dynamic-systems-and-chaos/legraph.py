@@ -37,7 +37,7 @@ def usage():
 
     writeln('Usage:\n' +
         progname + ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> ' \
-            + '[-k <int>] [-c|-l|-s]\n' +
+            + '[-s <int>] [-c|-l|-t]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
@@ -45,11 +45,11 @@ def usage():
   -1 | --x1: 2nd initial condition (optional)
   -d | --dots-only: do not connect the dots with lines
   -r | --rate: growth rate parameter
-  -k | --skip: skip plotting the first 'k' iterations
+  -s | --skip: skip plotting the first 'k' iterations
   -n | --steps: number of iterations
   -c | --cubic: plot the bifurcation diagram of the cubic map
   -l | --logistic: plot the diagram of the logistic map (default)
-  -s | --sine: plot the diagram of the sine map\n""")
+  -t | --sine: plot the diagram of the sine map\n""")
 
     writeln('Example:\n' +
         '  # time series with a stable fixed point\n' +
@@ -73,7 +73,7 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:k:hcls',
+        opts, args = getopt.getopt(sys.argv[1:], '0:1:dn:r:s:hclt',
             ["x0=", "x1=", "dots-only", "steps=", \
              "rate=", "skip=", "help", "cubic", "logistic", "sine"])
     except getopt.GetoptError:
@@ -100,13 +100,13 @@ def main():
             n = int(a)
         elif o in ('-r', '--rate'):
             r = float(a)
-        elif o in ('-k', '--skip'):
+        elif o in ('-s', '--skip'):
             s = int(a)
         elif o in ('-c', '--cubic'):
             map_name = 'cubic'
         elif o in ('-l', '--logistic'):
             map_name = 'logistic'
-        elif o in ('-s', '--sine'):
+        elif o in ('-t', '--sine'):
             map_name = 'sine'
         else:
             assert False, "Unhandled command-line option."
