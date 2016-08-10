@@ -34,19 +34,23 @@ def usage():
 
     writeln('Usage:\n' +
         progname + \
-         ' [--x0 <float>] -r <float> [-n <int>] [-s <int>]\n' +
+         ' [--x0 <float>] -r <float> [-n <int>] [-s <int>] [-c|-l|-t]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
   -0 | --x0: initial condition (default: .5)
   -r | --rate: growth rate parameter
   -s | --skip: skip plotting the first 's' iterations (default: 2000)
-  -n | --steps: number of iterations (default: 1000)\n""")
+  -n | --steps: number of iterations (default: 1000)
+  -c | --cubic: plot the bifurcation diagram of the cubic map
+  -l | --logistic: plot the diagram of the logistic map (default)
+  -t | --sine: plot the diagram of the sine map\n""")
 
     writeln('Example:\n' +
         progname + ' -r 3.492\n' +
         progname + ' -r 3.614 -s 200 -n 300\n' +
-        progname + ' -0 0.4 -r 3.2 -s 10 -n 50\n')
+        progname + ' -0 0.4 -r 3.2 -s 10 -n 50\n' +
+        progname + ' -0 0.8 -r 6.2 -n 20 --cubic\n')
 
 def help():
     """Print the Copyright and an help message """
@@ -59,8 +63,9 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:n:r:s:h',
-            ["x0=", "steps=", "rate=", "skip=", "help"])
+        opts, args = getopt.getopt(sys.argv[1:], '0:n:r:s:hclt',
+            ["x0=", "steps=", "rate=", "skip=", "help",\
+             "cubic", "logistic", "sine"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
@@ -71,6 +76,9 @@ def main():
     # By default, make 3000 iterations but do no plot the first 2000 ones
     n = 1000
     s = 2000
+
+    # By default select the Logistic Equation
+    map_name = 'logistic'
 
     for o, a in opts:
         if o in ('-h', '--help'):
@@ -84,6 +92,12 @@ def main():
             r = float(a)
         elif o in ('-s', '--skip'):
             s = int(a)
+        elif o in ('-c', '--cubic'):
+            map_name = 'cubic'
+        elif o in ('-l', '--logistic'):
+            map_name = 'logistic'
+        elif o in ('-t', '--sine'):
+            map_name = 'sine'
         else:
             assert False, "Unhandled command-line option."
 
@@ -91,7 +105,7 @@ def main():
         usage()
         die(2, 'You must set at least the growth rate parameter.')
 
-    FinalState(r, n, x0, s).plot()
+    FinalState(r, n, x0, s, map_name).plot()
 
 
 if __name__ == '__main__':

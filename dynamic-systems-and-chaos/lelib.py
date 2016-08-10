@@ -153,7 +153,7 @@ class FinalState(Logistic):
         self.getxy()
 
         plt.suptitle('Dynamic Systems and Chaos', fontsize=14, fontweight='bold')
-        plt.title('Final State Diagram')
+        plt.title('Final State Diagram for the ' + self.map_longname)
 
         plt.xlim([0, 1.])
         plt.ylim([0, 1.])
