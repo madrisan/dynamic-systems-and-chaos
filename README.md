@@ -31,14 +31,21 @@ is called the _itinerary_ or _orbit_ (or sometimes a _time series_ or a _traject
 
 The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 Workstation).
 
-* __legraph.py__: iterate the logistic equation for different _r_ and _x0_ values and make _time series plots_;
-* __finalstate.py__: iterate the logistic equation for different _r_ and _x0_ values and make _final state diagrams_;
-* __lelib.py__: a simple library that implements a few Python classes for computing the time series and make the plots;
-* __bifurcation.sh__: plot the _bifurcation diagram_ of a cubic, logistic (default), or sine map.
+<dl>
+  <dt>legraph.py -- Plot Logistic, Cube, and Sine orbits</dt>
+  <dd>Iterate a logistic, cube, or sine equation for different <em>r</em> and <em>x0</em> values and make <em>time series plots</em>;</dd>
 
-It requires the (widely-available and ivery popular) Python libraries `NumPy` and `matplotlib`.
+  <dt>finalstate.py -- Plot Final State Diagrams</dt>
+  <dd>Iterate a logistic, cube, or sine equation for different <em>r</em> and <em>x0</em> values and plot the <em>final state diagram</em>;</dd>
 
-#### How to use these scripts
+  <dt>bifurcation.py -- Plot Bifurcations Diagrams</dt>
+  <dd>Plot the <em>bifurcation diagram</em> of a cubic, logistic (default), or sine maps;</dd>
+
+  <dt>lelib.py -- Object-oriented core library for computing and plotting</dt>
+  <dd> A simple object-oriented Python library for <em>computing</em> time series and <em>plotting</em> orbits, final state and bifurcations diagrams.</dd>
+</dl>
+
+The core library requires the (widely-available and very popular) Python libraries `NumPy` and `matplotlib`.
 
 ##### legraph.py
 
