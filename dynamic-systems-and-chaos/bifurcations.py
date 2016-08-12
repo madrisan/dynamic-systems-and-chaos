@@ -39,7 +39,7 @@ def usage():
         progname + ' -h\n')
 
     writeln("""Where:
-  -r | --rate: range of the growth rate parameters (default: [0:4])
+  -r | --rate: range of the growth rate parameters (default: the entire range)
   -s | --skip: skip plotting the first 's' iterations (default: 200)
   -n | --steps: number of iterations (default: 100)
   -c | --cubic: plot the bifurcation diagram of the cubic map
