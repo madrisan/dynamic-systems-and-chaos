@@ -35,11 +35,12 @@ def usage():
 
     writeln('Usage:\n' +
         progname + \
-         ' [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-t]\n' +
+         ' [-r min:max] [-y min:max] [-n <int>] [-s <int>] [-c|-l|-t]\n' +
         progname + ' -h\n')
 
     writeln("""Where:
   -r | --rate: range of the growth rate parameters (default: the entire range)
+  -y | --people: normalized range of the population (default: the entire range)
   -s | --skip: skip plotting the first 's' iterations (default: 200)
   -n | --steps: number of iterations (default: 100)
   -c | --cubic: plot the bifurcation diagram of the cubic map
@@ -50,7 +51,8 @@ def usage():
         progname + ' -r 1:4\n' +
         progname + ' -r 4:6.5 --cubic\n' +
         progname + ' --sine -s 200 -n 200\n' +
-        progname + ' -r 2.:4. -s 500 -n 600\n')
+        progname + ' -r 3.:4. -s 500 -n 600\n' +
+        progname + ' -r 3.5:3.6 -y .3:.6 -s 800 -n 1000\n')
 
 def help():
     """Print the Copyright and an help message """
@@ -63,13 +65,14 @@ def help():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], 'n:r:s:hclt',
-            ["steps=", "rate=", "skip=", "help", "cubic", "logistic", "sine"])
+        opts, args = getopt.getopt(sys.argv[1:], 'n:r:y:s:hclt',
+            ["steps=", "rate=", "people=", "skip=", "help",
+             "cubic", "logistic", "sine"])
     except getopt.GetoptError:
         usage()
         sys.exit(2)
 
-    r = None
+    r = y = None
 
     # By default, make 300 iterations and do no plot the first 200 ones
     n = 100
@@ -86,6 +89,8 @@ def main():
             n = int(a)
         elif o in ('-r', '--rate'):
             r = [ float(i) for i in a.split(':')]
+        elif o in ('-y', '--people'):
+            y = [ float(i) for i in a.split(':')]
         elif o in ('-s', '--skip'):
             s = int(a)
         elif o in ('-c', '--cubic'):
@@ -97,12 +102,12 @@ def main():
         else:
             assert False, "Unhandled command-line option."
 
-    if not r:
-        map = Map(map_name)
-        # Plot the entire diagram by default
-        r = [map.map_rmin, map.map_rmax]
+    map = Map(map_name)
+    # Plot the entire diagram by default
+    if not r: r = [map.map_rmin, map.map_rmax]
+    if not y: y = [map.map_ymin, map.map_ymax]
 
-    Bifurcation(r, n, s, map_name).plot()
+    Bifurcation(r, y, n, s, map_name).plot()
 
 if __name__ == '__main__':
     try:

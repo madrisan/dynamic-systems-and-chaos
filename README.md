@@ -111,11 +111,12 @@ The core library requires the (widely-available and very popular) Python librari
     Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
 
     Usage:
-      ./bifurcations.py [-r <float>:<float>] [-n <int>] [-s <int>] [-c|-l|-t]
+      ./bifurcations.py [-r min:max] [-y min:max] [-n <int>] [-s <int>] [-c|-l|-t]
       ./bifurcations.py -h
 
     Where:
-      -r | --rate: range of the growth rate parameters (default: [0:4])
+      -r | --rate: range of the growth rate parameters (default: the entire range)
+      -y | --people: normalized range of the population (default: the entire range)
       -s | --skip: skip plotting the first 's' iterations (default: 200)
       -n | --steps: number of iterations (default: 100)
       -c | --cubic: plot the bifurcation diagram of the cubic map
@@ -126,7 +127,8 @@ The core library requires the (widely-available and very popular) Python librari
       ./bifurcations.py -r 1:4
       ./bifurcations.py -r 4:6.5 --cubic
       ./bifurcations.py --sine -s 200 -n 200
-      ./bifurcations.py -r 2.:4. -s 500 -n 600
+      ./bifurcations.py -r 3.:4. -s 500 -n 600
+      ./bifurcations.py -r 3.5:3.6 -y .3:.6 -s 800 -n 1000
 
 ## Examples
 

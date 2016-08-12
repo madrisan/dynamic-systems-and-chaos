@@ -242,16 +242,22 @@ class LogisticDiff(Logistic):
 
 class Bifurcation(Map):
     """Class for plotting a Logistic/Cubic/Sine Bifurcation Diagram """
-    def __init__(self, r, n=100, s=200, map='logistic'):
+    def __init__(self, r, y, n=100, s=200, map='logistic'):
         Map.__init__(self, map=map)
 
         assert len(r) == 2, 'The growth rate vector should contains two elements'
         assert r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax, \
             ('The parameters [r0, r1] must be between %g and %g, '
              'and in ascending order.') % (self.map_rmin, self.map_rmax)
+        assert len(y) == 2, 'The y range vector should contains two elements'
+        assert y[0] >= self.map_ymin and y[0] < y[1] and y[1] <= self.map_ymax, \
+            ('The parameters [y0, y1] must be between %g and %g, '
+             'and in ascending order.') % (self.map_ymin, self.map_ymax)
 
-        self.rmin = r[0]    # Growth rate range
+        self.rmin = r[0]    # Range of the growth rate for plot()
         self.rmax = r[1]
+        self.ymin = y[0]    # Range of the population for plot()
+        self.ymax = y[1]
 
         assert n > 0, 'The number of iterations must be greater than zero.'
         self.n = n    # Number of iterations
@@ -267,7 +273,7 @@ class Bifurcation(Map):
         plt.xticks([round(i, 1) for i in np.linspace(self.rmin, self.rmax, 5)])
         plt.xlabel('r')
 
-        plt.ylim([self.map_ymin, self.map_ymax])
+        plt.ylim([self.ymin, self.ymax])
         plt.ylabel('final states')
 
         for r in np.linspace(self.rmin, self.rmax, 1000):
