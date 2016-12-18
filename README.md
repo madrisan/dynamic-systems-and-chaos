@@ -146,7 +146,7 @@ That is to say, _c_ is a fixed point of the function _f_(_x_) if and only if _f_
 
 #### Aperiodic Orbits and The Batterfly Effect
 
-For _r_ = 4 (and other values), the orbit is aperiodic It never repeats.
+For _r_ = 4 (and other values), the orbit is aperiodic: it never repeats.
 Applying the same function over and over again does not result in periodic behavior.
 
 We can use `legraph.py` to compare time series for two different initial conditions.
@@ -166,7 +166,7 @@ Systems with _SDIC_ are deterministic yet unpredictable in the long run.
 
 #### Aperiodic Orbits with holes
 
-The aperiodic orbits are always bounded nut do not necessarily cover all the domain. They can present one or more holes.
+The aperiodic orbits are always bounded but do not necessarily cover all the domain. They can present one or more holes.
 
     ./legraph.py --x0 0.2 -r 3.6 -n 500
 
