@@ -29,7 +29,7 @@ is called the _itinerary_ or _orbit_ (or sometimes a _time series_ or a _traject
 
 ## Software
 
-The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 Workstation).
+The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 and Fedora 26 Workstation), but if you want to run it under Python 2, you need to modify the shebang line of each Python script.
 
 <dl>
   <dt>legraph.py -- Plot Logistic, Cube, and Sine orbits</dt>
@@ -51,7 +51,7 @@ The core library requires the (widely-available and very popular) Python librari
 
     $ ./legraph.py --help
     Plot of Logistic Equation Time Series
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
+    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
       ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>] [-c|-l|-t]
@@ -83,7 +83,7 @@ The core library requires the (widely-available and very popular) Python librari
 
     $ ./finalstate.py --help
     Plot of the Final State Diagram
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
+    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
     
     Usage:
       ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>] [-c|-l|-t]
@@ -108,7 +108,7 @@ The core library requires the (widely-available and very popular) Python librari
 
     $ ./bifurcations.py --help
     Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps
-    Copyright (C) 2016 Davide Madrisan <davide.madrisan@gmail.com>
+    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
 
     Usage:
       ./bifurcations.py [-r min:max] [-y min:max] [-n <int>] [-s <int>] [-c|-l|-t]
