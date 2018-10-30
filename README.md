@@ -247,7 +247,7 @@ You can note the similarities between the three bifurcation diagrams (and all th
 iterated functions that map an interval to itself and have a single quadratic maximum.)
 
 This is a well known result that came from the amazing phenomenon of the _universality of the period-doubling route to chaos_
-(also known as [_Feigenbaum's constant_](https://en.wikipedia.org/wiki/Feigenbaum_constants/))
+(also known as [_Feigenbaum's constant_](https://en.wikipedia.org/wiki/Feigenbaum_constants))
 
 
 ## References and Acknowledgments
