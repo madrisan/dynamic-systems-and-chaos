@@ -100,7 +100,7 @@ def main():
         elif o in ('-t', '--sine'):
             map_name = 'sine'
         else:
-            assert False, "Unhandled command-line option."
+            raise AssertionError("Unhandled command-line option.")
 
     mapobj = Map(map_name)
     # Plot the entire diagram by default

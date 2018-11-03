@@ -109,7 +109,7 @@ def main():
         elif o in ('-t', '--sine'):
             map_name = 'sine'
         else:
-            assert False, "Unhandled command-line option."
+            raise AssertionError("Unhandled command-line option.")
 
     if x0 == None or n == None or r == None:
         usage()
