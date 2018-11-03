@@ -38,9 +38,10 @@ class Map(object):
             raise type(e)('Unknown map name ' + mapname)
 
     def _mapper(self, r, x):
-        assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between %g and %g' % \
-            (self.map_rmin, self.map_rmax)
+        if r < self.map_rmin or r > self.map_rmax:
+            raise AssertionError(
+                'The growth parameter r must be between %g and %g' % \
+                (self.map_rmin, self.map_rmax))
         return self.map_function(r, x)
 
 class Logistic(Map):
@@ -51,15 +52,20 @@ class Logistic(Map):
 
         self.r = r    # Growth rate parameter
 
-        assert n > 0, 'The number of iterations must be greater than zero.'
+        if n <= 0:
+            raise AssertionError(
+                'The number of iterations must be greater than zero.')
         self.n = n    # Number of iterations
 
-        assert s >= 0, 'You cannot skip a negative number of iterations.'
+        if s < 0:
+            raise AssertionError(
+                'You cannot skip a negative number of iterations.')
         self.s = s    # Number of iterations to skip in the plot
 
-        assert x0 >= self.map_ymin and x0 <= self.map_ymax, \
-            'The initial condition x0 should be in [%g, %g].' % \
-            (self.map_ymin, self.map_ymax)
+        if x0 < self.map_ymin or x0 > self.map_ymax:
+            raise AssertionError(
+                'The initial condition x0 should be in [%g, %g].' % \
+                (self.map_ymin, self.map_ymax))
         self.x0 = x0  # The 1st initial condition
 
         self.x = self.y1 = []
@@ -69,7 +75,8 @@ class Logistic(Map):
         """Plot the dots (x, y) connected by straight lines
            if the parameter 'dotsonly' if set to False """
 
-        assert x.any() and y.any(), '_plotline(): internal error'
+        if not x.any() or not y.any():
+            raise AssertionError('_plotline(): internal error')
 
         plt.plot(x, y, color=color, linestyle='',
                  markerfacecolor=color, marker='o', markersize=8)
@@ -166,9 +173,10 @@ class LogisticDiff(Logistic):
     def __init__(self, r, n, x0, x1, s=0, dotsonly=False, mapname='logistic'):
         Logistic.__init__(self, r, n, x0, s, dotsonly, mapname)
 
-        assert x1 >= self.map_ymin and x1 <= self.map_ymax, \
-            'The initial condition x1 should be in [%g, %g].' % \
-            (self.map_ymin, self.map_ymax)
+        if x1 < self.map_ymin or x1 > self.map_ymax:
+            raise AssertionError(
+                'The initial condition x1 should be in [%g, %g].' % \
+                (self.map_ymin, self.map_ymax))
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
@@ -231,24 +239,34 @@ class Bifurcation(Map):
     def __init__(self, r, y, n=100, s=200, mapname='logistic'):
         Map.__init__(self, mapname)
 
-        assert len(r) == 2, 'The growth rate vector should contains two elements'
-        assert r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax, \
-            ('The parameters [r0, r1] must be between %g and %g, '
-             'and in ascending order.') % (self.map_rmin, self.map_rmax)
-        assert len(y) == 2, 'The y range vector should contains two elements'
-        assert y[0] >= self.map_ymin and y[0] < y[1] and y[1] <= self.map_ymax, \
-            ('The parameters [y0, y1] must be between %g and %g, '
-             'and in ascending order.') % (self.map_ymin, self.map_ymax)
+        if len(r) != 2:
+            raise AssertionError(
+                'The growth rate vector should contains two elements')
+        if r[0] < self.map_rmin or r[0] >= r[1] or r[1] > self.map_rmax:
+            raise AssertionError(
+                ('The parameters [r0, r1] must be between %g and %g, '
+                 'and in ascending order.') % (self.map_rmin, self.map_rmax))
+        if len(y) != 2:
+            raise AssertionError(
+                'The y range vector should contains two elements')
+        if y[0] < self.map_ymin or y[0] >= y[1] or y[1] > self.map_ymax:
+            raise AssertionError(
+                ('The parameters [y0, y1] must be between %g and %g, '
+                 'and in ascending order.') % (self.map_ymin, self.map_ymax))
 
         self.rmin = r[0]    # Range of the growth rate for plot()
         self.rmax = r[1]
         self.ymin = y[0]    # Range of the population for plot()
         self.ymax = y[1]
 
-        assert n > 0, 'The number of iterations must be greater than zero.'
+        if n <= 0:
+            raise AssertionError(
+                'The number of iterations must be greater than zero.')
         self.n = n    # Number of iterations
 
-        assert s >= 0, 'You cannot skip a negative number of iterations.'
+        if s < 0:
+            raise AssertionError(
+                'You cannot skip a negative number of iterations.')
         self.s = s    # Number of iterations to skip in the plot
 
     def plot(self):
