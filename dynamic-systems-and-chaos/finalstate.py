@@ -52,7 +52,7 @@ def usage():
         progname + ' -0 0.4 -r 3.2 -s 10 -n 50\n' +
         progname + ' -0 0.8 -r 6.2 -n 20 --cubic\n')
 
-def help():
+def helpmsg():
     """Print the Copyright and an help message """
 
     writeln('Plot of the Final State Diagram v.' +
@@ -82,7 +82,7 @@ def main():
 
     for o, a in opts:
         if o in ('-h', '--help'):
-            help()
+            helpmsg()
             sys.exit()
         elif o in ('-0', '--x0'):
             x0 = float(a)

@@ -62,7 +62,7 @@ def usage():
         progname + ' -0 0.4 -r 0.8 -n 50 --sine\n')
 
 
-def help():
+def helpmsg():
     """Print the Copyright and an help message """
 
     writeln('Plot of Logistic Equation Time Series v.' +
@@ -88,7 +88,7 @@ def main():
 
     for o, a in opts:
         if o in ('-h', '--help'):
-            help()
+            helpmsg()
             sys.exit()
         elif o in ('-0', '--x0'):
             x0 = float(a)

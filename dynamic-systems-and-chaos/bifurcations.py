@@ -54,7 +54,7 @@ def usage():
         progname + ' -r 3.:4. -s 500 -n 600\n' +
         progname + ' -r 3.5:3.6 -y .3:.6 -s 800 -n 1000\n')
 
-def help():
+def helpmsg():
     """Print the Copyright and an help message """
 
     writeln('Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps v.'\
@@ -83,7 +83,7 @@ def main():
 
     for o, a in opts:
         if o in ('-h', '--help'):
-            help()
+            helpmsg()
             sys.exit()
         elif o in ('-n', '--steps'):
             n = int(a)
