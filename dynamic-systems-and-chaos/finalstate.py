@@ -63,7 +63,7 @@ def helpmsg():
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], '0:n:r:s:hclt',
+        opts, _ = getopt.getopt(sys.argv[1:], '0:n:r:s:hclt',
             ["x0=", "steps=", "rate=", "skip=", "help",\
              "cubic", "logistic", "sine"])
     except getopt.GetoptError:
