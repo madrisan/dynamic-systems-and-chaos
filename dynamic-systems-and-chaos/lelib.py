@@ -19,43 +19,29 @@ class Map(object):
     """Class that provides the map functions along with r and y ranges """
 
     def __init__(self, map='logistic'):
-        ranges = {
-                      # rmin rmax ymin ymax
-            'cubic'   : [ 0, 6.5, 0, 1 ],
-            'logistic': [ 0, 4.0, 0, 1 ],
-            'sine'    : [ 0, 2.0, 0, 2 ]
+        params = {
+                      # rmin rmax ymin ymax function
+            'cubic'   : [ 0, 6.5, 0, 1, lambda r, x: r * x**2 * (1.0 - x)  ],
+            'logistic': [ 0, 4.0, 0, 1, lambda r, x: r * x * (1.0 - x)     ],
+            'sine'    : [ 0, 2.0, 0, 2, lambda r, x: r * sin(pi * x / 2.0) ]
         }
 
         self.map_name = map
         self.map_longname = "%s Equation" % map.capitalize()
 
         try:
-            self.map = getattr(self, "_%s" % map, Map._logistic)
             self.map_rmin, self.map_rmax, \
-            self.map_ymin, self.map_ymax = ranges[map]
+            self.map_ymin, self.map_ymax, \
+            self.map_function = params[map]
+            self.map = self._mapper
         except Exception as e:
             raise type(e)('Unknown map name ' + map)
 
-    def _logistic(self, r, x):
-        """Logistic map: rx(1-x) """
+    def _mapper(self, r, x):
         assert r >= self.map_rmin and r <= self.map_rmax, \
             'The growth parameter r must be between %g and %g' % \
             (self.map_rmin, self.map_rmax)
-        return r * x * (1.0 - x)
-
-    def _cubic(self, r, x):
-        """Cubic map: rx^2(1-x) """
-        assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between %g and %g' % \
-            (self.map_rmin, self.map_rmax)
-        return r * x**2 * (1.0 - x)
-
-    def _sine(self, r, x):
-        """Sine map: r sin(pi x / 2) """
-        assert r >= self.map_rmin and r <= self.map_rmax, \
-            'The growth parameter r must be between %g and %g' % \
-            (self.map_rmin, self.map_rmax)
-        return r * sin(pi * x / 2.0)
+        return self.map_function(r, x)
 
 class Logistic(Map):
     """Class for plotting a Logistic/Cubic/Sine Map """
