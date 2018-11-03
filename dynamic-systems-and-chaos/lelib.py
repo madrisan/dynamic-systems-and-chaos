@@ -319,7 +319,7 @@ def test():
     sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
     r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
     le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
-    x, y1, y2 = le2.getxy()
+    x, y1, _ = le2.getxy()
 
     assert len(x) == n+1, "x should be a vector of size %d" % (n+1)
     assert x[0] == 0, "x[0] should be 0"
