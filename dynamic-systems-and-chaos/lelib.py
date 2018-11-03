@@ -18,7 +18,7 @@ from math import pi, sin
 class Map(object):
     """Class that provides the map functions along with r and y ranges """
 
-    def __init__(self, map='logistic'):
+    def __init__(self, mapname='logistic'):
         params = {
                       # rmin rmax ymin ymax function
             'cubic'   : [ 0, 6.5, 0, 1, lambda r, x: r * x**2 * (1.0 - x)  ],
@@ -26,16 +26,16 @@ class Map(object):
             'sine'    : [ 0, 2.0, 0, 2, lambda r, x: r * sin(pi * x / 2.0) ]
         }
 
-        self.map_name = map
-        self.map_longname = "%s Equation" % map.capitalize()
+        self.map_name = mapname
+        self.map_longname = "%s Equation" % mapname.capitalize()
 
         try:
             self.map_rmin, self.map_rmax, \
             self.map_ymin, self.map_ymax, \
-            self.map_function = params[map]
+            self.map_function = params[mapname]
             self.map = self._mapper
         except Exception as e:
-            raise type(e)('Unknown map name ' + map)
+            raise type(e)('Unknown map name ' + mapname)
 
     def _mapper(self, r, x):
         assert r >= self.map_rmin and r <= self.map_rmax, \
@@ -46,8 +46,8 @@ class Map(object):
 class Logistic(Map):
     """Class for plotting a Logistic/Cubic/Sine Map """
 
-    def __init__(self, r, n, x0, s=0, dotsonly=False, map='logistic'):
-        Map.__init__(self, map)
+    def __init__(self, r, n, x0, s=0, dotsonly=False, mapname='logistic'):
+        Map.__init__(self, mapname)
 
         self.r = r    # Growth rate parameter
 
@@ -114,8 +114,8 @@ class FinalState(Logistic):
 
     # By default, set the initial state to .5
     # make 3000 iterations and do no plot the first 2000 ones
-    def __init__(self, r, n=1000, x0=.5, s=2000, map='logistic'):
-        Logistic.__init__(self, r, n, x0, s, True, map)
+    def __init__(self, r, n=1000, x0=.5, s=2000, mapname='logistic'):
+        Logistic.__init__(self, r, n, x0, s, True, mapname)
 
     def getxy(self, y=.5):
         """Set the numpy vectors 'x' and 'y1' containing the values of the
@@ -163,8 +163,8 @@ class LogisticDiff(Logistic):
        with two different initial conditions, followed by a plot of
        their differences (for a visualization of the Butterfly Effect) """
 
-    def __init__(self, r, n, x0, x1, s=0, dotsonly=False, map='logistic'):
-        Logistic.__init__(self, r, n, x0, s, dotsonly, map)
+    def __init__(self, r, n, x0, x1, s=0, dotsonly=False, mapname='logistic'):
+        Logistic.__init__(self, r, n, x0, s, dotsonly, mapname)
 
         assert x1 >= self.map_ymin and x1 <= self.map_ymax, \
             'The initial condition x1 should be in [%g, %g].' % \
@@ -228,8 +228,8 @@ class LogisticDiff(Logistic):
 
 class Bifurcation(Map):
     """Class for plotting a Logistic/Cubic/Sine Bifurcation Diagram """
-    def __init__(self, r, y, n=100, s=200, map='logistic'):
-        Map.__init__(self, map=map)
+    def __init__(self, r, y, n=100, s=200, mapname='logistic'):
+        Map.__init__(self, mapname)
 
         assert len(r) == 2, 'The growth rate vector should contains two elements'
         assert r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax, \

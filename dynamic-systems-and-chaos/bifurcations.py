@@ -102,10 +102,10 @@ def main():
         else:
             assert False, "Unhandled command-line option."
 
-    map = Map(map_name)
+    mapobj = Map(map_name)
     # Plot the entire diagram by default
-    if not r: r = [map.map_rmin, map.map_rmax]
-    if not y: y = [map.map_ymin, map.map_ymax]
+    if not r: r = [mapobj.map_rmin, mapobj.map_rmax]
+    if not y: y = [mapobj.map_ymin, mapobj.map_ymax]
 
     Bifurcation(r, y, n, s, map_name).plot()
 
