@@ -37,11 +37,15 @@ class Map(object):
         except Exception as e:
             raise type(e)('Unknown map name ' + mapname)
 
+    def ensure(self, expression, message, *argv):
+        if not expression:
+            raise AssertionError(message % (argv) if argv else message)
+
     def _mapper(self, r, x):
-        if r < self.map_rmin or r > self.map_rmax:
-            raise AssertionError(
-                'The growth parameter r must be between %g and %g' % \
-                (self.map_rmin, self.map_rmax))
+        self.ensure(
+            (r >= self.map_rmin and r <= self.map_rmax),
+            'The growth parameter r must be between %g and %g',
+            self.map_rmin, self.map_rmax)
         return self.map_function(r, x)
 
 class Logistic(Map):
@@ -52,20 +56,17 @@ class Logistic(Map):
 
         self.r = r    # Growth rate parameter
 
-        if n <= 0:
-            raise AssertionError(
-                'The number of iterations must be greater than zero.')
+        self.ensure(n > 0,
+                    'The number of iterations must be greater than zero.')
         self.n = n    # Number of iterations
 
-        if s < 0:
-            raise AssertionError(
-                'You cannot skip a negative number of iterations.')
+        self.ensure(s >= 0,
+                    'You cannot skip a negative number of iterations.')
         self.s = s    # Number of iterations to skip in the plot
 
-        if x0 < self.map_ymin or x0 > self.map_ymax:
-            raise AssertionError(
-                'The initial condition x0 should be in [%g, %g].' % \
-                (self.map_ymin, self.map_ymax))
+        self.ensure(x0 >= self.map_ymin and x0 <= self.map_ymax,
+                    'The initial condition x0 should be in [%g, %g].',
+                    self.map_ymin, self.map_ymax)
         self.x0 = x0  # The 1st initial condition
 
         self.x = self.y1 = []
@@ -75,9 +76,7 @@ class Logistic(Map):
         """Plot the dots (x, y) connected by straight lines
            if the parameter 'dotsonly' if set to False """
 
-        if not x.any() or not y.any():
-            raise AssertionError('_plotline(): internal error')
-
+        self.ensure(x.any() and y.any(), '_plotline(): internal error')
         plt.plot(x, y, color=color, linestyle='',
                  markerfacecolor=color, marker='o', markersize=8)
         if not self.dotsonly: plt.plot(x, y, color=color, alpha=0.6)
@@ -173,10 +172,9 @@ class LogisticDiff(Logistic):
     def __init__(self, r, n, x0, x1, s=0, dotsonly=False, mapname='logistic'):
         Logistic.__init__(self, r, n, x0, s, dotsonly, mapname)
 
-        if x1 < self.map_ymin or x1 > self.map_ymax:
-            raise AssertionError(
-                'The initial condition x1 should be in [%g, %g].' % \
-                (self.map_ymin, self.map_ymax))
+        self.ensure(x1 >= self.map_ymin and x1 <= self.map_ymax,
+                    'The initial condition x1 should be in [%g, %g].',
+                    self.map_ymin, self.map_ymax)
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
@@ -239,34 +237,24 @@ class Bifurcation(Map):
     def __init__(self, r, y, n=100, s=200, mapname='logistic'):
         Map.__init__(self, mapname)
 
-        if len(r) != 2:
-            raise AssertionError(
-                'The growth rate vector should contains two elements')
-        if r[0] < self.map_rmin or r[0] >= r[1] or r[1] > self.map_rmax:
-            raise AssertionError(
-                ('The parameters [r0, r1] must be between %g and %g, '
-                 'and in ascending order.') % (self.map_rmin, self.map_rmax))
-        if len(y) != 2:
-            raise AssertionError(
-                'The y range vector should contains two elements')
-        if y[0] < self.map_ymin or y[0] >= y[1] or y[1] > self.map_ymax:
-            raise AssertionError(
-                ('The parameters [y0, y1] must be between %g and %g, '
-                 'and in ascending order.') % (self.map_ymin, self.map_ymax))
+        self.ensure(len(r) == 2, 'The growth rate vector should contains two elements')
+        self.ensure(r[0] >= self.map_rmin and r[0] < r[1] and r[1] <= self.map_rmax,
+                    ('The parameters [r0, r1] must be between %g and %g, '
+                     'and in ascending order.'), self.map_rmin, self.map_rmax)
+        self.ensure(len(y) == 2, 'The y range vector should contains two elements')
+        self.ensure(y[0] >= self.map_ymin and y[0] < y[1] and y[1] <= self.map_ymax,
+                    ('The parameters [y0, y1] must be between %g and %g, '
+                     'and in ascending order.'), self.map_ymin, self.map_ymax)
 
         self.rmin = r[0]    # Range of the growth rate for plot()
         self.rmax = r[1]
         self.ymin = y[0]    # Range of the population for plot()
         self.ymax = y[1]
 
-        if n <= 0:
-            raise AssertionError(
-                'The number of iterations must be greater than zero.')
+        self.ensure(n > 0, 'The number of iterations must be greater than zero.')
         self.n = n    # Number of iterations
 
-        if s < 0:
-            raise AssertionError(
-                'You cannot skip a negative number of iterations.')
+        self.ensure(s >= 0, 'You cannot skip a negative number of iterations.')
         self.s = s    # Number of iterations to skip in the plot
 
     def plot(self):
@@ -292,29 +280,37 @@ def test():
     # Test the class 'Map'
     sys.stdout.write("Running the tests for the class 'Map'...\n")
     m = Map()
-    assert m.map_name == 'logistic', "The default map should be 'logistic'"
-    assert m.map_longname == 'Logistic Equation', "Logistic Map: bad long name"
-    assert m.map_rmin == 0 and m.map_rmax == 4, "Logistic Map: bad range for r"
-    assert m.map_ymin == 0 and m.map_ymax == 1, "Logistic Map: bad range for y"
+    m.ensure(m.map_name == 'logistic',
+             "The default map should be 'logistic'")
+    m.ensure(m.map_longname == 'Logistic Equation',
+             "Logistic Map: bad long name")
+    m.ensure(m.map_rmin == 0 and m.map_rmax == 4,
+             "Logistic Map: bad range for r")
+    m.ensure(m.map_ymin == 0 and m.map_ymax == 1,
+             "Logistic Map: bad range for y")
     i = m.map(4,.25)
-    assert i == .75, "Logistic Map: bad value for r=4 and x=.25: should be %f" % i
+    m.ensure(i == .75,
+             "Logistic Map: bad value for r=4 and x=.25: should be %f" % i)
 
     m = Map('cubic')
-    assert m.map_name == 'cubic', "Cubic Map: bad map selection"
-    assert m.map_longname == 'Cubic Equation', "Cubic Map: bad long name"
-    assert m.map_rmin == 0 and m.map_rmax == 6.5, "Cubic Map: bad range for r"
-    assert m.map_ymin == 0 and m.map_ymax == 1, "Cubic Map: bad range for y"
+    m.ensure(m.map_name == 'cubic', "Cubic Map: bad map selection")
+    m.ensure(m.map_longname == 'Cubic Equation', "Cubic Map: bad long name")
+    m.ensure(m.map_rmin == 0 and m.map_rmax == 6.5,
+             "Cubic Map: bad range for r")
+    m.ensure(m.map_ymin == 0 and m.map_ymax == 1,
+             "Cubic Map: bad range for y")
     i = m.map(2,.5)
-    assert i == .25, "Cubic Map: bad value for r=2 and x=.5, should be %f" % i
+    m.ensure(i == .25,
+             "Cubic Map: bad value for r=2 and x=.5, should be %f" % i)
 
     m = Map('sine')
-    assert m.map_name == 'sine', "Sine Map: bad map selection"
-    assert m.map_longname == 'Sine Equation', "Sine Map: bad long name"
-    assert m.map_rmin == 0 and m.map_rmax == 2, "Sine Map: bad range for r"
-    assert m.map_ymin == 0 and m.map_ymax == 2, "Sine Map: bad range for y"
+    m.ensure(m.map_name == 'sine', "Sine Map: bad map selection")
+    m.ensure(m.map_longname == 'Sine Equation', "Sine Map: bad long name")
+    m.ensure(m.map_rmin == 0 and m.map_rmax == 2, "Sine Map: bad range for r")
+    m.ensure(m.map_ymin == 0 and m.map_ymax == 2, "Sine Map: bad range for y")
     i = m.map(0.5,1)
-    assert i == .5, "Sine Map: bad value for r=0.5 and x=1: should be %f" % i
-
+    m.ensure(i == .5,
+             "Sine Map: bad value for r=0.5 and x=1: should be %f" % i)
 
     # Test the class 'Logistic'
     sys.stdout.write("Running the tests for the class 'Logistic'...\n")
@@ -322,16 +318,16 @@ def test():
     le1 = Logistic(r, n, x0, False, 'logistic')
     x, y1 = le1.getxy()
 
-    assert len(x) == n+1, "x should be a vector of size %d" % (n+1)
-    assert x[0] == 0, "x[0] should be 0"
-    assert x[n] == n, "the last element of x should be equal to %d" % n
-    assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
+    m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
+    m.ensure(x[0] == 0, "x[0] should be 0")
+    m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
+    m.ensure(x.sum() == n*(n+1)/2,
+             "the sum of the elements of x is not correct")
 
-    assert len(y1) == n+1, "y1 should be a vector of size %d" % (n+1)
-    assert y1[0] == x0, "the first element of y1 should be equal to x0"
-    assert y1[n] == y1[n-2], "y1 is expected to be periodic with period 2"
-    assert y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2"
-
+    m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
+    m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
+    m.ensure(y1[n] == y1[n-2], "y1 is expected to be periodic with period 2")
+    m.ensure(y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2")
 
     # Test the class 'LogisticDiff'
     sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
@@ -339,19 +335,20 @@ def test():
     le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
     x, y1, _ = le2.getxy()
 
-    assert len(x) == n+1, "x should be a vector of size %d" % (n+1)
-    assert x[0] == 0, "x[0] should be 0"
-    assert x[n] == n, "the last element of x should be equal to %d" % n
-    assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
+    m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
+    m.ensure(x[0] == 0, "x[0] should be 0")
+    m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
+    m.ensure(x.sum() == n*(n+1)/2,
+             "the sum of the elements of x is not correct")
 
-    assert len(y1) == n+1, "y1 should be a vector of size %d" % (n+1)
-    assert y1[0] == x0, "the first element of y1 should be equal to x0"
+    m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
+    m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
 
     ydiff = le2.getdiffy()
-    assert len(ydiff) == n+1, \
-        "the vector y2-y1 should have a size equal to %d" % (n+1)
-    assert np.all(ydiff < 1e3) and np.all(ydiff > -1e3), \
-        "the diff vector should show the Butterfly Effect"
+    m.ensure(len(ydiff) == n+1,
+             "the vector y2-y1 should have a size equal to %d" % (n+1))
+    m.ensure(np.all(ydiff < 1e3) and np.all(ydiff > -1e3),
+             "the diff vector should show the Butterfly Effect")
 
     sys.stdout.write("All tests successfully passed!\n")
 
