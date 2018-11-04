@@ -2,6 +2,7 @@
 
 # Logistic Equation Library
 # Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+# SPDX-License-Identifier: Apache-2.0
 
 __author__ = "Davide Madrisan"
 __copyright__ = "Copyright (C) 2016-2018 Davide Madrisan"

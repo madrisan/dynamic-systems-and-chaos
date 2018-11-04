@@ -2,33 +2,13 @@
 
 # Logistic Equation: Comparing Initial Conditions
 # Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
-
-__author__ = "Davide Madrisan"
-__copyright__ = "Copyright (C) 2016-2018 Davide Madrisan"
-__license__ = "Apache License 2.0"
-__version__ = "3"
-__email__ = "davide.madrisan@gmail.com"
-__status__ = "stable"
+# SPDX-License-Identifier: Apache-2.0
 
 import getopt
 import sys
 
-from lelib import Logistic
-from lelib import LogisticDiff
-
-def die(exitcode, message):
-    """Print and error message and exit with 'exitcode' """
-
-    progname = sys.argv[0]
-    sys.stderr.write('%s: error: %s\n' % (progname, message))
-    sys.exit(exitcode)
-
-
-def writeln(line):
-    """Print the given line to stdout followed by a newline """
-
-    sys.stdout.write(line + '\n')
-
+from lelib import Logistic, LogisticDiff
+from utils import copyright, die, writeln
 
 def usage():
     """Program usage """
@@ -61,15 +41,12 @@ def usage():
         progname + ' -0 0.9 -r 4.5 -n 50 --cubic\n' +
         progname + ' -0 0.4 -r 0.8 -n 50 --sine\n')
 
-
 def helpmsg():
     """Print the Copyright and an help message """
 
-    writeln('Plot of Logistic Equation Time Series v.' +
-        __version__ + ' (' + __status__ +  ')')
-    writeln(__copyright__ + ' <' + __email__ + '>\n')
+    descr = 'Plot of Logistic Equation Time Series'
+    copyright(descr)
     usage()
-
 
 def main():
     try:

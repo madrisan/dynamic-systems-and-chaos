@@ -2,30 +2,13 @@
 
 # Final State Diagram
 # Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
-
-__author__ = "Davide Madrisan"
-__copyright__ = "Copyright (C) 2016-2018 Davide Madrisan"
-__license__ = "Apache License 2.0"
-__version__ = "2"
-__email__ = "davide.madrisan@gmail.com"
-__status__ = "stable"
+# SPDX-License-Identifier: Apache-2.0
 
 import getopt
 import sys
 
 from lelib import FinalState
-
-def die(exitcode, message):
-    """Print and error message and exit with 'exitcode' """
-
-    progname = sys.argv[0]
-    sys.stderr.write('%s: error: %s\n' % (progname, message))
-    sys.exit(exitcode)
-
-def writeln(line):
-    """Print the given line to stdout followed by a newline """
-
-    sys.stdout.write(line + '\n')
+from utils import copyright, die, writeln
 
 def usage():
     """Program usage """
@@ -55,11 +38,9 @@ def usage():
 def helpmsg():
     """Print the Copyright and an help message """
 
-    writeln('Plot of the Final State Diagram v.' +
-        __version__ + ' (' + __status__ +  ')')
-    writeln(__copyright__ + ' <' + __email__ + '>\n')
+    descr = 'Plot of the Final State Diagram'
+    copyright(descr)
     usage()
-
 
 def main():
     try:
