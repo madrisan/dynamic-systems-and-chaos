@@ -277,12 +277,11 @@ class Bifurcation(Map):
         plt.show()
 
 
-def test():
-    # Test the class 'Map'
+def test_class_map():
+    """Test the class 'Map' """
     sys.stdout.write("Running the tests for the class 'Map'...\n")
     m = Map()
-    m.ensure(m.map_name == 'logistic',
-             "The default map should be 'logistic'")
+    m.ensure(m.map_name == 'logistic', "The default map should be 'logistic'")
     m.ensure(m.map_longname == 'Logistic Equation',
              "Logistic Map: bad long name")
     m.ensure(m.map_rmin == 0 and m.map_rmax == 4,
@@ -313,45 +312,51 @@ def test():
     m.ensure(i == .5,
              "Sine Map: bad value for r=0.5 and x=1: should be %f" % i)
 
-    # Test the class 'Logistic'
-    sys.stdout.write("Running the tests for the class 'Logistic'...\n")
-    r, n, x0 = 3.2, 100, 0.4
-    le1 = Logistic(r, n, x0, False, 'logistic')
-    x, y1 = le1.getxy()
+def test_class_logistic():
+   """Test the class 'Logistic' """
+   sys.stdout.write("Running the tests for the class 'Logistic'...\n")
+   r, n, x0 = 3.2, 100, 0.4
+   le1 = Logistic(r, n, x0, False, 'logistic')
+   x, y1 = le1.getxy()
 
-    m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
-    m.ensure(x[0] == 0, "x[0] should be 0")
-    m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
-    m.ensure(x.sum() == n*(n+1)/2,
-             "the sum of the elements of x is not correct")
+   m = Map()
+   m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
+   m.ensure(x[0] == 0, "x[0] should be 0")
+   m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
+   m.ensure(x.sum() == n*(n+1)/2,
+            "the sum of the elements of x is not correct")
 
-    m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
-    m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
-    m.ensure(y1[n] == y1[n-2], "y1 is expected to be periodic with period 2")
-    m.ensure(y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2")
+   m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
+   m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
+   m.ensure(y1[n] == y1[n-2], "y1 is expected to be periodic with period 2")
+   m.ensure(y1[n-1] == y1[n-3], "y1 is expected to be periodic with period 2")
 
-    # Test the class 'LogisticDiff'
-    sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
-    r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
-    le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
-    x, y1, _ = le2.getxy()
+def test_class_logisticdiff():
+   """Test the class 'LogisticDiff' """
+   sys.stdout.write("Running the tests for the class 'LogisticDiff'...\n")
+   r, n, x0, x1 = 4.0, 50, 0.2, 0.2000001
+   le2 = LogisticDiff(r, n, x0, x1, False, 'logistic')
+   x, y1, _ = le2.getxy()
 
-    m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
-    m.ensure(x[0] == 0, "x[0] should be 0")
-    m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
-    m.ensure(x.sum() == n*(n+1)/2,
-             "the sum of the elements of x is not correct")
+   m = Map()
+   m.ensure(len(x) == n+1, "x should be a vector of size %d" % (n+1))
+   m.ensure(x[0] == 0, "x[0] should be 0")
+   m.ensure(x[n] == n, "the last element of x should be equal to %d" % n)
+   m.ensure(x.sum() == n*(n+1)/2,
+            "the sum of the elements of x is not correct")
 
-    m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
-    m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
+   m.ensure(len(y1) == n+1, "y1 should be a vector of size %d" % (n+1))
+   m.ensure(y1[0] == x0, "the first element of y1 should be equal to x0")
 
-    ydiff = le2.getdiffy()
-    m.ensure(len(ydiff) == n+1,
-             "the vector y2-y1 should have a size equal to %d" % (n+1))
-    m.ensure(np.all(ydiff < 1e3) and np.all(ydiff > -1e3),
-             "the diff vector should show the Butterfly Effect")
-
-    sys.stdout.write("All tests successfully passed!\n")
+   ydiff = le2.getdiffy()
+   m.ensure(len(ydiff) == n+1,
+            "the vector y2-y1 should have a size equal to %d" % (n+1))
+   m.ensure(np.all(ydiff < 1e3) and np.all(ydiff > -1e3),
+            "the diff vector should show the Butterfly Effect")
 
 if __name__ == '__main__':
-    test()
+    test_class_map()
+    test_class_logistic()
+    test_class_logisticdiff()
+
+    sys.stdout.write("All tests successfully passed!\n")
