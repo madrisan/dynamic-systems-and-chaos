@@ -2,7 +2,7 @@
 
 from setuptools import setup
 
-"""Dynamic Systems and Chaos Plot Generator.
+DESCRIPTION = """Dynamic Systems and Chaos Plot Generator.
 
 This software has been developed as part of the (optional) homeworks of the
 MOOC "Introduction to Dynamical Systems and Chaos (Summer, 2016)", leaded by
@@ -12,11 +12,9 @@ It let you plot the orbit of a Logistic, Cubic, or Sine Map, the two orbits of a
 Logistic, Cubic, or Sine Map with two different starting points (along with the
 plot of the differences between the two maps), and the Final State and
 Bifurcation Diagrams.
-
-
 """
 
-DOCLINES = (__doc__ or '').split("\n")
+DOCLINES = DESCRIPTION.split('\n')
 
 CLASSIFIERS = """\
 Development Status :: 5 - Production/Stable
@@ -38,6 +36,7 @@ VERSION = '2'
 setup(
     name = 'dynamic-systems-and-chaos',
     description = DOCLINES[0],
+    long_description = DESCRIPTION,
     version = VERSION,
     url = 'https://github.com/madrisan/dynamic-systems-and-chaos/',
 
