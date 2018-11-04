@@ -81,7 +81,7 @@ class Logistic(Map):
         if self.plotdots:
             plt.plot(x, y, color=color, alpha=0.6)
 
-    def getxy(self):
+    def getxy(self, fill_value=None):
         """Set the numpy vectors 'x' and 'y1' containing
            the iterations (1..n) and the corresponding values
            of the choosen Map """
@@ -131,9 +131,8 @@ class FinalState(Logistic):
     # make 3000 iterations and do no plot the first 2000 ones
     def __init__(self, r, n=1000, x0=.5, s=2000, mapname='logistic'):
         Logistic.__init__(self, r, n, x0, s, mapname)
-        self.dots(True)
 
-    def getxy(self, y=.5):
+    def getxy(self, fill_value=.5):
         """Set the numpy vectors 'x' and 'y1' containing the values of the
            choosen Map for the first n iterations """
 
@@ -146,7 +145,7 @@ class FinalState(Logistic):
         for t in range(1, vectlen):
             self.x[t] = self.map(self.r, self.x[t-1])
 
-        self.y1 = np.full(vectlen, y, dtype=np.float)
+        self.y1 = np.full(vectlen, fill_value, dtype=np.float)
 
         return self.x, self.y1
 
@@ -188,7 +187,7 @@ class LogisticDiff(Logistic):
         self.x1 = x1  # The 2st initial condition
         self.y2 = []
 
-    def getxy(self):
+    def getxy(self, fill_value=None):
         """Set the numpy vectors 'x', 'y1', and 'y2' containing
            the iterations (1..n) and the corresponding values
            of the choosen Map """
