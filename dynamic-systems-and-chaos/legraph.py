@@ -8,7 +8,7 @@ import getopt
 import sys
 
 from lelib import Logistic, LogisticDiff
-from utils import copyright, die, writeln
+from utils import copyleft, die, writeln
 
 def usage():
     """Program usage """
@@ -45,7 +45,7 @@ def helpmsg():
     """Print the Copyright and an help message """
 
     descr = 'Plot of Logistic Equation Time Series'
-    copyright(descr)
+    copyleft(descr)
     usage()
 
 def main():

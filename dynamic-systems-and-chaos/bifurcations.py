@@ -8,7 +8,7 @@ import getopt
 import sys
 
 from lelib import Bifurcation, Map
-from utils import copyright, die, writeln
+from utils import copyleft, die, writeln
 
 def usage():
     """Program usage """
@@ -40,7 +40,7 @@ def helpmsg():
     """Print the Copyright and an help message """
 
     descr = 'Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps'
-    copyright(descr)
+    copyleft(descr)
     usage()
 
 def main():

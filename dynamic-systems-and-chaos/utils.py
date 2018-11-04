@@ -13,8 +13,8 @@ __status__ = "stable"
 
 import sys
 
-def copyright(descr):
-    """Print the Copyright message """
+def copyleft(descr):
+    """Print the Copyright message and License """
 
     writeln(descr + ' v.' +  __version__ + ' (' + __status__ +  ')')
     writeln(__copyright__ + ' <' + __email__ + '>')
