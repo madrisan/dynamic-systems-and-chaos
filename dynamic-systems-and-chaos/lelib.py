@@ -37,7 +37,8 @@ class Map(object):
         except Exception as e:
             raise type(e)('Unknown map name ' + mapname)
 
-    def ensure(self, expression, message, *argv):
+    @staticmethod
+    def ensure(expression, message, *argv):
         if not expression:
             raise AssertionError(message % (argv) if argv else message)
 
