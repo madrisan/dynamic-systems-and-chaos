@@ -92,8 +92,9 @@ def main():
         usage()
         die(2, 'One of more arguments have not been set.')
 
-    lemap = LogisticDiff(r, n, x0, x1, s, dotsonly, map_name) if x1 \
-                else Logistic(r, n, x0, s, dotsonly, map_name)
+    lemap = LogisticDiff(r, n, x0, x1, s, map_name) if x1 \
+                else Logistic(r, n, x0, s, map_name)
+    lemap.plotdots = not dotsonly
     lemap.plot()
 
 

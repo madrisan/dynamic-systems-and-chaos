@@ -53,26 +53,22 @@ class Map(object):
 class Logistic(Map):
     """Class for plotting a Logistic/Cubic/Sine Map """
 
-    def __init__(self, r, n, x0, s=0, dotsonly=False, mapname='logistic'):
+    def __init__(self, r, n, x0, s=0, mapname='logistic'):
         Map.__init__(self, mapname)
 
         self.r = r    # Growth rate parameter
-
-        self.ensure(n > 0,
-                    'The number of iterations must be greater than zero.')
         self.n = n    # Number of iterations
-
-        self.ensure(s >= 0,
-                    'You cannot skip a negative number of iterations.')
         self.s = s    # Number of iterations to skip in the plot
+        self.x0 = x0  # The 1st initial condition
+        self.x = self.y1 = []
 
+        self._dotsonly = False
+
+        self.ensure(n > 0, 'The number of iterations must be greater than zero.')
+        self.ensure(s >= 0, 'You cannot skip a negative number of iterations.')
         self.ensure(x0 >= self.map_ymin and x0 <= self.map_ymax,
                     'The initial condition x0 should be in [%g, %g].',
                     self.map_ymin, self.map_ymax)
-        self.x0 = x0  # The 1st initial condition
-
-        self.x = self.y1 = []
-        self.dotsonly = dotsonly
 
     def _plotline(self, x, y, color):
         """Plot the dots (x, y) connected by straight lines
@@ -81,7 +77,9 @@ class Logistic(Map):
         self.ensure(x.any() and y.any(), '_plotline(): internal error')
         plt.plot(x, y, color=color, linestyle='',
                  markerfacecolor=color, marker='o', markersize=8)
-        if not self.dotsonly: plt.plot(x, y, color=color, alpha=0.6)
+
+        if self.plotdots:
+            plt.plot(x, y, color=color, alpha=0.6)
 
     def getxy(self):
         """Set the numpy vectors 'x' and 'y1' containing
@@ -94,9 +92,9 @@ class Logistic(Map):
         vectlen = self.n + self.s + 1
 
         self.x = np.arange(vectlen)
+
         self.y1 = np.arange(0, vectlen, 1.)
         self.y1[0] = self.x0
-
         for t in self.x[1:]:
             self.y1[t] = self.map(self.r, self.y1[t-1])
 
@@ -116,6 +114,15 @@ class Logistic(Map):
 
         plt.show()
 
+    @property
+    def plotdots(self):
+        return self._dotsonly
+
+    @plotdots.setter
+    def plotdots(self, value):
+        """Set whether to plot or not the dots in a logistic graph """
+        self._dotsonly = value
+
 
 class FinalState(Logistic):
     """Derived class for plotting a Final State Diagram """
@@ -123,7 +130,8 @@ class FinalState(Logistic):
     # By default, set the initial state to .5
     # make 3000 iterations and do no plot the first 2000 ones
     def __init__(self, r, n=1000, x0=.5, s=2000, mapname='logistic'):
-        Logistic.__init__(self, r, n, x0, s, True, mapname)
+        Logistic.__init__(self, r, n, x0, s, mapname)
+        self.dots(True)
 
     def getxy(self, y=.5):
         """Set the numpy vectors 'x' and 'y1' containing the values of the
@@ -134,11 +142,11 @@ class FinalState(Logistic):
 
         vectlen = self.n + self.s + 1
 
-        self.y1 = np.full(vectlen, y, dtype=np.float)
         self.x = np.full(vectlen, self.x0, dtype=np.float64)
-
         for t in range(1, vectlen):
             self.x[t] = self.map(self.r, self.x[t-1])
+
+        self.y1 = np.full(vectlen, y, dtype=np.float)
 
         return self.x, self.y1
 
@@ -171,8 +179,8 @@ class LogisticDiff(Logistic):
        with two different initial conditions, followed by a plot of
        their differences (for a visualization of the Butterfly Effect) """
 
-    def __init__(self, r, n, x0, x1, s=0, dotsonly=False, mapname='logistic'):
-        Logistic.__init__(self, r, n, x0, s, dotsonly, mapname)
+    def __init__(self, r, n, x0, x1, s=0, mapname='logistic'):
+        Logistic.__init__(self, r, n, x0, s, mapname)
 
         self.ensure(x1 >= self.map_ymin and x1 <= self.map_ymax,
                     'The initial condition x1 should be in [%g, %g].',
@@ -185,18 +193,17 @@ class LogisticDiff(Logistic):
            the iterations (1..n) and the corresponding values
            of the choosen Map """
 
-        super(LogisticDiff, self).getxy()
+        x, y1 = super(LogisticDiff, self).getxy()
 
         # do not initialize twice the vector y2
         if len(self.y2) > 0: return
 
         self.y2 = np.arange(0, self.n + self.s + 1, 1.)
         self.y2[0] = self.x1
-
         for t in self.x[1:]:
             self.y2[t] = self.map(self.r, self.y2[t-1])
 
-        return self.x, self.y1, self.y2
+        return x, y1, self.y2
 
     def getdiffy(self):
         """Return the difference between the two vectors y2 and y1 """
