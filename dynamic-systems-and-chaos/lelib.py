@@ -322,7 +322,7 @@ def test():
     le1 = Logistic(r, n, x0, False, 'logistic')
     x, y1 = le1.getxy()
 
-    assert len(x) == n+1, "x should be a vector of size %n" % (n+1)
+    assert len(x) == n+1, "x should be a vector of size %d" % (n+1)
     assert x[0] == 0, "x[0] should be 0"
     assert x[n] == n, "the last element of x should be equal to %d" % n
     assert x.sum() == n*(n+1)/2, "the sum of the elements of x is not correct"
