@@ -1,10 +1,10 @@
 #!/usr/bin/python3
 
 # Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps
-# Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
+# Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
 
 __author__ = "Davide Madrisan"
-__copyright__ = "Copyright (C) 2016,2017 Davide Madrisan"
+__copyright__ = "Copyright (C) 2016-2018 Davide Madrisan"
 __license__ = "Apache License 2.0"
 __version__ = "2"
 __email__ = "davide.madrisan@gmail.com"
