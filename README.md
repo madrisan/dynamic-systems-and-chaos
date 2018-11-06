@@ -113,28 +113,31 @@ The core library requires the (widely-available and very popular) Python librari
 ##### bifurcations.py
 
     $ ./bifurcations.py --help
-    Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps
-    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
-
-    Usage:
-      ./bifurcations.py [-r min:max] [-y min:max] [-n <int>] [-s <int>] [-c|-l|-t]
-      ./bifurcations.py -h
-
-    Where:
-      -r | --rate: range of the growth rate parameters (default: the entire range)
-      -y | --people: normalized range of the population (default: the entire range)
-      -s | --skip: skip plotting the first 's' iterations (default: 200)
-      -n | --steps: number of iterations (default: 100)
-      -c | --cubic: plot the bifurcation diagram of the cubic map
-      -l | --logistic: plot the diagram of the logistic map (default)
-      -t | --sine: plot the diagram of the sine map
-
-    Example:
-      ./bifurcations.py -r 1:4
-      ./bifurcations.py -r 4:6.5 --cubic
-      ./bifurcations.py --sine -s 200 -n 200
-      ./bifurcations.py -r 3.:4. -s 500 -n 600
-      ./bifurcations.py -r 3.5:3.6 -y .3:.6 -s 800 -n 1000
+    Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps v.4 (stable)
+    Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+    License: Apache License 2.0 (Apache-2.0)
+    
+    usage: bifurcations.py [-h] [-r R] [-y Y] [-s S] [-n N]
+                           [-m {logistic,cubic,sine}]
+    
+    optional arguments:
+      -h, --help            show this help message and exit
+      -r R, --rate R        range of the growth rate parameter (default: the
+                            entire range)
+      -y Y, --people Y      normalized range of the population (default: the
+                            entire range)
+      -s S, --skip S        skip plotting the first 's' iterations (default: 200)
+      -n N, --steps N       number of iterations (default: 100)
+      -m {logistic,cubic,sine}, --map {logistic,cubic,sine}
+                            select the desired map (logistic, cubic, or sine)
+    
+    Examples:
+    
+    bifurcations.py -r 1:4
+    bifurcations.py -r 4:6.5 --map=cubic
+    bifurcations.py --map=sine -s 200 -n 200
+    bifurcations.py -r 3.:4. -s 500 -n 600
+    bifurcations.py -r 3.5:3.6 -y .3:.6 -s 800 -n 1000
 
 ## Examples
 
