@@ -4,7 +4,7 @@
 
 ![Release Status](https://img.shields.io/badge/status-stable-brightgreen.svg)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9aeecdd2b382411b9f55d71edc6946ea)](https://www.codacy.com/app/madrisan/dynamic-systems-and-chaos?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=madrisan/dynamic-systems-and-chaos&amp;utm_campaign=Badge_Grade)
-[![Code Climate](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos/badges/gpa.svg)](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos)
+[![Code Climate](https://api.codeclimate.com/v1/badges/dbff89213a50df63fc01/maintainability)](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos/maintainability)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://spdx.org/licenses/Apache-2.0.html)
 
 ## Some theory
@@ -235,7 +235,7 @@ We can plot the _bifurcation diagram_ of the _cubic map_
    <i>f</i>(<i>x</i>) = <i>rx</i><sup>2</sup>(1-<i>x</i>)
 </p>
 
-by adding the command-line switch `--cubic`
+by adding the command-line switch `--map=cubic`
 
     ./bifurcations.py -r 4:6.5 --map=cubic
 
@@ -249,7 +249,7 @@ And finally plot the _bifurcation diagram_ of the _sine map_
    <i>f</i>(<i>x</i>) = <i>r sin</i>(<sup>&pi;<i>x</i></sup>&frasl;<sub>2</sub>)
 </p>
 
-by using the command-line switch `--sine`
+by using the command-line switch `--map=sine`
 
     ./bifurcations.py --map=sine -s 200 -n 200
 
