@@ -57,59 +57,61 @@ The core library requires the (widely-available and very popular) Python librari
 ##### legraph.py
 
     $ ./legraph.py --help
-    Plot of Logistic Equation Time Series
-    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
+    usage: legraph.py [-h] -0 X0 [-1 X1] [-d DOTSONLY] -r R [-s S] -n N
+                      [-m {logistic,cubic,sine}]
     
-    Usage:
-      ./legraph.py --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> [-s <int>] [-c|-l|-t]
-      ./legraph.py -h
+    Plot of Logistic Equation Time Series v.4 (stable)
+    Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+    License: Apache License 2.0 (Apache-2.0)
     
-    Where:
-      -0 | --x0: 1st initial condition
-      -1 | --x1: 2nd initial condition (optional)
-      -d | --dots-only: do not connect the dots with lines
-      -r | --rate: growth rate parameter
-      -s | --skip: skip plotting the first 's' iterations
-      -n | --steps: number of iterations
-      -c | --cubic: plot the bifurcation diagram of the cubic map
-      -l | --logistic: plot the diagram of the logistic map (default)
-      -t | --sine: plot the diagram of the sine map
+    optional arguments:
+      -h, --help            show this help message and exit
+      -0 X0, --x0 X0        1st initial condition
+      -1 X1, --x1 X1        2nd initial condition (optional)
+      -d DOTSONLY, --dots-only DOTSONLY
+                            do not connect the dots with lines (default: False)
+      -r R, --rate R        growth rate parameter
+      -s S, --skip S        skip plotting the first 's' iterations
+      -n N, --steps N       number of iterations
+      -m {logistic,cubic,sine}, --map {logistic,cubic,sine}
+                            select the desired map (logistic, cubic, or sine)
     
-    Example:
-      # time series with a stable fixed point
-      ./legraph.py -0 0.4 -r 3.2 -n 50
-      ./legraph.py -0 0.4 -1 0.45 -r 3.2 -n 50
+    Examples:
     
-      # chaotic results (randon output)
-      ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
-      ./legraph.py -0 0.2 -r 3.6 -n 5000 --dots-only
-      ./legraph.py -0 0.9 -r 4.5 -n 50 --cubic
-      ./legraph.py -0 0.4 -r 0.8 -n 50 --sine
+    # time series with a stable fixed point
+    legraph.py -0 0.4 -r 3.2 -n 50
+    legraph.py -0 0.4 -1 0.45 -r 3.2 -n 50
+    # chaotic results (randon output)
+    legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
+    legraph.py -0 0.2 -r 3.6 -n 5000 --dots-only
+    legraph.py -0 0.9 -r 4.5 -n 50 --map=cubic
+    legraph.py -0 0.4 -r 0.8 -n 50 --map=sine
 
 ##### finalstate.py
 
     $ ./finalstate.py --help
-    Plot of the Final State Diagram
-    Copyright (C) 2016,2017 Davide Madrisan <davide.madrisan@gmail.com>
+    usage: finalstate.py [-h] [-0 X0] -r R [-s S] [-n N]
+                         [-m {logistic,cubic,sine}]
     
-    Usage:
-      ./finalstate.py [--x0 <float>] -r <float> [-n <int>] [-s <int>] [-c|-l|-t]
-      ./finalstate.py -h
+    Plot of the Final State Diagram v.4 (stable)
+    Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+    License: Apache License 2.0 (Apache-2.0)
     
-    Where:
-      -0 | --x0: initial condition (default: .5)
-      -r | --rate: growth rate parameter
-      -s | --skip: skip plotting the first 's' iterations (default: 2000)
-      -n | --steps: number of iterations (default: 3000)
-      -c | --cubic: plot the bifurcation diagram of the cubic map
-      -l | --logistic: plot the diagram of the logistic map (default)
-      -t | --sine: plot the diagram of the sine map
+    optional arguments:
+      -h, --help            show this help message and exit
+      -0 X0, --x0 X0        initial condition (default: 0.5)
+      -r R, --rate R        growth rate parameter
+      -s S, --skip S        skip plotting the first 's' iterations (default: 2000)
+      -n N, --steps N       number of iterations (default: 1000)
+      -m {logistic,cubic,sine}, --map {logistic,cubic,sine}
+                            select the desired map (logistic, cubic, or sine)
     
-    Example:
-      ./finalstate.py -r 3.492
-      ./finalstate.py -r 3.614 -s 200 -n 300
-      ./finalstate.py -0 0.4 -r 3.2 -s 10 -n 50
-      ./finalstate.py -0 0.8 -r 6.2 -n 20 --cubic
+    Examples:
+    
+    finalstate.py -r 3.492
+    finalstate.py -r 3.614 -s 200 -n 300
+    finalstate.py -0 0.4 -r 3.2 -s 10 -n 50
+    finalstate.py -0 0.8 -r 6.2 -n 20 --map=cubic
 
 ##### bifurcations.py
 
@@ -235,7 +237,7 @@ We can plot the _bifurcation diagram_ of the _cubic map_
 
 by adding the command-line switch `--cubic`
 
-    ./bifurcations.py -r 4:6.5 --cubic
+    ./bifurcations.py -r 4:6.5 --map=cubic
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot08_le-bifurcation-diagram-cubic.png)
 
@@ -249,7 +251,7 @@ And finally plot the _bifurcation diagram_ of the _sine map_
 
 by using the command-line switch `--sine`
 
-    ./bifurcations.py --sine -s 200 -n 200
+    ./bifurcations.py --map=sine -s 200 -n 200
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot09_le-bifurcation-diagram-sine.png)
 

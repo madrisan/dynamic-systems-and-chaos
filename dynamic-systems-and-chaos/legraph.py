@@ -4,99 +4,76 @@
 # Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 
-import getopt
+import argparse
 import sys
+import textwrap
 
 from lelib import Logistic, LogisticDiff
-from utils import copyleft, die, writeln
+from utils import copyleft, die
 
-def usage():
-    """Program usage """
-
-    progname = '  ' + sys.argv[0]
-
-    writeln('Usage:\n' +
-        progname + ' --x0 <float> [--x1 <float>] [-d] -r <float> -n <int> ' \
-            + '[-s <int>] [-c|-l|-t]\n' +
-        progname + ' -h\n')
-
-    writeln("""Where:
-  -0 | --x0: 1st initial condition
-  -1 | --x1: 2nd initial condition (optional)
-  -d | --dots-only: do not connect the dots with lines
-  -r | --rate: growth rate parameter
-  -s | --skip: skip plotting the first 'k' iterations
-  -n | --steps: number of iterations
-  -c | --cubic: plot the bifurcation diagram of the cubic map
-  -l | --logistic: plot the diagram of the logistic map (default)
-  -t | --sine: plot the diagram of the sine map\n""")
-
-    writeln('Example:\n' +
-        '  # time series with a stable fixed point\n' +
-        progname + ' -0 0.4 -r 3.2 -n 50\n' +
-        progname + ' -0 0.4 -1 0.45 -r 3.2 -n 50\n\n' +
-        '  # chaotic results (randon output)\n' +
-        progname + ' --x0 0.2 --x1 0.2000001 -r 4.0 -n 50\n' +
-        progname + ' -0 0.2 -r 3.6 -n 5000 --dots-only\n' +
-        progname + ' -0 0.9 -r 4.5 -n 50 --cubic\n' +
-        progname + ' -0 0.4 -r 0.8 -n 50 --sine\n')
-
-def helpmsg():
-    """Print the Copyright and an help message """
-
+def parse_args():
+    """This function parses and return arguments passed in """
     descr = 'Plot of Logistic Equation Time Series'
-    copyleft(descr)
-    usage()
+    examples = '''
+      # time series with a stable fixed point
+      %(prog)s -0 0.4 -r 3.2 -n 50
+      %(prog)s -0 0.4 -1 0.45 -r 3.2 -n 50
+      # chaotic results (randon output)
+      %(prog)s --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
+      %(prog)s -0 0.2 -r 3.6 -n 5000 --dots-only
+      %(prog)s -0 0.9 -r 4.5 -n 50 --map=cubic
+      %(prog)s -0 0.4 -r 0.8 -n 50 --map=sine'''
+
+    parser = argparse.ArgumentParser(
+                 formatter_class = argparse.RawDescriptionHelpFormatter,
+                 description = copyleft(descr),
+                 epilog = "Examples:\n" + textwrap.dedent(examples))
+
+    # By default select the Logistic Equation
+
+    parser.add_argument(
+        "-0", "--x0",
+        action="store", dest="x0", type=float, required=True,
+        help="1st initial condition")
+    parser.add_argument(
+        "-1", "--x1",
+        action="store", dest="x1", type=float,
+        help="2nd initial condition (optional)")
+    parser.add_argument(
+        "-d", "--dots-only",
+        action="store", dest="dotsonly", type=bool, default=False,
+        help="do not connect the dots with lines (default: %(default)s)")
+    parser.add_argument(
+        "-r", "--rate",
+        action="store", dest="r", type=float, required=True,
+        help="growth rate parameter")
+    parser.add_argument(
+        "-s", "--skip",
+        action="store", dest="s", type=int, default=0,
+        help="skip plotting the first 's' iterations")
+    parser.add_argument(
+        "-n", "--steps",
+        action="store", dest="n", type=int, required=True,
+        help="number of iterations")
+    parser.add_argument(
+        "-m", "--map",
+        action="store", dest="map_name", default="logistic",
+        choices = ["logistic", "cubic", "sine"],
+        help = "select the desired map (logistic, cubic, or sine)")
+
+    return parser.parse_args()
 
 def main():
-    try:
-        opts, _ = getopt.getopt(sys.argv[1:], '0:1:dn:r:s:hclt',
-            ["x0=", "x1=", "dots-only", "steps=", \
-             "rate=", "skip=", "help", "cubic", "logistic", "sine"])
-    except getopt.GetoptError:
-        usage()
-        sys.exit(2)
+    args = parse_args()
 
-    x0 = x1 = n = r = None
-    s = 0
-    dotsonly = False
-    # By default select the Logistic Equation
-    map_name = 'logistic'
+    lemap = (
+        LogisticDiff(
+            args.r, args.n, args.x0, args.x1, args.s, args.map_name)
+        if args.x1 else Logistic(
+            args.r, args.n, args.x0, args.s, args.map_name))
 
-    for o, a in opts:
-        if o in ('-h', '--help'):
-            helpmsg()
-            sys.exit()
-        elif o in ('-0', '--x0'):
-            x0 = float(a)
-        elif o in ('-1', '--x1'):
-            x1 = float(a)
-        elif o in ('-d', '--dots-only'):
-            dotsonly = True
-        elif o in ('-n', '--steps'):
-            n = int(a)
-        elif o in ('-r', '--rate'):
-            r = float(a)
-        elif o in ('-s', '--skip'):
-            s = int(a)
-        elif o in ('-c', '--cubic'):
-            map_name = 'cubic'
-        elif o in ('-l', '--logistic'):
-            map_name = 'logistic'
-        elif o in ('-t', '--sine'):
-            map_name = 'sine'
-        else:
-            raise AssertionError("Unhandled command-line option.")
-
-    if x0 == None or n == None or r == None:
-        usage()
-        die(2, 'One of more arguments have not been set.')
-
-    lemap = LogisticDiff(r, n, x0, x1, s, map_name) if x1 \
-                else Logistic(r, n, x0, s, map_name)
-    lemap.plotdots = not dotsonly
+    lemap.plotdots = not args.dotsonly
     lemap.plot()
-
 
 if __name__ == '__main__':
     try:

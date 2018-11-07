@@ -11,14 +11,14 @@ __version__ = "4"
 __email__ = "davide.madrisan@gmail.com"
 __status__ = "stable"
 
-import sys
-
 def copyleft(descr):
     """Print the Copyright message and License """
 
-    writeln(descr + ' v.' +  __version__ + ' (' + __status__ +  ')')
-    writeln(__copyright__ + ' <' + __email__ + '>')
-    writeln('License: ' + __license__ + '\n')
+    return ("{0} v.{1} ({2})\n{3} <{4}>\nLicense: {5}"
+        .format(
+            descr, __version__, __status__,
+            __copyright__, __email__,
+            __license__))
 
 def die(exitcode, message):
     """Print and error message and exit with 'exitcode' """
@@ -26,8 +26,3 @@ def die(exitcode, message):
     progname = sys.argv[0]
     sys.stderr.write('%s: error: %s\n' % (progname, message))
     sys.exit(exitcode)
-
-def writeln(line):
-    """Print the given line to stdout followed by a newline """
-
-    sys.stdout.write(line + '\n')

@@ -5,13 +5,11 @@
 # SPDX-License-Identifier: Apache-2.0
 
 import argparse
-import getopt
-import os
 import sys
 import textwrap
 
 from lelib import Bifurcation, Map
-from utils import copyleft
+from utils import copyleft, die
 
 def parse_args():
     """This function parses and return arguments passed in """
@@ -24,7 +22,6 @@ def parse_args():
       %(prog)s -r 3.5:3.6 -y .3:.6 -s 800 -n 1000'''
 
     parser = argparse.ArgumentParser(
-                 prog = os.path.basename(sys.argv[0]),
                  formatter_class = argparse.RawDescriptionHelpFormatter,
                  description = copyleft(descr),
                  epilog = "Examples:\n" + textwrap.dedent(examples))
@@ -34,35 +31,25 @@ def parse_args():
 
     parser.add_argument(
         "-r", "--rate",
-        action = "store",
-        help = "range of the growth rate parameter (default: the entire range)",
-        dest = "r")
+        action="store", dest="r",
+        help="range of the growth rate parameter (default: the entire range)")
     parser.add_argument(
         "-y", "--people",
-        action = "store",
-        help = "normalized range of the population (default: the entire range)",
-        dest = "y")
+        action="store", dest="y",
+        help="normalized range of the population (default: the entire range)")
     parser.add_argument(
         "-s", "--skip",
-        action = "store",
-        default = 200,
-        type = int,
-        help = "skip plotting the first 's' iterations (default: %(default)s)",
-        dest = "s")
+        action="store", dest="s", type=int, default=200,
+        help="skip plotting the first 's' iterations (default: %(default)s)")
     parser.add_argument(
         "-n", "--steps",
-        action = "store",
-        default = 100,
-        type = int,
-        help = "number of iterations (default: %(default)s)",
-        dest = "n")
+        action="store", dest="n", type=int, default=100,
+        help="number of iterations (default: %(default)s)")
     parser.add_argument(
         "-m", "--map",
-        action = "store",
-        choices = ["logistic", "cubic", "sine"],
-        default = "logistic",
-        help = "select the desired map (logistic, cubic, or sine)",
-        dest = "map_name")
+        action="store", dest="map_name", default="logistic",
+        choices=["logistic", "cubic", "sine"],
+        help="select the desired map (logistic, cubic, or sine)")
 
     return parser.parse_args()
 
