@@ -6,10 +6,9 @@
 
 import argparse
 import sys
-import textwrap
 
 from lelib import Logistic, LogisticDiff
-from utils import copyleft, die
+from utils import argparser, copyleft, die
 
 def parse_args():
     """This function parses and return arguments passed in """
@@ -24,10 +23,7 @@ def parse_args():
       %(prog)s -0 0.9 -r 4.5 -n 50 --map=cubic
       %(prog)s -0 0.4 -r 0.8 -n 50 --map=sine'''
 
-    parser = argparse.ArgumentParser(
-                 formatter_class = argparse.RawDescriptionHelpFormatter,
-                 description = copyleft(descr),
-                 epilog = "Examples:\n" + textwrap.dedent(examples))
+    parser = argparser(descr, examples)
 
     # By default select the Logistic Equation
 

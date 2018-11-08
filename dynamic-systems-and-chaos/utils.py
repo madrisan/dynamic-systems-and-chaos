@@ -11,6 +11,16 @@ __version__ = "4"
 __email__ = "davide.madrisan@gmail.com"
 __status__ = "stable"
 
+import argparse
+import textwrap
+
+def argparser(descr, examples):
+    """Return a new ArgumentParser object """
+    return argparse.ArgumentParser(
+               formatter_class = argparse.RawDescriptionHelpFormatter,
+               description = copyleft(descr),
+               epilog = "Examples:\n" + textwrap.dedent(examples))
+
 def copyleft(descr):
     """Print the Copyright message and License """
 

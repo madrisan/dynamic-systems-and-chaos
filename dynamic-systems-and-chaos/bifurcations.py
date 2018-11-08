@@ -6,10 +6,9 @@
 
 import argparse
 import sys
-import textwrap
 
 from lelib import Bifurcation, Map
-from utils import copyleft, die
+from utils import argparser, copyleft, die
 
 def parse_args():
     """This function parses and return arguments passed in """
@@ -21,10 +20,7 @@ def parse_args():
       %(prog)s -r 3.:4. -s 500 -n 600
       %(prog)s -r 3.5:3.6 -y .3:.6 -s 800 -n 1000'''
 
-    parser = argparse.ArgumentParser(
-                 formatter_class = argparse.RawDescriptionHelpFormatter,
-                 description = copyleft(descr),
-                 epilog = "Examples:\n" + textwrap.dedent(examples))
+    parser = argparser(descr, examples)
 
     # By default, make 300 iterations (n) and do no plot the first 200 ones (s)
     # By default select the Logistic Equation

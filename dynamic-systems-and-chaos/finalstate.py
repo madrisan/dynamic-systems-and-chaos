@@ -6,10 +6,9 @@
 
 import argparse
 import sys
-import textwrap
 
 from lelib import FinalState
-from utils import copyleft, die
+from utils import argparser, copyleft, die
 
 def parse_args():
     """This function parses and return arguments passed in """
@@ -20,10 +19,7 @@ def parse_args():
       %(prog)s -0 0.4 -r 3.2 -s 10 -n 50
       %(prog)s -0 0.8 -r 6.2 -n 20 --map=cubic'''
 
-    parser = argparse.ArgumentParser(
-                 formatter_class = argparse.RawDescriptionHelpFormatter,
-                 description = copyleft(descr),
-                 epilog = "Examples:\n" + textwrap.dedent(examples))
+    parser = argparser(descr, examples)
 
     # By default, make 3000 iterations (n) and
     # do no plot the first 2000 ones (s)
