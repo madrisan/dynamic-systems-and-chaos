@@ -37,7 +37,7 @@ def parse_args():
         help="2nd initial condition (optional)")
     parser.add_argument(
         "-d", "--dots-only",
-        action="store", dest="dotsonly", type=bool, default=False,
+        action="store_true", dest="dotsonly",
         help="do not connect the dots with lines (default: %(default)s)")
     parser.add_argument(
         "-r", "--rate",

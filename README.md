@@ -57,7 +57,7 @@ The core library requires the (widely-available and very popular) Python librari
 ##### legraph.py
 
     $ ./legraph.py --help
-    usage: legraph.py [-h] -0 X0 [-1 X1] [-d DOTSONLY] -r R [-s S] -n N
+    usage: legraph.py [-h] -0 X0 [-1 X1] [-d] -r R [-s S] -n N
                       [-m {logistic,cubic,sine}]
     
     Plot of Logistic Equation Time Series v.4 (stable)
@@ -68,8 +68,7 @@ The core library requires the (widely-available and very popular) Python librari
       -h, --help            show this help message and exit
       -0 X0, --x0 X0        1st initial condition
       -1 X1, --x1 X1        2nd initial condition (optional)
-      -d DOTSONLY, --dots-only DOTSONLY
-                            do not connect the dots with lines (default: False)
+      -d, --dots-only       do not connect the dots with lines (default: False)
       -r R, --rate R        growth rate parameter
       -s S, --skip S        skip plotting the first 's' iterations
       -n N, --steps N       number of iterations
