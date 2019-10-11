@@ -77,7 +77,7 @@ class Logistic(Map):
 
         self.ensure(x.any() and y.any(), '_plotline(): internal error')
         plt.plot(x, y, color=color, linestyle='',
-                 markerfacecolor=color, marker='o', markersize=8)
+                 markerfacecolor=color, marker='o', markersize=5)
 
         if self.plotdots:
             plt.plot(x, y, color=color, alpha=0.6)
