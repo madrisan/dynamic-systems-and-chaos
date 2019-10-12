@@ -39,7 +39,7 @@ is called the _itinerary_ or _orbit_ (or sometimes a _time series_ or a _traject
 
 ## Software
 
-The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 and Fedora 26 Workstation), but if you want to run it under Python 2, you need to modify the shebang line of each Python script.
+The software is written in Python and compatible with both Python 2 and 3 (tested on Fedora 24 through Fedora 30 Workstation), but if you want to run it under Python 2, you need to modify the shebang line of each Python script.
 
 <dl>
   <dt>legraph.py -- Plot Logistic, Cube, and Sine orbits</dt>
@@ -56,6 +56,62 @@ The software is written in Python and compatible with both Python 2 and 3 (teste
 </dl>
 
 The core library requires the (widely-available and very popular) Python libraries `NumPy` and `matplotlib`.
+
+### Working With Python3.3+ Virtual Environments
+
+When testing `dynamic-systems-and-chaos` it's easier to use a virtual environment.
+Python 3 presents a few steps to ensure you are actually installing and working with files inside of your virtual environment.
+Refer to the original Python documentation
+[Installing Packages Using pip and virtualenv](https://packaging.python.org/guides/installing-using-pip-and-virtualenv/)
+for the official instructions on this topic.
+
+#### `dynamic-systems-and-chaos` virtual Environment Example
+
+Create a virtual environment named `.venv` inside the git repository root:
+```
+$ python3 -m venv .venv
+Using base prefix '/usr'
+New python executable in /home/myself/dynamic-systems-and-chaos/.venv/bin/python3
+Also creating executable in /home/myself/dynamic-systems-and-chaos/.venv/bin/python
+Installing setuptools, pip, wheel...done.
+```
+
+Now that a virtualenv has been created in our `.venv` folder we should activate the virtual environment.
+```
+$ source .venv/bin/activate
+(.venv)$
+```
+The virtual environment contains no extra modules needed to run `dynamic-systems-and-chaos`.
+Therefore, we want to install the dependencies from the `requirements.txt file`.
+However, we want to specify that we're using the virtual environment `pip3`:
+
+```
+(.venv)$ .venv/bin/pip3 install -r requirements.txt
+Collecting cycler==0.10.0 (from -r requirements.txt (line 1))
+  Using cached https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
+Collecting kiwisolver==1.1.0 (from -r requirements.txt (line 2))
+  Using cached https://files.pythonhosted.org/packages/93/f8/518fb0bb89860eea6ff1b96483fbd9236d5ee991485d0f3eceff1770f654/kiwisolver-1.1.0-cp37-cp37m-manylinux1_x86_64.whl
+Collecting matplotlib==3.1.1 (from -r requirements.txt (line 3))
+  Using cached https://files.pythonhosted.org/packages/19/7a/60bd79c5d79559150f8bba866dd7d434f0a170312e4d15e8aefa5faba294/matplotlib-3.1.1-cp37-cp37m-manylinux1_x86_64.whl
+Collecting numpy==1.17.2 (from -r requirements.txt (line 4))
+  Using cached https://files.pythonhosted.org/packages/ba/e0/46e2f0540370f2661b044647fa447fef2ecbcc8f7cdb4329ca2feb03fb23/numpy-1.17.2-cp37-cp37m-manylinux1_x86_64.whl
+Collecting pyparsing==2.4.2 (from -r requirements.txt (line 5))
+  Using cached https://files.pythonhosted.org/packages/11/fa/0160cd525c62d7abd076a070ff02b2b94de589f1a9789774f17d7c54058e/pyparsing-2.4.2-py2.py3-none-any.whl
+Collecting python-dateutil==2.8.0 (from -r requirements.txt (line 6))
+  Using cached https://files.pythonhosted.org/packages/41/17/c62faccbfbd163c7f57f3844689e3a78bae1f403648a6afb1d0866d87fbb/python_dateutil-2.8.0-py2.py3-none-any.whl
+Collecting six==1.12.0 (from -r requirements.txt (line 7))
+  Using cached https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl
+Requirement already satisfied: setuptools in ./.venv/lib/python3.7/site-packages (from kiwisolver==1.1.0->-r requirements.txt (line 2)) (41.4.0)
+Installing collected packages: six, cycler, kiwisolver, numpy, python-dateutil, pyparsing, matplotlib
+Successfully installed cycler-0.10.0 kiwisolver-1.1.0 matplotlib-3.1.1 numpy-1.17.2 pyparsing-2.4.2 python-dateutil-2.8.0 six-1.12.0
+```
+
+The output above is an example of already cached modules being installed.
+These packages could also be outdated so please remember it's just an example.
+
+You are now ready to start running and testing `dynamic-systems-and-chao` with a virtual environment using Python 3.
+
+### Scripts Available
 
 ##### legraph.py
 
