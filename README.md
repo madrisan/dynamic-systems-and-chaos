@@ -111,7 +111,7 @@ These packages could also be outdated so please remember it's just an example.
 
 You are now ready to start running and testing `dynamic-systems-and-chao` with a virtual environment using Python 3.
 
-### Scripts Available
+### Available Scripts
 
 ##### legraph.py
 
