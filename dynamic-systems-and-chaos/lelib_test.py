@@ -51,7 +51,7 @@ def test_class_logistic():
 
     print("Running the tests for the class 'Logistic'...")
 
-r, n, x0 = 3.2, 100, 0.4
+    r, n, x0 = 3.2, 100, 0.4
     le1 = Logistic(r, n, x0, False, 'logistic')
     x, y1 = le1.getxy()
 

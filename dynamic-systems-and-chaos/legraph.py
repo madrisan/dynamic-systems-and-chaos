@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 
 # Logistic Equation: Comparing Initial Conditions
-# Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+# Copyright (C) 2016-2019 Davide Madrisan <davide.madrisan@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 
-import argparse
 import sys
 
 from lelib import Logistic, LogisticDiff
-from utils import argparser, copyleft, die
+from utils import argparser, die
 
 def parse_args():
     """This function parses and return arguments passed in """

@@ -4,11 +4,10 @@
 # Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 
-import argparse
 import sys
 
 from lelib import FinalState
-from utils import argparser, copyleft, die
+from utils import argparser, die
 
 def parse_args():
     """This function parses and return arguments passed in """
