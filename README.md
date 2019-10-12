@@ -7,6 +7,9 @@
 [![Code Climate](https://api.codeclimate.com/v1/badges/dbff89213a50df63fc01/maintainability)](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos/maintainability)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://spdx.org/licenses/Apache-2.0.html)
 
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/alerts/)
+[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/context:python)
+
 ## Some theory
 
 ### Logistic maps
