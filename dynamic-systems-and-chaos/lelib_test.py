@@ -1,13 +1,13 @@
 #!/usr/bin/python3
 
 # Logistic Equation Library - Unit tests
-# Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
+# Copyright (C) 2016-2019 Davide Madrisan <davide.madrisan@gmail.com>
 # SPDX-License-Identifier: Apache-2.0
 
 from __future__ import print_function
 import numpy as np
 
-from lelib import Map, Logistic, FinalState, LogisticDiff
+from lelib import Map, Logistic, LogisticDiff
 
 def test_class_map():
     """Test the class 'Map' """

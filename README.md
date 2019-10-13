@@ -82,7 +82,7 @@ $ source .venv/bin/activate
 (.venv)$
 ```
 The virtual environment contains no extra modules needed to run `dynamic-systems-and-chaos`.
-Therefore, we want to install the dependencies from the `requirements.txt file`.
+Therefore, we want to install the dependencies from the `requirements.txt` file.
 However, we want to specify that we're using the virtual environment `pip3`:
 
 ```
