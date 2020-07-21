@@ -228,7 +228,13 @@ The bottom plot is the difference between the two time series in the top plot.
 You can note that the two orbits start very close together and eventually end up far apart.
 This is known as _sensitive dependence on initial conditions_ (_SDIC_), or the _butterfly effect_.
 
-For any initial condition _x_ there is another initial condition very near to it that eventually ends up far away.
+The latter name cames from the title of a 1979 paper by Ed Lorenz called
+"Predictability: Does the Flap of a Butterfly's Wings in Brazil Set Off a Tornado in Texas?".
+The idea is that in a chaotic system, small disturbances grow exponenfially fast, rendering long-term prediction
+impossible.
+
+More precisely, for any initial condition _x_ there is another initial condition very near to it that eventually
+ends up far away.
 To predict the behavior of a system with _SDIC_ requires knowing the initial condition with _impossible accuracy_.
 Systems with _SDIC_ are deterministic yet unpredictable in the long run.
 
@@ -317,11 +323,17 @@ You can note the similarities between the three bifurcation diagrams (and all th
 iterated functions that map an interval to itself and have a single quadratic maximum.)
 
 This is a well known result that came from the amazing phenomenon of the _universality of the period-doubling route to chaos_
-(also known as [_Feigenbaum's constant_](https://en.wikipedia.org/wiki/Feigenbaum_constants))
-
+(also known as [_Feigenbaum's constant_](https://en.wikipedia.org/wiki/Feigenbaum_constants)).
+The physicist Mitchell Feigenbaum in fact showed that there are certain universal laws governing the transition from
+regular to chaotic behaviour, His predictions were confirmed in experiments on electronic circuits, swirling fluids,
+chemical reactions, semiconductors, and heard cells. Feigenbaum's laws transcended the superficial differences between heart
+cells and and silicon semiconductors. Different materials, the same laws of chaos!
 
 ## References and Acknowledgments
 
 This software has been developed as part of the (optional) homeworks of the
 [MOOC](https://www.complexityexplorer.org/courses/61-introduction-to-dynamical-systems-and-chaos-summer-2016)
 __Introduction to Dynamical Systems and Chaos__ (Summer, 2016), leaded by __David Feldman__, Professor of Physics and Mathematics at College of the Atlantic.
+
+For more details about the chaos and sync theories, see the Steven Strogatz's books "Sync" and "Nonlinear Dynamics and Chaos".
+Or the David Feldman's introductory book "Chaos and Fractals: An Elementary Introduction".
