@@ -6,9 +6,15 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9aeecdd2b382411b9f55d71edc6946ea)](https://www.codacy.com/app/madrisan/dynamic-systems-and-chaos?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=madrisan/dynamic-systems-and-chaos&amp;utm_campaign=Badge_Grade)
 [![Code Climate](https://api.codeclimate.com/v1/badges/dbff89213a50df63fc01/maintainability)](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos/maintainability)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://spdx.org/licenses/Apache-2.0.html)
-
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/alerts/)
 [![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/context:python)
+
+This software has been developed as part of the (optional) homeworks of the
+[MOOC](https://www.complexityexplorer.org/courses/61-introduction-to-dynamical-systems-and-chaos-summer-2016)
+__Introduction to Dynamical Systems and Chaos__ (Summer, 2016), leaded by __David Feldman__, Professor of Physics and Mathematics at College of the Atlantic.
+
+For more details about the chaos and sync theories, see the Steven Strogatz's books _Sync_ and _Nonlinear Dynamics and Chaos_.
+Or the David Feldman's introductory book _Chaos and Fractals: An Elementary Introduction_.
 
 ## Some theory
 
@@ -69,11 +75,9 @@ for the official instructions on this topic.
 
 Create a virtual environment named `.venv` inside the git repository root:
 ```
+$ git clone https://github.com/madrisan/dynamic-systems-and-chaos.git
+$ cd dynamic-systems-and-chaos
 $ python3 -m venv .venv
-Using base prefix '/usr'
-New python executable in /home/myself/dynamic-systems-and-chaos/.venv/bin/python3
-Also creating executable in /home/myself/dynamic-systems-and-chaos/.venv/bin/python
-Installing setuptools, pip, wheel...done.
 ```
 
 Now that a virtualenv has been created in our `.venv` folder we should activate the virtual environment.
@@ -84,38 +88,17 @@ $ source .venv/bin/activate
 The virtual environment contains no extra modules needed to run `dynamic-systems-and-chaos`.
 Therefore, we want to install the dependencies from the `requirements.txt` file.
 However, we want to specify that we're using the virtual environment `pip3`:
-
 ```
+(.venv)$ pip install --upgrade pip
 (.venv)$ .venv/bin/pip3 install -r requirements.txt
-Collecting cycler==0.10.0 (from -r requirements.txt (line 1))
-  Using cached https://files.pythonhosted.org/packages/f7/d2/e07d3ebb2bd7af696440ce7e754c59dd546ffe1bbe732c8ab68b9c834e61/cycler-0.10.0-py2.py3-none-any.whl
-Collecting kiwisolver==1.1.0 (from -r requirements.txt (line 2))
-  Using cached https://files.pythonhosted.org/packages/93/f8/518fb0bb89860eea6ff1b96483fbd9236d5ee991485d0f3eceff1770f654/kiwisolver-1.1.0-cp37-cp37m-manylinux1_x86_64.whl
-Collecting matplotlib==3.1.1 (from -r requirements.txt (line 3))
-  Using cached https://files.pythonhosted.org/packages/19/7a/60bd79c5d79559150f8bba866dd7d434f0a170312e4d15e8aefa5faba294/matplotlib-3.1.1-cp37-cp37m-manylinux1_x86_64.whl
-Collecting numpy==1.17.2 (from -r requirements.txt (line 4))
-  Using cached https://files.pythonhosted.org/packages/ba/e0/46e2f0540370f2661b044647fa447fef2ecbcc8f7cdb4329ca2feb03fb23/numpy-1.17.2-cp37-cp37m-manylinux1_x86_64.whl
-Collecting pyparsing==2.4.2 (from -r requirements.txt (line 5))
-  Using cached https://files.pythonhosted.org/packages/11/fa/0160cd525c62d7abd076a070ff02b2b94de589f1a9789774f17d7c54058e/pyparsing-2.4.2-py2.py3-none-any.whl
-Collecting python-dateutil==2.8.0 (from -r requirements.txt (line 6))
-  Using cached https://files.pythonhosted.org/packages/41/17/c62faccbfbd163c7f57f3844689e3a78bae1f403648a6afb1d0866d87fbb/python_dateutil-2.8.0-py2.py3-none-any.whl
-Collecting six==1.12.0 (from -r requirements.txt (line 7))
-  Using cached https://files.pythonhosted.org/packages/73/fb/00a976f728d0d1fecfe898238ce23f502a721c0ac0ecfedb80e0d88c64e9/six-1.12.0-py2.py3-none-any.whl
-Requirement already satisfied: setuptools in ./.venv/lib/python3.7/site-packages (from kiwisolver==1.1.0->-r requirements.txt (line 2)) (41.4.0)
-Installing collected packages: six, cycler, kiwisolver, numpy, python-dateutil, pyparsing, matplotlib
-Successfully installed cycler-0.10.0 kiwisolver-1.1.0 matplotlib-3.1.1 numpy-1.17.2 pyparsing-2.4.2 python-dateutil-2.8.0 six-1.12.0
 ```
-
-The output above is an example of already cached modules being installed.
-These packages could also be outdated so please remember it's just an example.
-
-You are now ready to start running and testing `dynamic-systems-and-chao` with a virtual environment using Python 3.
+You are now ready to start running and testing `dynamic-systems-and-chaos` with a virtual environment using Python 3.
 
 ### Available Scripts
 
 ##### legraph.py
 
-    $ ./legraph.py --help
+    (.venv)$ python3 dynamic-systems-and-chaos/legraph.py --help
     usage: legraph.py [-h] -0 X0 [-1 X1] [-d] -r R [-s S] -n N
                       [-m {logistic,cubic,sine}]
     
@@ -147,7 +130,7 @@ You are now ready to start running and testing `dynamic-systems-and-chao` with a
 
 ##### finalstate.py
 
-    $ ./finalstate.py --help
+    $ (.venv)$ python3 dynamic-systems-and-chaos/finalstate.py --help
     usage: finalstate.py [-h] [-0 X0] -r R [-s S] [-n N]
                          [-m {logistic,cubic,sine}]
     
@@ -173,7 +156,7 @@ You are now ready to start running and testing `dynamic-systems-and-chao` with a
 
 ##### bifurcations.py
 
-    $ ./bifurcations.py --help
+    $ (.venv)$ python3 dynamic-systems-and-chaos/bifurcations.py --help
     Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps v.4 (stable)
     Copyright (C) 2016-2018 Davide Madrisan <davide.madrisan@gmail.com>
     License: Apache License 2.0 (Apache-2.0)
@@ -210,7 +193,7 @@ In mathematics, a _fixed point_ of a function is an element of the function's do
 That is to say, _c_ is a fixed point of the function _f_(_x_) if and only if _f_(_c_) = _c_
 
     # initial condition: 0.4 - growth rate: 3.2 - 50 iterations starting from 0 (x0)
-    ./legraph.py --x0 0.4 -r 3.2 -n 50
+    (.venv)$ python3 dynamic-systems-and-chaos/legraph.py --x0 0.4 -r 3.2 -n 50
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot01_le-periodic-orbit.png)
 
@@ -221,7 +204,7 @@ Applying the same function over and over again does not result in periodic behav
 
 We can use `legraph.py` to compare time series for two different initial conditions.
 
-    ./legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
+    (.venv)$ python3 dynamic-systems-and-chaos/legraph.py --x0 0.2 --x1 0.2000001 -r 4.0 -n 50
 
 The bottom plot is the difference between the two time series in the top plot.
 
@@ -244,14 +227,14 @@ Systems with _SDIC_ are deterministic yet unpredictable in the long run.
 
 The aperiodic orbits are always bounded but do not necessarily cover all the domain. They can present one or more holes.
 
-    ./legraph.py --x0 0.2 -r 3.6 -n 500
+    (.venv)$ python3 dynamic-systems-and-chaos/legraph.py --x0 0.2 -r 3.6 -n 500
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot03_le-sdic-dots-and-lines.png)
 
 We can increase the number of iterations and add the command line switch `--dots-only` in order to better visualize this
 behaviour.
 
-    ./legraph.py --x0 0.2 -r 3.6 -n 5000 --dots-only
+    (.venv)$ python3 dynamic-systems-and-chaos/legraph.py --x0 0.2 -r 3.6 -n 5000 --dots-only
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot04_le-sdic-dotsonly.png)
 
@@ -263,13 +246,13 @@ The resulting plot is called a _final-state diagram_.
 
 The number of skipped (`-s`) and plotted (`-n`) iterations can be manually tuned as shown in the following example.
 
-    ./finalstate.py -r 3.614 -s 200 -n 300
+    (.venv)$ python3 dynamic-systems-and-chaos/finalstate.py -r 3.614 -s 200 -n 300
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot05_le-final-state-diagram.png)
 
 Here you can find an example of a final-state diagram generated by a periodic orbit.
 
-    ./finalstate.py -r 3.2 -s 10 -n 50
+    (.venv)$ python3 dynamic-systems-and-chaos/finalstate.py -r 3.2 -s 10 -n 50
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot06_le-final-state-diagram.png)
 
@@ -287,7 +270,7 @@ The script `bifurcations.py` lets us plot the _bifurcation diagram_ of the logis
    <i>f</i>(<i>x</i>) = <i>rx</i>(1-<i>x</i>)
 </p>
 
-    ./bifurcations.py -r 2:4 -n 300 -s 400
+    (.venv)$ python3 dynamic-systems-and-chaos/bifurcations.py -r 2:4 -n 300 -s 400
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot07_le-bifurcation-diagram-le.png)
 
@@ -301,7 +284,7 @@ We can plot the _bifurcation diagram_ of the _cubic map_
 
 by adding the command-line switch `--map=cubic`
 
-    ./bifurcations.py -r 4:6.5 --map=cubic
+    (.venv)$ python3 dynamic-systems-and-chaos/bifurcations.py -r 4:6.5 --map=cubic
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot08_le-bifurcation-diagram-cubic.png)
 
@@ -315,7 +298,7 @@ And finally plot the _bifurcation diagram_ of the _sine map_
 
 by using the command-line switch `--map=sine`
 
-    ./bifurcations.py --map=sine -s 200 -n 200
+    (.venv)$ python3 dynamic-systems-and-chaos/bifurcations.py --map=sine -s 200 -n 200
 
 ![alt tag](https://github.com/madrisan/dynamic-systems-and-chaos/blob/master/plots/plot09_le-bifurcation-diagram-sine.png)
 
@@ -328,12 +311,3 @@ The physicist Mitchell Feigenbaum in fact showed that there are certain universa
 regular to chaotic behaviour, His predictions were confirmed in experiments on electronic circuits, swirling fluids,
 chemical reactions, semiconductors, and heard cells. Feigenbaum's laws transcended the superficial differences between heart
 cells and and silicon semiconductors. Different materials, the same laws of chaos!
-
-## References and Acknowledgments
-
-This software has been developed as part of the (optional) homeworks of the
-[MOOC](https://www.complexityexplorer.org/courses/61-introduction-to-dynamical-systems-and-chaos-summer-2016)
-__Introduction to Dynamical Systems and Chaos__ (Summer, 2016), leaded by __David Feldman__, Professor of Physics and Mathematics at College of the Atlantic.
-
-For more details about the chaos and sync theories, see the Steven Strogatz's books "Sync" and "Nonlinear Dynamics and Chaos".
-Or the David Feldman's introductory book "Chaos and Fractals: An Elementary Introduction".
