@@ -308,6 +308,6 @@ iterated functions that map an interval to itself and have a single quadratic ma
 This is a well known result that came from the amazing phenomenon of the _universality of the period-doubling route to chaos_
 (also known as [_Feigenbaum's constant_](https://en.wikipedia.org/wiki/Feigenbaum_constants)).
 The physicist Mitchell Feigenbaum in fact showed that there are certain universal laws governing the transition from
-regular to chaotic behaviour, His predictions were confirmed in experiments on electronic circuits, swirling fluids,
-chemical reactions, semiconductors, and heard cells. Feigenbaum's laws transcended the superficial differences between heart
+regular to chaotic behaviour. His predictions were confirmed in experiments on electronic circuits, swirling fluids,
+chemical reactions, semiconductors, and heart cells. Feigenbaum's laws transcended the superficial differences between heart
 cells and and silicon semiconductors. Different materials, the same laws of chaos!
