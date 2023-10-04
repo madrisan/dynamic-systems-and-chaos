@@ -6,8 +6,6 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9aeecdd2b382411b9f55d71edc6946ea)](https://www.codacy.com/app/madrisan/dynamic-systems-and-chaos?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=madrisan/dynamic-systems-and-chaos&amp;utm_campaign=Badge_Grade)
 [![Code Climate](https://api.codeclimate.com/v1/badges/dbff89213a50df63fc01/maintainability)](https://codeclimate.com/github/madrisan/dynamic-systems-and-chaos/maintainability)
 [![License](https://img.shields.io/badge/License-Apache--2.0-blue.svg)](https://spdx.org/licenses/Apache-2.0.html)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/alerts/)
-[![Language grade: Python](https://img.shields.io/lgtm/grade/python/g/madrisan/dynamic-systems-and-chaos.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/madrisan/dynamic-systems-and-chaos/context:python)
 
 This software has been developed as part of the (optional) homeworks of the
 [MOOC](https://www.complexityexplorer.org/courses/61-introduction-to-dynamical-systems-and-chaos-summer-2016)
