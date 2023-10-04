@@ -14,7 +14,7 @@ plot of the differences between the two maps), and the Final State and
 Bifurcation Diagrams.
 """
 
-DOCLINES = DESCRIPTION.split('\n')
+DOCLINES = DESCRIPTION.split("\n")
 
 CLASSIFIERS = """\
 Development Status :: 5 - Production/Stable
@@ -31,33 +31,27 @@ Operating System :: Unix
 Operating System :: MacOS
 """
 
-VERSION = '2'
+VERSION = "2"
 
 setup(
-    name = 'dynamic-systems-and-chaos',
-    description = DOCLINES[0],
-    long_description = DESCRIPTION,
-    version = VERSION,
-    url = 'https://github.com/madrisan/dynamic-systems-and-chaos/',
-
-    author = 'Davide Madrisan',
-    author_email = 'davide.madrisan@gmail.com',
-
-    license = 'Apache License 2.0',
-    packages = ['dynamic-systems-and-chaos'],
-
-    scripts = [
-        'dynamic-systems-and-chaos/bifurcations.py',
-        'dynamic-systems-and-chaos/finalstate.py',
-        'dynamic-systems-and-chaos/legraph.py',
+    name="dynamic-systems-and-chaos",
+    description=DOCLINES[0],
+    long_description=DESCRIPTION,
+    version=VERSION,
+    url="https://github.com/madrisan/dynamic-systems-and-chaos/",
+    author="Davide Madrisan",
+    author_email="davide.madrisan@gmail.com",
+    license="Apache License 2.0",
+    packages=["dynamic-systems-and-chaos"],
+    scripts=[
+        "dynamic-systems-and-chaos/bifurcations.py",
+        "dynamic-systems-and-chaos/finalstate.py",
+        "dynamic-systems-and-chaos/legraph.py",
     ],
-
-    classifiers = [ _f for _f in CLASSIFIERS.split('\n') if _f ],
-
-    install_requires = [
-        'numpy',
-        'matplotlib',
+    classifiers=[_f for _f in CLASSIFIERS.split("\n") if _f],
+    install_requires=[
+        "numpy",
+        "matplotlib",
     ],
-
-    platforms = ["Linux", "Mac OS-X", "Windows"],
+    platforms=["Linux", "Mac OS-X", "Windows"],
 )

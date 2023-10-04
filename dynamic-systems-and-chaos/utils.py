@@ -14,25 +14,27 @@ __status__ = "stable"
 import argparse
 import textwrap
 
+
 def argparser(descr, examples):
-    """Return a new ArgumentParser object """
+    """Return a new ArgumentParser object"""
     return argparse.ArgumentParser(
-               formatter_class = argparse.RawDescriptionHelpFormatter,
-               description = copyleft(descr),
-               epilog = "Examples:\n" + textwrap.dedent(examples))
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        description=copyleft(descr),
+        epilog="Examples:\n" + textwrap.dedent(examples),
+    )
+
 
 def copyleft(descr):
-    """Print the Copyright message and License """
+    """Print the Copyright message and License"""
 
-    return ("{0} v.{1} ({2})\n{3} <{4}>\nLicense: {5}"
-        .format(
-            descr, __version__, __status__,
-            __copyright__, __email__,
-            __license__))
+    return "{0} v.{1} ({2})\n{3} <{4}>\nLicense: {5}".format(
+        descr, __version__, __status__, __copyright__, __email__, __license__
+    )
+
 
 def die(exitcode, message):
-    """Print and error message and exit with 'exitcode' """
+    """Print and error message and exit with 'exitcode'"""
 
     progname = sys.argv[0]
-    sys.stderr.write('%s: error: %s\n' % (progname, message))
+    sys.stderr.write("%s: error: %s\n" % (progname, message))
     sys.exit(exitcode)
