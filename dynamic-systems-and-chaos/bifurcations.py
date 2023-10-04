@@ -9,15 +9,16 @@ import sys
 from lelib import Bifurcation, Map
 from utils import argparser, die
 
+
 def parse_args():
-    """This function parses and return arguments passed in """
-    descr = 'Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps'
-    examples = '''
+    """This function parses and return arguments passed in"""
+    descr = "Plot the Bifurcation Diagram of Logistic, Cubic, and Sine Maps"
+    examples = """
       %(prog)s -r 1:4
       %(prog)s -r 4:6.5 --map=cubic
       %(prog)s --map=sine -s 200 -n 200
       %(prog)s -r 3.:4. -s 500 -n 600
-      %(prog)s -r 3.5:3.6 -y .3:.6 -s 800 -n 1000'''
+      %(prog)s -r 3.5:3.6 -y .3:.6 -s 800 -n 1000"""
 
     parser = argparser(descr, examples)
 
@@ -25,26 +26,46 @@ def parse_args():
     # By default select the Logistic Equation
 
     parser.add_argument(
-        "-r", "--rate",
-        action="store", dest="r",
-        help="range of the growth rate parameter (default: the entire range)")
+        "-r",
+        "--rate",
+        action="store",
+        dest="r",
+        help="range of the growth rate parameter (default: the entire range)",
+    )
     parser.add_argument(
-        "-y", "--people",
-        action="store", dest="y",
-        help="normalized range of the population (default: the entire range)")
+        "-y",
+        "--people",
+        action="store",
+        dest="y",
+        help="normalized range of the population (default: the entire range)",
+    )
     parser.add_argument(
-        "-s", "--skip",
-        action="store", dest="s", type=int, default=200,
-        help="skip plotting the first 's' iterations (default: %(default)s)")
+        "-s",
+        "--skip",
+        action="store",
+        dest="s",
+        type=int,
+        default=200,
+        help="skip plotting the first 's' iterations (default: %(default)s)",
+    )
     parser.add_argument(
-        "-n", "--steps",
-        action="store", dest="n", type=int, default=100,
-        help="number of iterations (default: %(default)s)")
+        "-n",
+        "--steps",
+        action="store",
+        dest="n",
+        type=int,
+        default=100,
+        help="number of iterations (default: %(default)s)",
+    )
     parser.add_argument(
-        "-m", "--map",
-        action="store", dest="map_name", default="logistic",
+        "-m",
+        "--map",
+        action="store",
+        dest="map_name",
+        default="logistic",
         choices=["logistic", "cubic", "sine"],
-        help="select the desired map (logistic, cubic, or sine)")
+        help="select the desired map (logistic, cubic, or sine)",
+    )
 
     return parser.parse_args()
 
@@ -54,9 +75,11 @@ def main():
     mapobj = Map(args.map_name)
 
     # range to vector: "1:4" --> [1., 4.]
-    r2v = (lambda a, minval, maxval :
-             [float(i) for i in a.split(':')] if a else
-             [minval, maxval])
+    r2v = (
+        lambda a, minval, maxval: [float(i) for i in a.split(":")]
+        if a
+        else [minval, maxval]
+    )
 
     # Plot the entire diagram by default
     Bifurcation(
@@ -64,13 +87,14 @@ def main():
         r2v(args.y, mapobj.map_ymin, mapobj.map_ymax),
         args.n,
         args.s,
-        args.map_name
+        args.map_name,
     ).plot()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     try:
         main()
     except KeyboardInterrupt:
-        die(3, 'Exiting on user request')
+        die(3, "Exiting on user request")
 
     sys.exit()
